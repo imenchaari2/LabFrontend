@@ -1,0 +1,73 @@
+<div fxLayout="row wrap">
+    <mat-form-field class="pl-16 pr-16" appearance="outline">
+        <input
+                matInput
+                placeholder="filter by Title"
+                value=""
+                (keyup)='filterBySearchField($event)'
+        >
+    </mat-form-field>
+    <mat-form-field class="pl-16 pr-16" appearance="outline">
+        <input
+                matInput
+                placeholder="filter by Type"
+                value=""
+                (keyup)='filterBySearchField($event)'
+        >
+    </mat-form-field>
+    <mat-form-field class=" pr-16" appearance="outline">
+        <input
+                matInput
+                placeholder="filter by Author"
+                value=""
+                (keyup)='filterBySearchField($event)'
+        >
+    </mat-form-field>
+
+
+
+    <button mat-stroked-button class="filter-button" (click)="openDialog()">
+        <mat-icon class="pr-16">date_range</mat-icon>Filter by release period</button>
+
+        <span fxFlex></span>
+        <div class="m-333">
+            <button mat-button class="button-add" (click)="openPopUp({}, true)">
+                <mat-icon  style="color: #c0320d">add_circle</mat-icon>
+                Add Article
+            </button>
+        </div>
+    </div>
+<mat-card class="p-0">
+    <div class="mat-box-shadow">
+        <ngx-datatable class="material"
+                       [columnMode]="'force'"
+                       [headerHeight]="50"
+                       [rowHeight]="50"
+                       [footerHeight]="50"
+                       [limit]="10"
+                       [rows]="rows"
+                       [columns]="columns"
+        >
+            <ng-container *ngFor='let column of columns'>
+                <ngx-datatable-column *ngIf='column.name !== "Actions"' name="{{column.name}}"
+                                      prop="{{column.prop}}">
+                </ngx-datatable-column>
+                <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                    <span>
+
+                        <button mat-icon-button mat-sm-button class="mr-8" style="color: green" (click)="openPopUp(row,false)"
+                                ><mat-icon>edit</mat-icon></button>
+                              <button mat-icon-button color="warn"><mat-icon>add_task</mat-icon></button>
+
+                        <button mat-icon-button mat-sm-button color="warn" (click)="deleteItem(row.title, row.articleId)"><mat-icon>delete</mat-icon></button>
+
+                    </span>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ng-container>
+        </ngx-datatable>
+    </div>
+</mat-card>
+
+

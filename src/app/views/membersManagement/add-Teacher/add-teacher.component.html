@@ -1,0 +1,184 @@
+<div fxLayoutAlign="space-between center">
+    <div>
+        <h2 class="green-300-fg">{{dialogTitle}}</h2>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<div fxLayout="row wrap">
+    <div
+            fxFlex="100"
+            fxFlex.gt-sm="99.99"
+            fxFlex.sm="99.99"
+    >
+        <mat-card class="p-0 ">
+            <mat-card-content>
+                <form [formGroup]="basicForm">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="100" fxFlex.gt-xs="33.33" class="pr-16">
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>FirstName</mat-label>
+                                    <input
+                                            matInput
+                                            name="firstName"
+                                            formControlName="firstName"
+                                            placeholder="First name"
+                                            value="">
+                                </mat-form-field>
+                                <small
+                                        *ngIf="basicForm.get('firstName').hasError('required') && basicForm.get('firstName').touched"
+                                        class="form-error-msg"> First name is required </small>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>Lastname</mat-label>
+                                    <input
+                                            matInput
+                                            name="lastName"
+                                            formControlName="lastName"
+                                            placeholder="Last name"
+                                            value="">
+                                </mat-form-field>
+                                <small
+                                        *ngIf="basicForm.controls['lastName'].hasError('required') && basicForm.controls['lastName'].touched"
+                                        class="form-error-msg"> Last name is required </small>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>Date of birth</mat-label>
+                                    <input
+                                            matInput
+                                            name="Birth date"
+                                            formControlName="birthDate"
+                                            placeholder="date of birth"
+                                            [matDatepicker]="appDatepicker"
+                                    >
+                                    <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
+                                </mat-form-field>
+                                <mat-datepicker #appDatepicker></mat-datepicker>
+                            </div>
+
+                        </div>
+                        <div fxFlex="100" fxFlex.gt-xs="33.33" class="pr-16">
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>Email</mat-label>
+                                    <input
+                                            matInput
+                                            type="email"
+                                            formControlName="email"
+                                            placeholder="Your Email"
+                                            class="form-control" required>
+                                </mat-form-field>
+                                <small
+                                        *ngIf="basicForm.controls['email'].hasError('required') && basicForm.controls['email'].touched"
+                                        class="form-error-msg"> Email is required </small>
+                                <small
+                                        *ngIf="basicForm.controls['email'].hasError('email') && basicForm.controls['email'].touched"
+                                        class="form-error-msg"> Invaild email address </small>
+                            </div>
+
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>Cin</mat-label>
+                                    <input
+                                            matInput
+                                            name="cin"
+                                            formControlName="cin"
+                                            placeholder="Cin card number"
+                                            type="number"
+                                            oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8);">
+                                </mat-form-field>
+                                <small
+                                        *ngIf="basicForm.controls['cin'].hasError('cin') && basicForm.controls['cin'].touched && basicForm.value.cin<0 && basicForm.value.cin.length<8"
+                                        class="form-error-msg"> Invaild cin card number </small>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>Etablishment</mat-label>
+                                    <input
+                                            matInput
+                                            name="etablishment"
+                                            formControlName="etablishment"
+                                            placeholder="etablishment"
+                                            value=""
+                                    >
+                                </mat-form-field>
+                                <small
+                                        *ngIf="basicForm.controls['etablishment'].hasError('required') && basicForm.controls['etablishment'].touched"
+                                        class="form-error-msg"> Etablishment is required </small>
+                            </div>
+
+                        </div>
+                        <div fxFlex="100" fxFlex.gt-xs="33.33" class="pr-16">
+
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>Grade</mat-label>
+                                    <input
+                                            matInput
+                                            name="grade"
+                                            formControlName="grade"
+                                            placeholder="grade"
+                                            value=""
+                                    >
+                                </mat-form-field>
+                                <small
+                                        *ngIf="basicForm.controls['grade'].hasError('required') && basicForm.controls['grade'].touched"
+                                        class="form-error-msg"> Grade is required </small>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>CV</mat-label>
+                                    <input
+                                            matInput
+                                            name="cv"
+                                            formControlName="cv"
+                                            placeholder="cv"
+                                            value=""
+                                    >
+                                </mat-form-field>
+                                <small
+                                        *ngIf="basicForm.controls['cv'].hasError('required') && basicForm.controls['cv'].touched"
+                                        class="form-error-msg"> CV is required </small>
+                            </div>
+                            <div >
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input
+                                            [type]="show ? 'text' : 'password'"
+                                            name="password"
+                                            matInput
+                                            formControlName="password"
+                                            placeholder="Password"
+                                            [value]="randomPass"
+                                            (keypress)="randomPassword(15)">
+
+                                    <mat-icon matSuffix color="primary" class="mr-8"
+                                              (click)="password()">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </mat-form-field>
+
+                                <small
+                                        *ngIf="basicForm.controls['password'].hasError('required') && basicForm.controls['password'].touched "
+                                        class="form-error-msg"> Password is required </small>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+
+<div style="margin-top:10px ">
+    <span fxFlex></span>
+    <button mat-raised-button color="primary" type="button"
+            (click)="dialogRef.close({action: 'save', member: basicForm.value})"
+            [disabled]="basicForm.invalid"
+    >{{buttonTitle}}</button>
+</div>

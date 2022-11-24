@@ -1,0 +1,20 @@
+table {
+  width: 100%;
+}
+.button-add{
+  border-radius: 20px;
+  background-color: rgba(179, 189, 189, 0.29);
+  color: #001844;
+  font-size: 15px;
+}
+.icon-button{
+  background-color: rgba(179, 189, 189, 0.29);
+  color: #001844;
+  margin-left: 10px;
+}
+.filter{
+  margin: 20px;
+}
+.filter-button {
+  height: 55px;
+}

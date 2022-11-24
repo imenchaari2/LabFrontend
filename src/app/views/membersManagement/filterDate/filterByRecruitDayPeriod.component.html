@@ -1,0 +1,102 @@
+<div fxLayoutAlign="space-between center">
+    <div>
+        <h2 class="green-300-fg">Choose Your period time </h2>
+    </div>
+    <button mat-icon-button  aria-label="Close dialog" (click)="close()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<div *ngIf="data.isArchived===false" fxLayout="row wrap" class="example-section1">
+    <div fxFlex="90" fxFlex.gt-xs="50">
+        <div style="margin-top: 19px">
+            <h5>Start date</h5>
+        </div>
+        <div>
+            <form [formGroup]="basicForm" >
+            <mat-form-field fxFlex.gt-xs="90" appearance="outline">
+                <input
+                        matInput
+                        [matDatepicker]="startDateDP"
+                        placeholder="Greater than"
+                        name="recruitDayGT"
+                        formControlName="recruitDayGT"
+                        >
+                <mat-datepicker-toggle matSuffix [for]="startDateDP"></mat-datepicker-toggle>
+                <mat-datepicker #startDateDP></mat-datepicker>
+
+            </mat-form-field>
+            </form>
+        </div>
+    </div>
+    <div fxFlex="90" fxFlex.gt-xs="50">
+        <div style="margin-top: 19px">
+            <h5>End date</h5>
+        </div>
+        <div>
+            <form [formGroup]="basicForm" novalidate >
+            <mat-form-field fxFlex.gt-xs="90" appearance="outline">
+                <input
+                        matInput
+                        [matDatepicker]="endDateDP"
+                        placeholder="Less than"
+                        name="recruitDayLT"
+                        formControlName="recruitDayLT"
+                        >
+                <mat-datepicker-toggle matSuffix [for]="endDateDP"></mat-datepicker-toggle>
+                <mat-datepicker #endDateDP></mat-datepicker>
+            </mat-form-field>
+            </form>
+        </div>
+    </div>
+</div>
+<div *ngIf="data.isArchived===true" fxLayout="row wrap" class="example-section1">
+    <div fxFlex="90" fxFlex.gt-xs="50">
+        <div style="margin-top: 19px">
+            <h5>Start date</h5>
+        </div>
+        <div>
+            <form [formGroup]="basicForm" >
+                <mat-form-field fxFlex.gt-xs="90" appearance="outline">
+                    <input
+                            matInput
+                            [matDatepicker]="startDateDP"
+                            placeholder="Greater than"
+                            name="archiveDayGT"
+                            formControlName="archiveDayGT"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="startDateDP"></mat-datepicker-toggle>
+                    <mat-datepicker #startDateDP></mat-datepicker>
+
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+    <div fxFlex="90" fxFlex.gt-xs="50">
+        <div style="margin-top: 19px">
+            <h5>End date</h5>
+        </div>
+        <div>
+            <form [formGroup]="basicForm" novalidate >
+                <mat-form-field fxFlex.gt-xs="90" appearance="outline">
+                    <input
+                            matInput
+                            [matDatepicker]="endDateDP"
+                            placeholder="Less than"
+                            name="archiveDayLT"
+                            formControlName="archiveDayLT"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="endDateDP"></mat-datepicker-toggle>
+                    <mat-datepicker #endDateDP></mat-datepicker>
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="data.isArchived===true" mat-dialog-actions class="m-0 p-16" fxLayoutAlign="center">
+    <button mat-stroked-button color="warn" (click)="applyArchivePeriodFilter()" >Apply filter</button>
+</div>
+<div *ngIf="data.isArchived===false" mat-dialog-actions class="m-0 p-16" fxLayoutAlign="center">
+    <button mat-stroked-button color="warn" (click)="applyRecruitePeriodFilter()" >Apply filter</button>
+</div>

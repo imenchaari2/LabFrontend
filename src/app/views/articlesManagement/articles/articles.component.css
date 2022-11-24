@@ -1,0 +1,12 @@
+table {
+  width: 100%;
+}
+.button-add{
+  border-radius: 20px;
+  background-color: rgba(179, 189, 189, 0.29);
+  color: #001844;
+  font-size: 15px;
+}
+.filter-button {
+  height: 55px;
+}

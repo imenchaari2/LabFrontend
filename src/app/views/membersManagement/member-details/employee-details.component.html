@@ -1,0 +1,124 @@
+<h1 matDialogTitle style="color: #d81b60">{{data.title}}</h1>
+<div fxLayout="row wrap">
+    <div fxFlex="100" fxFlex.gt-sm="66.67" fxFlex.sm="50"
+         [@animate]="{value:'*',params:{delay:'400ms',scale:'.9'}}">
+        <mat-card class="user-card p-0">
+            <mat-card-title>
+                <div  *ngIf="imageUrl != undefined" class="card-title-text">
+                    <a href="" class="toolbar-avatar md mr-16">
+                        <img src="{{imageUrl}}" alt=""></a>
+                    <span class="text-blue font-weight-bold">{{data.payload.information.firstName +" " + data.payload.information.lastName }}</span>
+                    <span fxFlex></span>
+                </div>
+                <div  *ngIf="imageUrl === undefined" class="card-title-text">
+                    <a href="" class="toolbar-avatar md mr-16">
+                        <img src="assets/images/user.jfif" alt=""></a>
+                    <span class="text-blue font-weight-bold">{{data.payload.information.firstName +" " + data.payload.information.lastName }}</span>
+                    <span fxFlex></span>
+                </div>
+                <mat-divider></mat-divider>
+            </mat-card-title>
+            <mat-card-content>
+                <!-- user detail lines-->
+                <div class="user-details">
+<!--                    <p><mat-icon class="text-muted">settings</mat-icon>{{data.payload.dapartment}} </p>-->
+                    <p><mat-icon class="text-muted">card_membership</mat-icon>{{data.payload.information.grade}} </p>
+                    <p><mat-icon class="text-muted">email</mat-icon>{{data.payload.information.email}}</p>
+                    <p><mat-icon class="text-muted">phone</mat-icon>{{data.payload.information.phone}}</p>
+                    <p><mat-icon class="text-muted">date_range</mat-icon>Member since {{data.payload.information.recruitDay}}</p>
+                    <p><mat-icon class="text-muted">location_on</mat-icon>{{data.payload.information.address.city
+                        + " , " + data.payload.information.address.street + " , " +data.payload.information.address.postalCode  }}</p>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'400ms',scale:'.9'}}">
+        <div class="m-333">
+            <mat-accordion multi="false">
+                <mat-expansion-panel expanded="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Consult leave sold
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="border-bottom pb-16 mb-16">
+                        <div fxLayout="row wrap" class="text-blue font-weight-bold">
+                            <span>Leave sold</span>
+                            <span fxFlex></span>
+                            <span>{{data.sold}}</span>
+                        </div>
+                        <div fxLayout="row wrap" class="text-muted">
+                            <small>limit exceeded ?</small>
+                            <span fxFlex></span>
+
+                            <small  class="{{textColor}}">{{limitExceeded}}</small>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div fxLayout="row wrap" class="text-blue font-weight-bold">
+                            <span>Got leave days</span>
+                            <span fxFlex></span>
+                            <span>{{data.payload.information.gotLeaveDays}}</span>
+                        </div>
+                        <div fxLayout="row wrap" class="text-muted">
+                            <small>leaves not approuved</small>
+                            <span fxFlex></span>
+                            <small class="text-red">{{notApprouved}}</small>
+                        </div>
+                        <div fxLayout="row wrap" class="text-muted">
+                            <small>total days requested</small>
+                            <span fxFlex></span>
+                            <small class="text-red">{{total}}</small>
+                        </div>
+                        <div fxLayout="row wrap" class="text-muted">
+                            <small>leaves approuved</small>
+                            <span fxFlex></span>
+                            <small class="text-red">{{Approuved}}</small>
+                        </div>
+                    </div>
+
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Consult authorization
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="border-bottom pb-16 mb-16">
+                        <div fxLayout="row wrap" class="text-blue font-weight-bold">
+                            <span>Approved</span>
+                            <span fxFlex></span>
+                            <span>{{approved_authorization}}</span>
+                        </div>
+                        <div fxLayout="row wrap" class="text-muted">
+                            <small>total duration</small>
+                            <span fxFlex></span>
+                            <small class="text-red">{{duration_APP}}</small>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div fxLayout="row wrap" class="text-blue font-weight-bold">
+                            <span>Not approved </span>
+                            <span fxFlex></span>
+                            <span>{{not_approved_authorization}}</span>
+                        </div>
+                        <div fxLayout="row wrap" class="text-muted">
+                            <small>total duration</small>
+                            <span fxFlex></span>
+                            <small class="text-green">{{duration_NotAPP}}</small>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+    </div>
+</div>
+<div >
+    <span fxFlex></span>
+    <button mat-raised-button color="warn" type="button" (click)="dialogRef.close(true)">Close</button>
+</div>
+

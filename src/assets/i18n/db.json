@@ -1,0 +1,49 @@
+{
+  "members": [
+    {
+      "id": "12345",
+      "cin": "123342",
+      "name": "imen",
+      "createdDate": "10/11/2022",
+      "cv": "lien",
+      "type": "student"
+    },
+    {
+      "id": "123456",
+      "cin": "123342",
+      "name": "nessrine",
+      "createdDate": "11/11/2022",
+      "cv": "lien",
+      "type": "student"
+    },
+    {
+      "id": "1234567",
+      "cin": "12334211",
+      "name": "yosr",
+      "createdDate": "11/11/2022",
+      "cv": "lien",
+      "type": "student"
+    }
+  ],
+  "articles": [
+    {
+      "id": "12345678948556",
+      "title": "article1",
+      "date": "Fri Oct 14 2022 00:00:00 GMT+0100 (heure normale d’Afrique de l’Ouest)",
+      "auteur": ""
+    },
+    {
+      "id": "12345678987/7*",
+      "title": "article2",
+      "date": "Fri Oct 14 2022 00:00:00 GMT+0100 (heure normale d’Afrique de l’Ouest)",
+      "auteur": ""
+    },
+    {
+      "id": "1234567894789",
+      "title": "article3",
+      "date": "Fri Oct 14 2022 00:00:00 GMT+0100 (heure normale d’Afrique de l’Ouest)",
+      "auteur": ""
+    }
+
+  ]
+}
