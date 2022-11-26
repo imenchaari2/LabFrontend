@@ -8,8 +8,7 @@ import {Member} from '../../../shared/models/member';
 import {AddStudentComponent} from '../add-student/add-student.component';
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
-import {FilterByRecruitDayPeriodComponent} from "../filterDate/filterByRecruitDayPeriod.component";
-
+import {FilterByCreatedDatePeriodComponent} from "../filterDate/filterByCreatedDatePeriod.component";
 @Component({
     selector: 'app-students',
     templateUrl: './students.component.html',
@@ -147,7 +146,7 @@ export class StudentsComponent implements OnInit {
     }
     openDialog(): void {
         const isArchived = false;
-        const dialogRef = this.dialog.open(FilterByRecruitDayPeriodComponent, {
+        const dialogRef = this.dialog.open(FilterByCreatedDatePeriodComponent, {
             width: '600px',
             data: {isArchived}
 

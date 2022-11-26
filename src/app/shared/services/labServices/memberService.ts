@@ -59,7 +59,7 @@ export class MemberService {
     }
 
     public getMemberById(id: string): Observable<any> {
-        return this.http.get(`${this.apiUrl}/find/${id}`);
+        return this.http.get(`${this.apiUrl}/member/${id}`);
     }
 
     public addStudent(student: Student): Observable<Student> {

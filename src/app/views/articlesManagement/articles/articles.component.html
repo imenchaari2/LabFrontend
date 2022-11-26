@@ -16,13 +16,21 @@
         >
     </mat-form-field>
     <mat-form-field class=" pr-16" appearance="outline">
-        <input
-                matInput
-                placeholder="filter by Author"
-                value=""
-                (keyup)='filterBySearchField($event)'
-        >
-    </mat-form-field>
+    <input
+           placeholder="filter by Author"
+           value=""
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto"
+           (keyup)="filterByAuthorName($event)"
+    >
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let supervisor of filteredOptions | async" [value]="supervisor">
+            {{supervisor}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
 
 
 
@@ -54,11 +62,12 @@
                 </ngx-datatable-column>
                 <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
                     <ng-template ngx-datatable-cell-template let-row="row">
+
                     <span>
 
                         <button mat-icon-button mat-sm-button class="mr-8" style="color: green" (click)="openPopUp(row,false)"
                                 ><mat-icon>edit</mat-icon></button>
-                              <button mat-icon-button color="warn"><mat-icon>add_task</mat-icon></button>
+                              <button mat-icon-button color="warn" (click)="affect(row)"><mat-icon>add_task</mat-icon></button>
 
                         <button mat-icon-button mat-sm-button color="warn" (click)="deleteItem(row.title, row.articleId)"><mat-icon>delete</mat-icon></button>
 
@@ -66,6 +75,7 @@
                     </ng-template>
                 </ngx-datatable-column>
             </ng-container>
+
         </ngx-datatable>
     </div>
 </mat-card>

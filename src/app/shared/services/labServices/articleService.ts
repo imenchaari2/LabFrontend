@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Article} from "../../models/article";
 import {GLOBAL} from "../../../app-config";
 import {Observable} from "rxjs";
+import {Student} from "../../models/Student";
 
 
 @Injectable({
@@ -63,7 +64,15 @@ export class ArticleService {
   public addArticle(article: Article): Observable<Article> {
     return this.http.post<Article>(`${this.apiUrl}/addArticle`, article);
   }
-
+  public findArticleBySearch(title: string, type: string): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.apiUrl}/findArticleBySearch?title=${title}&type=${type}`);
+  }
+  public findArticleByAuthorName(name: string): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.apiUrl}/articlesByAuthorName?name=${name}`);
+  }
+  public findArticleByCreatedDatePeriod(createdDateGT: Date, createdDateLT: Date): Observable<Article[]> {
+    return this.http.get<Article[]>(`${this.apiUrl}/findByCreatedDatePeriod?createdDateGT=${createdDateGT}&createdDateLT=${createdDateLT}`);
+  }
   public updateArticle(article: Article , id: string): Observable<Article> {
     return this.http.put<Article>(`${this.apiUrl}/updateArticle/${id}`, article);
   }

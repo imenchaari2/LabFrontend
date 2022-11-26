@@ -1,0 +1,65 @@
+<!--<h1 mat-dialog-title>{{title}}</h1>-->
+<!--<div mat-dialog-content>-->
+<!--  {{message}}</div>-->
+<!--<div>-->
+
+<!--</div>-->
+<!--<div mat-dialog-actions>-->
+<!--  <button mat-button mat-dialog-close>{{cancel}}</button>-->
+<!--  <button mat-button (click)="onSubmit()" cdkFocusInitial color="warn">{{confirm}}</button>-->
+<!--</div>-->
+<!--<div class="event-dialog-wrapper">-->
+<!--  <mat-toolbar matDialogTitle class="mat-primary m-0">-->
+<!--    <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">-->
+<!--      <span class="title dialog-title">{{dialogTitle}}</span>-->
+<!--      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">-->
+<!--        <mat-icon>close</mat-icon>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </mat-toolbar>-->
+
+
+<div class="p-16 m-0">
+
+  <div fxLayoutAlign="space-between center">
+    <div>
+      <h2 class="green-300-fg">Affect author to {{article}}</h2>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+
+  <div mat-dialog-content class="p-16 m-0">
+
+
+        <div fxFlex="90">
+          <mat-select placeholder="Select your author"
+                      matInput
+                      [(ngModel)]="author"
+          >
+            <div>
+              <mat-option *ngFor="let auteur of authors" [value]="auteur">
+                {{auteur.firstName}} {{auteur.lastName}}
+              </mat-option>
+            </div>
+          </mat-select>
+
+        </div>
+
+  </div>
+
+  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="center">
+
+    <button
+            mat-stroked-button
+            color="warn"
+            (click)="onSubmit()"
+    >
+      affect
+    </button>
+
+
+  </div>
+</div>

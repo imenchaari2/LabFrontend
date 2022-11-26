@@ -33,7 +33,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {FlexModule} from "@angular/flex-layout";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AddArticleComponent} from "./views/articlesManagement/add-article/add-article.component";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {TeachersComponent} from "./views/membersManagement/teachers/teachers.component";
@@ -44,10 +44,14 @@ import {CalendarCommonModule, CalendarModule, DateAdapter} from "angular-calenda
 import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {
-    FilterByRecruitDayPeriodComponent
-} from './views/membersManagement/filterDate/filterByRecruitDayPeriod.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatSelectModule} from "@angular/material/select";
+import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {SelectAuteurComponent} from "./views/articlesManagement/affect-Author/select-auteur.component";
+import { FilterByCreatedDatePeriodComponent } from './views/membersManagement/filterDate/filterByCreatedDatePeriod.component';
+import { SharedPipesModule } from './shared/pipes/shared-pipes.module';
+import { DatePipe } from '@angular/common';
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient);
 }
@@ -84,11 +88,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         FlexModule,
         ReactiveFormsModule,
         MatDatepickerModule,
-
+        SharedPipesModule,
         MatDividerModule,
         MatTooltipModule,
         CalendarCommonModule,
         MatDialogModule,
+        MatSelectModule,
+        NgxMatSelectSearchModule,
+        MatAutocompleteModule,
+        FormsModule,
     ],
     declarations: [
         AppComponent,
@@ -99,7 +107,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         AddStudentComponent,
         AddTeacherComponent,
         AddArticleComponent,
-        FilterByRecruitDayPeriodComponent
+        FilterByCreatedDatePeriodComponent,
+        SelectAuteurComponent
     ],
     providers: [
         {provide: ErrorHandler, useClass: ErrorHandlerService},
@@ -111,6 +120,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
             useClass: TokenInterceptor,
             multi: true,
         },
+        DatePipe
     ],
     bootstrap: [AppComponent]
 })

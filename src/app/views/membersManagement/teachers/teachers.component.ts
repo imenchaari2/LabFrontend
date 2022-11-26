@@ -7,10 +7,8 @@ import {AppLoaderService} from "../../../shared/services/app-loader/app-loader.s
 import {MemberService} from "../../../shared/services/labServices/memberService";
 import {Member} from "../../../shared/models/member";
 import {AddTeacherComponent} from "../add-Teacher/add-teacher.component";
-import {AddStudentComponent} from "../add-student/add-student.component";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
-import {FilterByRecruitDayPeriodComponent} from "../filterDate/filterByRecruitDayPeriod.component";
 
 @Component({
     selector: 'app-teachers',
