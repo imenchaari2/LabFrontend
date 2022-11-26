@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Member} from 'app/shared/models/member';
 import {MemberService} from 'app/shared/services/labServices/memberService';
+import {Teacher} from "../../../shared/models/Teacher";
 
 @Component({
     selector: 'app-select-auteur',
@@ -13,19 +14,31 @@ import {MemberService} from 'app/shared/services/labServices/memberService';
 export class SelectAuteurComponent implements OnInit {
 
     authors: Member[];
+    supervisors: Teacher[];
     author: string;
+    supervisor: string;
     article = '';
+    student = '';
 
     constructor(private memberService: MemberService,
                 private matDialog: MatDialog,
                 public dialogRef: MatDialogRef<SelectAuteurComponent>,
-                @Inject(MAT_DIALOG_DATA) private data: any) {
-        this.article = this.data.payload.title;
+                @Inject(MAT_DIALOG_DATA) public data: any) {
+        if (data.isStudent === false) {
+            this.article = this.data.payload.title;
+        }
+        else {
+            this.student = this.data.payload.firstName +" "+this.data.payload.lastName
+        }
 
     }
 
     ngOnInit(): void {
-        this.getListAuthors();
+        if (this.data.isStudent === false) {
+            this.getListAuthors();
+        } else {
+            this.getListSupervisors();
+        }
     }
 
     private getListAuthors() {
@@ -35,10 +48,22 @@ export class SelectAuteurComponent implements OnInit {
             }
         });
     }
+    private getListSupervisors() {
+        this.memberService.getAllTeachers().subscribe(value => {
+            if (!!value) {
+                this.supervisors = value;
+            }
+            console.log(this.supervisors)
+        });
+    }
 
 
     onSubmit(): void {
-        this.dialogRef.close({data: this.author});
+        if (this.data.isStudent === false) {
+            this.dialogRef.close({data: this.author});
+        } else {
+            this.dialogRef.close({data: this.supervisor});
+        }
 
     }
 

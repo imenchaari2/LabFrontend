@@ -28,7 +28,7 @@
                 matInput
                 placeholder="filter by Supervisor"
                 value=""
-                (keyup)='filterBySearchField($event)'
+                (keyup)='getAllStudentsBySupervisorName($event)'
         >
     </mat-form-field>
 
@@ -65,7 +65,7 @@
                 <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
                     <ng-template ngx-datatable-cell-template let-row="row">
                     <span>
-                        <button mat-icon-button color="warn"><mat-icon>add_task</mat-icon></button>
+                        <button mat-icon-button color="warn" (click)="affect(row)"><mat-icon>add_task</mat-icon></button>
 
                         <button mat-icon-button mat-sm-button class="mr-8" style="color: green"
                                 (click)="openPopUp(row,false)"><mat-icon>edit</mat-icon></button>

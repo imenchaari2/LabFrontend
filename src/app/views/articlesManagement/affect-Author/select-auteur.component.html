@@ -1,27 +1,7 @@
-<!--<h1 mat-dialog-title>{{title}}</h1>-->
-<!--<div mat-dialog-content>-->
-<!--  {{message}}</div>-->
-<!--<div>-->
 
-<!--</div>-->
-<!--<div mat-dialog-actions>-->
-<!--  <button mat-button mat-dialog-close>{{cancel}}</button>-->
-<!--  <button mat-button (click)="onSubmit()" cdkFocusInitial color="warn">{{confirm}}</button>-->
-<!--</div>-->
-<!--<div class="event-dialog-wrapper">-->
-<!--  <mat-toolbar matDialogTitle class="mat-primary m-0">-->
-<!--    <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">-->
-<!--      <span class="title dialog-title">{{dialogTitle}}</span>-->
-<!--      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">-->
-<!--        <mat-icon>close</mat-icon>-->
-<!--      </button>-->
-<!--    </div>-->
-<!--  </mat-toolbar>-->
+<div *ngIf="data.isStudent===false" class="p-16 m-0">
 
-
-<div class="p-16 m-0">
-
-  <div fxLayoutAlign="space-between center">
+  <div  fxLayoutAlign="space-between center">
     <div>
       <h2 class="green-300-fg">Affect author to {{article}}</h2>
     </div>
@@ -57,9 +37,49 @@
             color="warn"
             (click)="onSubmit()"
     >
-      affect
+      affect author
     </button>
+  </div>
+</div>
+<div *ngIf="data.isStudent===true" class="p-16 m-0">
+
+  <div  fxLayoutAlign="space-between center">
+    <div>
+      <h2 class="green-300-fg">Affect Supervisor to {{student}}</h2>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
 
+  <div mat-dialog-content class="p-16 m-0">
+
+
+    <div fxFlex="90">
+      <mat-select placeholder="Select supervisor"
+                  matInput
+                  [(ngModel)]="supervisor"
+      >
+        <div>
+          <mat-option *ngFor="let supervisor of supervisors" [value]="supervisor">
+            {{supervisor.firstName}} {{supervisor.lastName}}
+          </mat-option>
+        </div>
+      </mat-select>
+
+    </div>
+
+  </div>
+
+  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="center">
+
+    <button
+            mat-stroked-button
+            color="warn"
+            (click)="onSubmit()"
+    >
+      affect supervisor
+    </button>
   </div>
 </div>

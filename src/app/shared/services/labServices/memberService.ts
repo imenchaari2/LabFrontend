@@ -5,6 +5,7 @@ import {GLOBAL} from "../../../app-config";
 import {Observable} from "rxjs";
 import {Student} from "../../models/Student";
 import {Teacher} from "../../models/Teacher";
+import {Article} from "../../models/article";
 
 @Injectable({
     providedIn: 'root'
@@ -73,6 +74,9 @@ export class MemberService {
     public updateTeacher(teacher: Teacher, id: string): Observable<Teacher> {
         return this.http.put<Teacher>(`${this.apiUrl}/updateTeacherResearcher/${id}`, teacher);
     }
+    public affectSupervisorToStudent(student: Student, idSupervisor: string): Observable<any> {
+        return this.http.put(`${this.apiUrl}/affectSupervisorToStudent/${idSupervisor}`, student);
+    }
 
     public updateStudent(student: Student, id: string): Observable<Student> {
         return this.http.put<Student>(`${this.apiUrl}/updateStudent/${id}`, student);
@@ -80,5 +84,11 @@ export class MemberService {
 
     public deleteMember(id: string): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/deleteMember/${id}`);
+    }
+    public getAllStudentsBySupervisorName(name: string): Observable<Student[]> {
+        return this.http.get<Student[]>(`${this.apiUrl}/studentsBySupervisorName?name=${name}`);
+    }
+    public findStudentByInscriptionDateBetween(inscriptionDateGT: Date, inscriptionDateLT: Date): Observable<Student[]> {
+        return this.http.get<Student[]>(`${this.apiUrl}/findByInscriptionDatePeriod?inscriptionDateGT=${inscriptionDateGT}&inscriptionDateLT=${inscriptionDateLT}`);
     }
 }

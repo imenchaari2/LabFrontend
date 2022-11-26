@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DatePipe, formatDate} from '@angular/common';
 import {ArticleService} from "../../../shared/services/labServices/articleService";
+import {MemberService} from "../../../shared/services/labServices/memberService";
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -14,20 +15,21 @@ export class FilterByCreatedDatePeriodComponent {
 
     basicForm: FormGroup;
     myDatepipe!: any;
-    isArchived = false;
+    isStudent = false;
 
     constructor(private formBuilder: FormBuilder,
                 datepipe: DatePipe,
                 public dialogRef: MatDialogRef<FilterByCreatedDatePeriodComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any,
-                private articleService: ArticleService
+                private articleService: ArticleService,
+                private memberService: MemberService,
     ) {
         this.myDatepipe = datepipe;
         this.basicForm = this.formBuilder.group({
             createdDateGT: new FormControl('', [Validators.required]),
             createdDateLT: new FormControl('', [Validators.required]),
-            archiveDayGT: new FormControl('', [Validators.required]),
-            archiveDayLT: new FormControl('', [Validators.required]),
+            inscriptionDateGT: new FormControl('', [Validators.required]),
+            inscriptionDateLT: new FormControl('', [Validators.required]),
         });
 
     }
@@ -42,16 +44,16 @@ export class FilterByCreatedDatePeriodComponent {
             }
         });
     }
-    // applyArchivePeriodFilter() {
-    //     const ConvertedArchiveDayGT = this.myDatepipe.transform(this.basicForm.value.archiveDayGT, 'yyyy-MM-dd');
-    //     const ConvertedArchiveDayLT = this.myDatepipe.transform(this.basicForm.value.archiveDayLT, 'yyyy-MM-dd');
-    //     // this.memberService.filterByArchivePeriod(ConvertedArchiveDayGT, ConvertedArchiveDayLT).subscribe(value => {
-    //     //     if (!!value) {
-    //     //         console.log(value);
-    //     //         this.dialogRef.close({data: value});
-    //     //     }
-    //     // });
-    // }
+    applyInscriptionDatePeriodFilter() {
+        const ConvertedInscriptionDateGT = this.myDatepipe.transform(this.basicForm.value.inscriptionDateGT, 'yyyy-MM-dd');
+        const ConvertedInscriptionDateLT = this.myDatepipe.transform(this.basicForm.value.inscriptionDateLT, 'yyyy-MM-dd');
+        this.memberService.findStudentByInscriptionDateBetween(ConvertedInscriptionDateGT, ConvertedInscriptionDateLT).subscribe(value => {
+            if (!!value) {
+                console.log(value);
+                this.dialogRef.close({data: value});
+            }
+        });
+    }
 
     close(): void {
         this.dialogRef.close();

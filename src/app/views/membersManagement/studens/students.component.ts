@@ -9,6 +9,10 @@ import {AddStudentComponent} from '../add-student/add-student.component';
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {FilterByCreatedDatePeriodComponent} from "../filterDate/filterByCreatedDatePeriod.component";
+import {Article} from "../../../shared/models/article";
+import {SelectAuteurComponent} from "../../articlesManagement/affect-Author/select-auteur.component";
+import {Teacher} from "../../../shared/models/Teacher";
+import {Student} from "../../../shared/models/Student";
 @Component({
     selector: 'app-students',
     templateUrl: './students.component.html',
@@ -55,7 +59,7 @@ export class StudentsComponent implements OnInit {
             name: 'Diploma'
         },
         {
-            prop: 'supervisor.firstName',
+            prop: 'supervisor.fullName',
             name: 'Supervisor'
         },
         {
@@ -70,20 +74,18 @@ export class StudentsComponent implements OnInit {
     lastName = '';
     diploma = '';
     cin = '';
+    supervisor = '';
 
     constructor(private memberService: MemberService,
                 private dialog: MatDialog,
                 private _snackBar: MatSnackBar,
                 private confirmService: AppConfirmService,
-                private loader: AppLoaderService,
-                private router: Router,
-                private ngZone: NgZone,) {
+                private loader: AppLoaderService) {
     }
 
     ngOnInit(): void {
         this.getListStudents();
     }
-
     private getListStudents() {
         this.memberService.getAllStudents().subscribe(value => {
             if (!!value) {
@@ -93,7 +95,6 @@ export class StudentsComponent implements OnInit {
         });
         return this.rows;
     }
-
     openPopUp(data: any = {}, isNew?) {
         const title = isNew ? 'Add new member' : 'Update member';
         const action = isNew ? 'add' : 'edit';
@@ -145,10 +146,10 @@ export class StudentsComponent implements OnInit {
             });
     }
     openDialog(): void {
-        const isArchived = false;
+        const isStudent = true;
         const dialogRef = this.dialog.open(FilterByCreatedDatePeriodComponent, {
             width: '600px',
-            data: {isArchived}
+            data: {isStudent}
 
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -180,5 +181,41 @@ export class StudentsComponent implements OnInit {
             }
         });
         return this.rows;
+    }
+    getAllStudentsBySupervisorName(event) {
+        switch (event.target.placeholder) {
+            case 'filter by Supervisor': {
+                this.supervisor = event.target.value;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        this.memberService.getAllStudentsBySupervisorName(this.supervisor).subscribe(value => {
+            if (!!value) {
+                this.rows = this.temp = value;
+                console.log(this.rows);
+            }
+        });
+        return this.rows;
+    }
+    affect(student: Student): void {
+        const isStudent = true;
+        const dialogRef = this.dialog.open(SelectAuteurComponent, {
+            width: '450px',
+            data: {payload: student , isStudent},
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.memberService.affectSupervisorToStudent(student, result.data.id).subscribe(res => {
+                    this._snackBar.open('author affected successfully !', '', {duration: 1000});
+                    this.getListStudents();
+                    this.refresh.next();
+                });
+            }
+        });
+
     }
 }

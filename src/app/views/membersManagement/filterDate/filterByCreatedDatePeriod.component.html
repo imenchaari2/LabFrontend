@@ -6,7 +6,7 @@
         <mat-icon>close</mat-icon>
     </button>
 </div>
-<div fxLayout="row wrap" class="example-section1">
+<div  *ngIf="data.isStudent===false" fxLayout="row wrap" class="example-section1">
     <div fxFlex="90" fxFlex.gt-xs="50">
         <div style="margin-top: 19px">
             <h5>Start date</h5>
@@ -49,54 +49,54 @@
         </div>
     </div>
 </div>
-<!--<div *ngIf="data.isArchived===true" fxLayout="row wrap" class="example-section1">-->
-<!--    <div fxFlex="90" fxFlex.gt-xs="50">-->
-<!--        <div style="margin-top: 19px">-->
-<!--            <h5>Start date</h5>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <form [formGroup]="basicForm" >-->
-<!--                <mat-form-field fxFlex.gt-xs="90" appearance="outline">-->
-<!--                    <input-->
-<!--                            matInput-->
-<!--                            [matDatepicker]="startDateDP"-->
-<!--                            placeholder="Greater than"-->
-<!--                            name="archiveDayGT"-->
-<!--                            formControlName="archiveDayGT"-->
-<!--                    >-->
-<!--                    <mat-datepicker-toggle matSuffix [for]="startDateDP"></mat-datepicker-toggle>-->
-<!--                    <mat-datepicker #startDateDP></mat-datepicker>-->
+<div *ngIf="data.isStudent===true" fxLayout="row wrap" class="example-section1">
+    <div fxFlex="90" fxFlex.gt-xs="50">
+        <div style="margin-top: 19px">
+            <h5>Start date</h5>
+        </div>
+        <div>
+            <form [formGroup]="basicForm" >
+                <mat-form-field fxFlex.gt-xs="90" appearance="outline">
+                    <input
+                            matInput
+                            [matDatepicker]="startDateDP"
+                            placeholder="Greater than"
+                            name="inscriptionDateGT"
+                            formControlName="inscriptionDateGT"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="startDateDP"></mat-datepicker-toggle>
+                    <mat-datepicker #startDateDP></mat-datepicker>
 
-<!--                </mat-form-field>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div fxFlex="90" fxFlex.gt-xs="50">-->
-<!--        <div style="margin-top: 19px">-->
-<!--            <h5>End date</h5>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <form [formGroup]="basicForm" novalidate >-->
-<!--                <mat-form-field fxFlex.gt-xs="90" appearance="outline">-->
-<!--                    <input-->
-<!--                            matInput-->
-<!--                            [matDatepicker]="endDateDP"-->
-<!--                            placeholder="Less than"-->
-<!--                            name="archiveDayLT"-->
-<!--                            formControlName="archiveDayLT"-->
-<!--                    >-->
-<!--                    <mat-datepicker-toggle matSuffix [for]="endDateDP"></mat-datepicker-toggle>-->
-<!--                    <mat-datepicker #endDateDP></mat-datepicker>-->
-<!--                </mat-form-field>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+    <div fxFlex="90" fxFlex.gt-xs="50">
+        <div style="margin-top: 19px">
+            <h5>End date</h5>
+        </div>
+        <div>
+            <form [formGroup]="basicForm" novalidate >
+                <mat-form-field fxFlex.gt-xs="90" appearance="outline">
+                    <input
+                            matInput
+                            [matDatepicker]="endDateDP"
+                            placeholder="Less than"
+                            name="inscriptionDateLT"
+                            formControlName="inscriptionDateLT"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="endDateDP"></mat-datepicker-toggle>
+                    <mat-datepicker #endDateDP></mat-datepicker>
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+</div>
 
 
-<!--<div *ngIf="data.isArchived===true" mat-dialog-actions class="m-0 p-16" fxLayoutAlign="center">-->
-<!--    <button mat-stroked-button color="warn" (click)="applyArchivePeriodFilter()" >Apply filter</button>-->
-<!--</div>-->
-<div mat-dialog-actions class="m-0 p-16" fxLayoutAlign="center">
+<div *ngIf="data.isStudent===true" mat-dialog-actions class="m-0 p-16" fxLayoutAlign="center">
+    <button mat-stroked-button color="warn" (click)="applyInscriptionDatePeriodFilter()" >Apply filter</button>
+</div>
+<div  *ngIf="data.isStudent===false" mat-dialog-actions class="m-0 p-16" fxLayoutAlign="center">
     <button mat-stroked-button color="warn" (click)="applyCreatedDatePeriodFilter()" >Apply filter</button>
 </div>

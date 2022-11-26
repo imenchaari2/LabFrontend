@@ -19,7 +19,7 @@ import {SelectAuteurComponent} from '../affect-Author/select-auteur.component';
 import {Member} from "../../../shared/models/member";
 import {
     FilterByCreatedDatePeriodComponent
-} from "../../membersManagement/filterDate/filterByCreatedDatePeriod.component";
+} from '../../membersManagement/filterDate/filterByCreatedDatePeriod.component';
 
 @Component({
     selector: 'app-articles',
@@ -134,14 +134,14 @@ export class ArticlesComponent implements OnInit {
                     console.log(article)
                     this.articleService.addArticle(article).subscribe(async () => {
                         this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
-                        this.getListArticles();
+                        await this.getListArticles();
                         this.refresh.next();
 
                     });
                 } else {
                     this.articleService.updateArticle(article, article.articleId).subscribe(async () => {
                         this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
-                        this.getListArticles();
+                        await this.getListArticles();
                         this.refresh.next();
                     });
                 }
@@ -149,13 +149,13 @@ export class ArticlesComponent implements OnInit {
     }
 
     affect(article: Article): void {
+        const isStudent = false;
         const dialogRef = this.dialog.open(SelectAuteurComponent, {
             width: '450px',
-            data: {payload: article},
+            data: {payload: article , isStudent},
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result.data)
             if (result) {
                 article.authorId = result.data.id;
                 this.articleService.updateArticle(article, article.articleId).subscribe(res => {
@@ -182,10 +182,10 @@ export class ArticlesComponent implements OnInit {
     }
 
     openDialog(): void {
-        const isArchived = false;
+        const isStudent = false;
         const dialogRef = this.dialog.open(FilterByCreatedDatePeriodComponent, {
             width: '600px',
-            data: {isArchived}
+            data: {isStudent}
 
         });
         dialogRef.afterClosed().subscribe(result => {
