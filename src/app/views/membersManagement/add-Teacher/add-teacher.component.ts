@@ -10,6 +10,7 @@ import {
 } from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Member} from "../../../shared/models/member";
+import {FileUploader} from "ng2-file-upload";
 
 
 @Component({
@@ -19,7 +20,7 @@ import {Member} from "../../../shared/models/member";
 })
 
 export class AddTeacherComponent {
-
+    public uploader: FileUploader = new FileUploader({ url: 'upload_url' });
     member!: Member;
     basicForm: FormGroup;
     minFromDate = '1980-01-01';

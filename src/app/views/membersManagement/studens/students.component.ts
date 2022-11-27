@@ -6,13 +6,16 @@ import {AppLoaderService} from '../../../shared/services/app-loader/app-loader.s
 import {MemberService} from '../../../shared/services/labServices/memberService';
 import {Member} from '../../../shared/models/member';
 import {AddStudentComponent} from '../add-student/add-student.component';
-import {Router} from "@angular/router";
-import {Subject} from "rxjs";
-import {FilterByCreatedDatePeriodComponent} from "../filterDate/filterByCreatedDatePeriod.component";
-import {Article} from "../../../shared/models/article";
-import {SelectAuteurComponent} from "../../articlesManagement/affect-Author/select-auteur.component";
-import {Teacher} from "../../../shared/models/Teacher";
-import {Student} from "../../../shared/models/Student";
+import {Router} from '@angular/router';
+import {Subject} from 'rxjs';
+import {FilterByCreatedDatePeriodComponent} from '../filterDate/filterByCreatedDatePeriod.component';
+import {Article} from '../../../shared/models/article';
+import {SelectAuteurComponent} from '../../articlesManagement/affect-Author/select-auteur.component';
+import {Teacher} from '../../../shared/models/Teacher';
+import {Student} from '../../../shared/models/Student';
+import {HttpErrorResponse} from "@angular/common/http";
+import {DatePipe} from "@angular/common";
+
 @Component({
     selector: 'app-students',
     templateUrl: './students.component.html',
@@ -75,17 +78,22 @@ export class StudentsComponent implements OnInit {
     diploma = '';
     cin = '';
     supervisor = '';
+    myDatePipe!: any;
 
     constructor(private memberService: MemberService,
                 private dialog: MatDialog,
+                datepipe: DatePipe,
                 private _snackBar: MatSnackBar,
                 private confirmService: AppConfirmService,
                 private loader: AppLoaderService) {
+        this.myDatePipe = datepipe;
+
     }
 
     ngOnInit(): void {
         this.getListStudents();
     }
+
     private getListStudents() {
         this.memberService.getAllStudents().subscribe(value => {
             if (!!value) {
@@ -95,40 +103,7 @@ export class StudentsComponent implements OnInit {
         });
         return this.rows;
     }
-    openPopUp(data: any = {}, isNew?) {
-        const title = isNew ? 'Add new member' : 'Update member';
-        const action = isNew ? 'add' : 'edit';
 
-        const dialogRef: MatDialogRef<any> = this.dialog.open(AddStudentComponent, {
-            width: '720px',
-            disableClose: true,
-            data: {title, action, payload: data}
-        });
-        dialogRef.afterClosed()
-            .subscribe(res => {
-                const member = res.member;
-
-                if (!res) {
-                    // If user press cancel
-                    return;
-                }
-                if (isNew) {
-                    console.log(member)
-                    this.memberService.addStudent(member).subscribe(res => {
-                        this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
-                        this.getListStudents();
-                        this.refresh.next();
-
-                    });
-                } else {
-                    this.memberService.updateStudent(member, member.id).subscribe(res => {
-                        this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
-                        this.getListStudents();
-                        this.refresh.next();
-                    });
-                }
-            });
-    }
     deleteItem(row, id: string) {
         this.confirmService.confirm({message: `Delete ${row.firstName + ' ' + row.lastName}?`})
             .subscribe(result => {
@@ -145,6 +120,7 @@ export class StudentsComponent implements OnInit {
                 }
             });
     }
+
     openDialog(): void {
         const isStudent = true;
         const dialogRef = this.dialog.open(FilterByCreatedDatePeriodComponent, {
@@ -156,6 +132,7 @@ export class StudentsComponent implements OnInit {
             this.rows = result.data;
         });
     }
+
     filterBySearchField(event) {
         switch (event.target.placeholder) {
             case 'filter by Name': {
@@ -182,6 +159,7 @@ export class StudentsComponent implements OnInit {
         });
         return this.rows;
     }
+
     getAllStudentsBySupervisorName(event) {
         switch (event.target.placeholder) {
             case 'filter by Supervisor': {
@@ -200,11 +178,12 @@ export class StudentsComponent implements OnInit {
         });
         return this.rows;
     }
+
     affect(student: Student): void {
         const isStudent = true;
         const dialogRef = this.dialog.open(SelectAuteurComponent, {
             width: '450px',
-            data: {payload: student , isStudent},
+            data: {payload: student, isStudent},
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -217,5 +196,69 @@ export class StudentsComponent implements OnInit {
             }
         });
 
+    }
+    openPopUp(data: any = {}, isNew?) {
+        const title = isNew ? 'Add new member' : 'Update member';
+        const action = isNew ? 'add' : 'edit';
+
+        const dialogRef: MatDialogRef<any> = this.dialog.open(AddStudentComponent, {
+            width: '720px',
+            disableClose: true,
+            data: {title, action, payload: data}
+        });
+        dialogRef.afterClosed()
+            .subscribe(res => {
+                const member = res.member;
+                const cv = res.cv;
+                const photo = res.photo;
+                const ConvertedBirthDate = this.myDatePipe.transform(member.birthDate, 'yyyy-MM-dd');
+                const ConvertedInscriptionDate = this.myDatePipe.transform(member.inscriptionDate, 'yyyy-MM-dd');
+                member.birthDate = ConvertedBirthDate;
+                member.inscriptionDate = ConvertedInscriptionDate;
+                if (!res) {
+                    // If user press cancel
+                    return;
+                }
+                if (isNew) {
+                    this.memberService.addStudent(member, cv, photo).subscribe(res => {
+                        this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
+                        this.getListStudents();
+                        this.refresh.next();
+
+                    });
+                } else {
+                    this.memberService.updateStudent(member, member.id,cv, photo).subscribe(res => {
+                        this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
+                        this.getListStudents();
+                        this.refresh.next();
+                    });
+                }
+            });
+    }
+    onUploadFiles(files: File[], id: string): void {
+        const formData = new FormData();
+        for (const file of files) {
+            formData.append('file', file, file.name);
+        }
+        this.memberService.upload(id, formData).subscribe(
+            event => {
+                console.log(event);
+            },
+            (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        );
+    }
+
+    onDownloadFile(filename: string): void {
+        this.memberService.download(filename).subscribe(
+            event => {
+                console.log(event);
+                // this.resportProgress(event);
+            },
+            (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        );
     }
 }

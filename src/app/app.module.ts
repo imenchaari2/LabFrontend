@@ -52,6 +52,7 @@ import {SelectAuteurComponent} from "./views/articlesManagement/affect-Author/se
 import { FilterByCreatedDatePeriodComponent } from './views/membersManagement/filterDate/filterByCreatedDatePeriod.component';
 import { SharedPipesModule } from './shared/pipes/shared-pipes.module';
 import { DatePipe } from '@angular/common';
+import {FileUploadModule} from "ng2-file-upload";
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient);
 }
@@ -97,6 +98,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         NgxMatSelectSearchModule,
         MatAutocompleteModule,
         FormsModule,
+        FileUploadModule,
     ],
     declarations: [
         AppComponent,

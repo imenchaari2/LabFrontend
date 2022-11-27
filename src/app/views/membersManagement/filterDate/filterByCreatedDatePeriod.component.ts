@@ -46,6 +46,8 @@ export class FilterByCreatedDatePeriodComponent {
     }
     applyInscriptionDatePeriodFilter() {
         const ConvertedInscriptionDateGT = this.myDatepipe.transform(this.basicForm.value.inscriptionDateGT, 'yyyy-MM-dd');
+        console.log(this.basicForm.value.inscriptionDateGT)
+        console.log(ConvertedInscriptionDateGT)
         const ConvertedInscriptionDateLT = this.myDatepipe.transform(this.basicForm.value.inscriptionDateLT, 'yyyy-MM-dd');
         this.memberService.findStudentByInscriptionDateBetween(ConvertedInscriptionDateGT, ConvertedInscriptionDateLT).subscribe(value => {
             if (!!value) {

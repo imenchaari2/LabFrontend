@@ -9,6 +9,7 @@ import {Member} from "../../../shared/models/member";
 import {AddTeacherComponent} from "../add-Teacher/add-teacher.component";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
+import {FileUploader} from "ng2-file-upload";
 
 @Component({
     selector: 'app-teachers',

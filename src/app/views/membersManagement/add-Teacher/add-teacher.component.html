@@ -138,7 +138,10 @@
                                             formControlName="cv"
                                             placeholder="cv"
                                             value=""
+                                            type="file" ng2FileSelect
+                                            [uploader]="uploader"
                                     >
+
                                 </mat-form-field>
                                 <small
                                         *ngIf="basicForm.controls['cv'].hasError('required') && basicForm.controls['cv'].touched"
@@ -177,7 +180,7 @@
 
 <div style="margin-top:10px ">
     <span fxFlex></span>
-    <button mat-raised-button color="primary" type="button"
+    <button mat-strocked-button color="warn" type="button"
             (click)="dialogRef.close({action: 'save', member: basicForm.value})"
             [disabled]="basicForm.invalid"
     >{{buttonTitle}}</button>
