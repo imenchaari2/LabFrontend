@@ -26,6 +26,10 @@ export class StudentsComponent implements OnInit {
     temp = [];
     columns = [
         {
+            prop: 'data:image/jpeg;base64,',
+            name: 'Photo'
+        },
+        {
             prop: 'firstName',
             name: 'First Name'
         },
@@ -79,7 +83,9 @@ export class StudentsComponent implements OnInit {
     cin = '';
     supervisor = '';
     myDatePipe!: any;
-
+    retrievedImage: any [] = [];
+    base64Data: any;
+    image: any;
     constructor(private memberService: MemberService,
                 private dialog: MatDialog,
                 datepipe: DatePipe,
@@ -93,6 +99,7 @@ export class StudentsComponent implements OnInit {
     ngOnInit(): void {
         this.getListStudents();
     }
+
 
     private getListStudents() {
         this.memberService.getAllStudents().subscribe(value => {
@@ -234,20 +241,6 @@ export class StudentsComponent implements OnInit {
                     });
                 }
             });
-    }
-    onUploadFiles(files: File[], id: string): void {
-        const formData = new FormData();
-        for (const file of files) {
-            formData.append('file', file, file.name);
-        }
-        this.memberService.upload(id, formData).subscribe(
-            event => {
-                console.log(event);
-            },
-            (error: HttpErrorResponse) => {
-                console.log(error);
-            }
-        );
     }
 
     onDownloadFile(filename: string): void {

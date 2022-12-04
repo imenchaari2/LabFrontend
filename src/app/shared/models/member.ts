@@ -1,5 +1,6 @@
 import {Article} from "./article";
 import {Tool} from "./tool";
+import {File} from "./File";
 
 export class Member {
     id: string;
@@ -8,12 +9,12 @@ export class Member {
     lastName: string;
     createdDate: string;
     cv: string;
-    photo: string;
+    photo: File;
     type: string;
     email: string;
     password: string;
     birthDate: string;
-
+    role: string;
     articles: Article[];
     events: Event[];
     tools: Tool[];

@@ -11,9 +11,9 @@
             fxFlex="100"
             fxFlex.gt-sm="99.99"
             fxFlex.sm="99.99"
+            class="p-16 "
     >
-        <mat-card class="p-0 ">
-            <mat-card-content>
+
                 <form enctype="multipart/form-data" [formGroup]="basicForm">
                     <div fxLayout="row wrap">
                         <div fxFlex="100" fxFlex.gt-xs="33.33" class="pr-16">
@@ -59,12 +59,18 @@
                                 </mat-form-field>
                                 <mat-datepicker #appDatepicker></mat-datepicker>
                             </div>
-                            <div class="mb-16">
-                                <p>Upload a profile picture</p>
-                                <input
-                                        type="file"
-                                        (change)="selectPhotoFile($event)"
-                                >
+
+                            <div>
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-select placeholder="role"
+                                                name="role"
+                                                formControlName="role"
+                                    >
+                                        <mat-option *ngFor="let r of roles" [value]="r.role">
+                                            {{ r.role }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
 
                         </div>
@@ -125,7 +131,10 @@
                                 >
                             </div>
 
+
                         </div>
+
+
                         <div fxFlex="100" fxFlex.gt-xs="33.33" class="pr-16">
                             <div>
                                 <mat-form-field class="full-width" appearance="outline">
@@ -150,8 +159,8 @@
                                             matInput
                                             formControlName="password"
                                             placeholder="Password"
-                                            [value]="randomPass"
-                                            (keypress)="randomPassword(15)">
+                                            [value]=""
+                                          >
 
                                     <mat-icon matSuffix color="primary" class="mr-8"
                                               (click)="password()">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -181,6 +190,13 @@
                                         class="form-error-msg"> Password mismatch </small>
 
                             </div>
+                            <div class="mb-16">
+                                <p>Upload a profile picture</p>
+                                <input
+                                        type="file"
+                                        (change)="selectPhotoFile($event)"
+                                >
+                            </div>
 
 
 
@@ -189,8 +205,7 @@
                         </div>
                     </div>
                 </form>
-            </mat-card-content>
-        </mat-card>
+
     </div>
 </div>
 

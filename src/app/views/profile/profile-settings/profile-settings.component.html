@@ -50,10 +50,12 @@
       </mat-card-content>
     </mat-tab>
     <mat-tab label="Profile Picture">
-      <mat-card-content>
+      <mat-card-content  class="mt-16">
         <div class="mb-16 mt-16">
           <p>Upload a profile picture</p>
-          <input type="file" ng2FileSelect [uploader]="uploader" />
+          <input type="file"
+                 (change)="selectPhotoFile($event)"
+                 ng2FileSelect [uploader]="uploader" />
         </div>
 
         <div class="mb-16">
@@ -96,18 +98,18 @@
                     <mat-icon *ngIf="item.isError" color="warn">error</mat-icon>
                 </td>
                 <td nowrap>
-                    <button 
+                    <button
                     mat-raised-button
                     class="mat-primary"
-                    (click)="item.upload()"
+                    (click)="updatePhoto(member.id,member.photo.id,selectedPhotoFile)"
                     [disabled]="item.isReady || item.isUploading || item.isSuccess">Upload</button>
-                    <button 
+                    <button
                     mat-raised-button
                     class="mat-accent"
                     (click)="item.cancel()"
                     [disabled]="!item.isUploading">Cancel</button>
 
-                    <button 
+                    <button
                     mat-raised-button
                     class="mat-warn"
                     (click)="item.remove()">Remove</button>

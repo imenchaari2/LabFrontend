@@ -46,6 +46,12 @@ export class NavigationService {
             ]
         },
         {
+            name: 'Profile',
+            type: 'link',
+            icon: 'profile',
+            state: 'profile'
+        },
+        {
             name: 'Members',
             type: 'dropDown',
             icon: 'people_outline',
@@ -133,6 +139,12 @@ export class NavigationService {
             state: 'dashboard'
         },
         {
+            name: 'Profile',
+            type: 'link',
+            icon: 'profile',
+            state: 'profile'
+        },
+        {
             name: 'Members',
             type: 'dropDown',
             icon: 'people_outline',
@@ -185,6 +197,12 @@ export class NavigationService {
             tooltip: 'Dashboard',
             icon: 'dashboard',
             state: 'dashboard'
+        },
+        {
+            name: 'Profile',
+            type: 'link',
+            icon: 'profile',
+            state: 'profile'
         },
         {
             name: 'Members',

@@ -40,6 +40,11 @@ export class AddStudentComponent {
     buttonTitle: string;
     selectedCvFile: File;
     selectedPhotoFile: File;
+    roles = [
+        {role: 'teacher'},
+        {role: 'student'}
+    ];
+
     constructor(private formBuilder: UntypedFormBuilder,
                 public dialogRef: MatDialogRef<AddStudentComponent>,
                 @Inject(MAT_DIALOG_DATA) private data: any,
@@ -60,15 +65,6 @@ export class AddStudentComponent {
         this.show = !this.show;
     }
 
-    randomPassword(length) {
-        const chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890';
-        let pass = '';
-        for (let x = 0; x < length; x++) {
-            const i = Math.floor(Math.random() * chars.length);
-            pass += chars.charAt(i);
-        }
-        this.randomPass = pass;
-    }
 
     buildStudentForm() {
         console.log(this.data);
@@ -79,6 +75,7 @@ export class AddStudentComponent {
             firstName: new UntypedFormControl(!!this.data?.payload?.firstName ? this.data?.payload?.firstName : ''),
             lastName: new UntypedFormControl(!!this.data?.payload?.lastName ? this.data?.payload?.lastName : ''),
             cin: new UntypedFormControl(!!this.data?.payload?.cin ? this.data?.payload?.cin : ''),
+            role: new UntypedFormControl(!!this.data?.payload?.role ? this.data?.payload?.role : ''),
             email: new UntypedFormControl(!!this.data?.payload?.email ? this.data?.payload?.email : ''),
             birthDate: new UntypedFormControl(!!this.data?.payload?.birthDate ? this.data?.payload?.birthDate : ''),
             diploma: new UntypedFormControl(!!this.data?.payload?.diploma ? this.data?.payload?.diploma : ''),

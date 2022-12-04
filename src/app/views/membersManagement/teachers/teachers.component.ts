@@ -10,6 +10,7 @@ import {AddTeacherComponent} from "../add-Teacher/add-teacher.component";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
 import {FileUploader} from "ng2-file-upload";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
     selector: 'app-teachers',
@@ -177,5 +178,16 @@ export class TeachersComponent implements OnInit {
             }
         });
         return this.rows;
+    }
+    onDownloadFile(filename: string): void {
+        this.memberService.download(filename).subscribe(
+            event => {
+                console.log(event);
+                // this.resportProgress(event);
+            },
+            (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        );
     }
 }

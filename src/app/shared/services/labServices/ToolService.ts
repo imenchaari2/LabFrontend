@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {Tool} from "../../models/tool";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
-export class MemberService {
+export class ToolService {
 
-    private apiUrl = `http://localhost:8083/api/tool`;
+    private apiUrl = `${environment.apiURL}/tool`;
 
     constructor(private http: HttpClient) {
     }

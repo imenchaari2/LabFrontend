@@ -18,3 +18,8 @@ table {
 .filter-button {
   height: 55px;
 }
+.image{
+  width: 50%;
+  height: auto;
+  border-radius: 50%;
+}

@@ -11,6 +11,7 @@ import {
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Member} from "../../../shared/models/member";
 import {FileUploader} from "ng2-file-upload";
+import {CustomValidators} from "ngx-custom-validators";
 
 
 @Component({
@@ -31,6 +32,12 @@ export class AddTeacherComponent {
     action: string;
     dialogTitle: string;
     buttonTitle: string;
+    roles = [
+        {role: 'teacher'},
+        {role: 'student'}
+    ];
+    selectedCvFile: File;
+    selectedPhotoFile: File;
     constructor(private formBuilder: UntypedFormBuilder,
                 public dialogRef: MatDialogRef<AddTeacherComponent>,
                 @Inject(MAT_DIALOG_DATA) private data: any,
@@ -51,30 +58,30 @@ export class AddTeacherComponent {
         this.show = !this.show;
     }
 
-    randomPassword(length) {
-        const chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890';
-        let pass = '';
-        for (let x = 0; x < length; x++) {
-            const i = Math.floor(Math.random() * chars.length);
-            pass += chars.charAt(i);
-        }
-        this.randomPass = pass;
-    }
-
     buildTeacherForm() {
         console.log(this.data)
+        const password = new UntypedFormControl(!!this.data?.payload?.password ? this.data?.payload?.password : '');
+        const confirmPassword = new UntypedFormControl(!!this.data?.payload?.password ? this.data?.payload?.password : '', CustomValidators.equalTo(password));
         return new UntypedFormGroup({
             id: new UntypedFormControl(!!this.data?.payload?.id ? this.data?.payload?.id : ''),
             firstName: new UntypedFormControl(!!this.data?.payload?.firstName ? this.data?.payload?.firstName : ''),
             lastName: new UntypedFormControl(!!this.data?.payload?.lastName ? this.data?.payload?.lastName : ''),
             cin: new UntypedFormControl(!!this.data?.payload?.cin ? this.data?.payload?.cin : ''),
             email: new UntypedFormControl(!!this.data?.payload?.email ? this.data?.payload?.email : ''),
-            password: new UntypedFormControl(!!this.data?.payload?.password ? this.data?.payload?.password : ''),
             birthDate: new UntypedFormControl(!!this.data?.payload?.birthDate ? this.data?.payload?.birthDate : ''),
             grade: new UntypedFormControl(!!this.data?.payload?.grade ? this.data?.payload?.grade : ''),
             etablishment: new UntypedFormControl(!!this.data?.payload?.etablishment ? this.data?.payload?.etablishment : ''),
-            cv: new UntypedFormControl(!!this.data?.payload?.cv ? this.data?.payload?.cv : ''),
+            role: new UntypedFormControl(!!this.data?.payload?.role ? this.data?.payload?.role : ''),
+            password,
+            confirmPassword,
         });
     }
-
+    selectCVFile(event) {
+        this.selectedCvFile = event.target.files[0];
+        console.log(this.selectedCvFile);
+    }
+    selectPhotoFile(event) {
+        this.selectedPhotoFile = event.target.files[0];
+        console.log(this.selectedPhotoFile);
+    }
 }

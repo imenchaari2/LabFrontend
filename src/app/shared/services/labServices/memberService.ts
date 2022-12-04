@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Member} from "../../models/member";
-import {GLOBAL} from "../../../app-config";
 import {Observable} from "rxjs";
 import {Student} from "../../models/Student";
 import {Teacher} from "../../models/Teacher";
 import {Article} from "../../models/article";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class MemberService {
 
-    private apiUrl = `http://localhost:8081/api/member`;
+    private apiUrl = `${environment.apiURL}/member`;
 
     constructor(private http: HttpClient) {
     }
@@ -64,6 +64,9 @@ export class MemberService {
     public getMemberById(id: string): Observable<any> {
         return this.http.get(`${this.apiUrl}/member/${id}`);
     }
+    public getMemberPhoto(imageName: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}/get/${imageName}`);
+    }
 
     public addStudent(student: Student, cv: File, photo: File): Observable<any> {
         const formData = new FormData();
@@ -83,11 +86,11 @@ export class MemberService {
         formData.append('photoFile', photo);
         return this.http.put<Student>(`${this.apiUrl}/updateStudent/${id}`, formData);
     }
-    upload(id: string, formData: FormData): Observable<any> {
-        return this.http.put<any>(`${this.apiUrl}/upload/${id}`, formData, {
-            reportProgress: true,
-            observe: 'events'
-        });
+
+    updatePhoto(idMember: string, idPhoto: string, photo: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('imageFile', photo);
+        return this.http.put<any>(`${this.apiUrl}/updatePhoto/${idMember}/${idPhoto}`, formData);
     }
 
     public addTeacher(teacher: Teacher): Observable<Teacher> {
@@ -117,7 +120,7 @@ export class MemberService {
     }
 
     download(filename: string): Observable<any> {
-        return this.http.get(`${this.apiUrl}/download/${filename}`, {
+        return this.http.get(`${this.apiUrl}/downloadFile/${filename}`, {
             reportProgress: true,
             observe: 'events',
             responseType: 'blob'

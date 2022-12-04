@@ -1,54 +1,40 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { JwtAuthService } from "app/shared/services/auth/jwt-auth.service";
-import { User } from '../../shared/models/user.model';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
+import {JwtAuthService} from "app/shared/services/auth/jwt-auth.service";
+import {Observable} from 'rxjs';
+import {MemberService} from "../../shared/services/labServices/memberService";
+import {Member} from "../../shared/models/member";
+import {Student} from "../../shared/models/Student";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
-  selector: "app-profile",
-  templateUrl: "./profile.component.html",
+    selector: "app-profile",
+    templateUrl: "./profile.component.html",
 })
 export class ProfileComponent implements OnInit {
-  activeView: string = "overview";
-  user: Observable<User>;
-  // Doughnut
-  doughnutChartColors: any[] = [
-    {
-      backgroundColor: ["#fff", "rgba(0, 0, 0, .24)"],
-    },
-  ];
 
-  total1: number = 500;
-  data1: number = 200;
-  doughnutChartData1: number[] = [this.data1, this.total1 - this.data1];
+    member!: Student;
+    photo: any;
 
-  total2: number = 1000;
-  data2: number = 400;
-  doughnutChartData2: number[] = [this.data2, this.total2 - this.data2];
+    constructor(private router: ActivatedRoute,
+                private memberService: MemberService,
+                public jwtAuth: JwtAuthService) {
+    }
 
-  doughnutChartType = "doughnut";
-  doughnutOptions: any = {
-    cutoutPercentage: 85,
-    responsive: true,
-    maintainAspectRatio: true,
-    legend: {
-      display: false,
-      position: "bottom",
-    },
-    elements: {
-      arc: {
-        borderWidth: 0,
-      },
-    },
-    tooltips: {
-      enabled: false,
-    },
-  };
+    ngOnInit() {
+        this.getMemberById('2');
+        // this.activeView = this.router.snapshot.params["view"];
+        // this.user = this.jwtAuth.user$;
+    }
 
-  constructor(private router: ActivatedRoute, public jwtAuth: JwtAuthService) {}
+    private getMemberById(id: string) {
+        this.memberService.getMemberById(id).subscribe(value => {
+            if (!!value) {
+                this.member = value;
+                this.photo = 'data:image/jpeg;base64,' + value.photo.data;
+            }
+        });
+    }
 
-  ngOnInit() {
-    this.activeView = this.router.snapshot.params["view"];
-    this.user = this.jwtAuth.user$;
-  }
+
 }

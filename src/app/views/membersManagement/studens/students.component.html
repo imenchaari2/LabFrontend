@@ -59,13 +59,19 @@
                        [columns]="columns"
         >
             <ng-container *ngFor='let column of columns'>
-                <ngx-datatable-column *ngIf='column.name !== "Actions" &&column.name !== "Cv" ' name="{{column.name}}"
+                <ngx-datatable-column *ngIf='column.name === "Photo"' name="{{column.name}}">
+                    <ng-template ngx-datatable-cell-template let-row="row">
+                            <img class="image pb-4" src="{{column.prop +row.photo.data}}" alt="">
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column *ngIf='column.name !== "Actions" &&column.name !== "Cv"&&column.name !== "Photo" ' name="{{column.name}}"
                                       prop="{{column.prop}}">
                 </ngx-datatable-column>
+
                 <ngx-datatable-column *ngIf='column.name === "Cv"' name="{{column.name}}">
                     <ng-template ngx-datatable-cell-template let-row="row">
                     <span>
-                        <button mat-icon-button color="primary" (click)="onDownloadFile(row.cv)"><mat-icon>cloud_download</mat-icon></button>
+                        <button mat-icon-button color="primary" (click)="onDownloadFile(row.cv.name)"><mat-icon>cloud_download</mat-icon></button>
                     </span>
                     </ng-template>
                 </ngx-datatable-column>

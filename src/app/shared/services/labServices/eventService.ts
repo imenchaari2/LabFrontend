@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {EgretCalendarEvent} from "../../models/event.model";
+import {environment} from "../../../../environments/environment";
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import {EgretCalendarEvent} from "../../models/event.model";
 })
 export class EventService {
 
-    private apiUrl = `http://localhost:8084/api/event`;
+    private apiUrl = `${environment.apiURL}/event`;
 
     constructor(private http: HttpClient) {
     }

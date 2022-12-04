@@ -85,6 +85,10 @@ export const rootRouterConfig: Routes = [
                 loadChildren: () => import('./views/charts/charts.module').then(m => m.AppChartsModule),
                 data: {title: 'Charts', breadcrumb: 'CHARTS'}
             },
+            {
+                path: 'profile',
+                loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule),
+            },
 
         ]
     },
