@@ -6,6 +6,7 @@ import {ArticlesComponent} from "./views/articlesManagement/articles/articles.co
 import {ToolsComponent} from "./views/tools/tools.component";
 import {TeachersComponent} from "./views/membersManagement/teachers/teachers.component";
 import {StudentsComponent} from './views/membersManagement/studens/students.component';
+import {UserRoleGuard} from "./shared/guards/user-role.guard";
 
 export const rootRouterConfig: Routes = [
     {
@@ -13,16 +14,6 @@ export const rootRouterConfig: Routes = [
         redirectTo: 'dashboard',
         pathMatch: 'full'
     },
-    // {
-    //     path: '',
-    //     pathMatch: 'full',
-    //     redirectTo: 'login'
-    // },
-    // {
-    //     path: 'login' ,
-    //     pathMatch: 'full',
-    //     component: LoginComponent,
-    // },
     {
         path: '',
         component: AuthLayoutComponent,
@@ -42,20 +33,27 @@ export const rootRouterConfig: Routes = [
             {
                 path: 'dashboard',
                 loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
-                data: {title: 'Dashboard', breadcrumb: 'DASHBOARD'}
+                data: {title: 'Dashboard', breadcrumb: 'DASHBOARD',roles: 'ROLE_ADMIN'}
             },
             {
                 path: 'members',
                 children: [
                     {
                         path: 'students',
+                        // canActivate: [UserRoleGuard],
                         pathMatch: 'full',
                         component: StudentsComponent,
+                        data: { title: 'students',  roles: 'ROLE_TEACHER'}
+
                     },
                     {
                         path: 'teachers',
                         pathMatch: 'full',
+                        // canActivate: [UserRoleGuard],
+
                         component: TeachersComponent,
+                        data: { title: 'teachers',  roles: 'ROLE_TEACHER'}
+
                     }
                 ]
             },

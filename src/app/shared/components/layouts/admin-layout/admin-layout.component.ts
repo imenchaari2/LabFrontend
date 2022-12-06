@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit, ViewChild, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { 
-  Router, 
-  NavigationEnd, 
-  RouteConfigLoadStart, 
-  RouteConfigLoadEnd, 
-  ResolveStart, 
-  ResolveEnd 
+import {
+  Router,
+  NavigationEnd,
+  RouteConfigLoadStart,
+  RouteConfigLoadEnd,
+  ResolveStart,
+  ResolveEnd
 } from '@angular/router';
 import { Subscription } from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +27,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   public  scrollConfig = {}
   public layoutConf: any = {};
   public adminContainerClasses: any = {};
-  
+
   constructor(
     private router: Router,
     public translate: TranslateService,
@@ -45,7 +45,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
       this.layout.adjustLayout({ route: routeChange.url });
       this.scrollToTop();
     });
-    
+
     // Translator init
     const browserLang: string = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
@@ -56,7 +56,7 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
     this.layoutConfSub = this.layout.layoutConf$.subscribe((layoutConf) => {
         this.layoutConf = layoutConf;
         // console.log(this.layoutConf);
-        
+
         this.adminContainerClasses = this.updateAdminContainerClasses(this.layoutConf);
         this.cdr.markForCheck();
     });
@@ -75,11 +75,11 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   onResize(event) {
     this.layout.adjustLayout(event);
   }
-  
+
   ngAfterViewInit() {
 
   }
-  
+
   scrollToTop() {
     if(document) {
       setTimeout(() => {
@@ -139,5 +139,5 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
       'fixed-topbar': layoutConf.topbarFixed && layoutConf.navigationPos === 'side'
     }
   }
-  
+
 }

@@ -15,8 +15,5 @@ export class Member {
     password: string;
     birthDate: string;
     role: string;
-    articles: Article[];
-    events: Event[];
-    tools: Tool[];
 }
 

@@ -77,7 +77,7 @@ export class MemberService {
         formData.append('photoFile', photo);
         return this.http.post<Student>(`${this.apiUrl}/addStudent`, formData);
     }
-    public updateStudent(student: Student, id: string,cv: File, photo: File): Observable<Student> {
+    public updateStudent(student: Student, id: string, cv: File, photo: File): Observable<Student> {
         const formData = new FormData();
         for (const key in student ) {
             formData.append(key, student[key]);
@@ -87,19 +87,33 @@ export class MemberService {
         return this.http.put<Student>(`${this.apiUrl}/updateStudent/${id}`, formData);
     }
 
+    public updateTeacher(teacher: Teacher, id: string, cv: File, photo: File): Observable<Teacher> {
+        const formData = new FormData();
+        for (const key in teacher ) {
+            formData.append(key, teacher[key]);
+        }
+        formData.append('cvFile', cv);
+        formData.append('photoFile', photo);
+        return this.http.put<Teacher>(`${this.apiUrl}/updateTeacherResearcher/${id}`, formData);
+    }
+    public addTeacher(teacher: Teacher, cv: File, photo: File): Observable<any> {
+        const formData = new FormData();
+        for (const key in teacher ) {
+            formData.append(key, teacher[key]);
+        }
+        formData.append('cvFile', cv);
+        formData.append('photoFile', photo);
+        return this.http.post<Teacher>(`${this.apiUrl}/addTeacherResearcher`, formData);
+    }
+
     updatePhoto(idMember: string, idPhoto: string, photo: File): Observable<any> {
         const formData = new FormData();
         formData.append('imageFile', photo);
         return this.http.put<any>(`${this.apiUrl}/updatePhoto/${idMember}/${idPhoto}`, formData);
     }
 
-    public addTeacher(teacher: Teacher): Observable<Teacher> {
-        return this.http.post<Teacher>(`${this.apiUrl}/addTeacherResearcher`, teacher);
-    }
 
-    public updateTeacher(teacher: Teacher, id: string): Observable<Teacher> {
-        return this.http.put<Teacher>(`${this.apiUrl}/updateTeacherResearcher/${id}`, teacher);
-    }
+
 
     public affectSupervisorToStudent(student: Student, idSupervisor: string): Observable<any> {
         return this.http.put(`${this.apiUrl}/affectSupervisorToStudent/${idSupervisor}`, student);

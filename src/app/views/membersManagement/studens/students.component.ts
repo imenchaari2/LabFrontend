@@ -86,6 +86,7 @@ export class StudentsComponent implements OnInit {
     retrievedImage: any [] = [];
     base64Data: any;
     image: any;
+    selectedCvFile: File;
     constructor(private memberService: MemberService,
                 private dialog: MatDialog,
                 datepipe: DatePipe,
@@ -100,7 +101,10 @@ export class StudentsComponent implements OnInit {
         this.getListStudents();
     }
 
-
+    selectCVFile(event) {
+        this.selectedCvFile = event.target.files[0];
+        console.log(this.selectedCvFile);
+    }
     private getListStudents() {
         this.memberService.getAllStudents().subscribe(value => {
             if (!!value) {

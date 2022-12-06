@@ -211,7 +211,7 @@
 <div style="margin-top:10px ">
     <span fxFlex></span>
     <button mat-strocked-button color="warn" type="button"
-            (click)="dialogRef.close({action: 'save', member: basicForm.value})"
+            (click)="dialogRef.close({action: 'save', member: basicForm.value, cv: selectedCvFile,photo: selectedPhotoFile})"
             [disabled]="basicForm.invalid"
     >{{buttonTitle}}</button>
 </div>

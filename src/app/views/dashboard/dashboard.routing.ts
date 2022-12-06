@@ -8,13 +8,14 @@ import { UserRoleGuard } from 'app/shared/guards/user-role.guard';
 import { LearningManagementComponent } from './learning-management/learning-management.component';
 import { AnalyticsAltComponent } from './analytics-alt/analytics-alt.component';
 import { config } from 'config';
+import {AuthGuard} from "../../shared/guards/auth.guard";
 
 export const DashboardRoutes: Routes = [
   {
     path: 'default',
     component: DefaultDashboardComponent,
-    canActivate: [UserRoleGuard],
-    data: { title: 'Default', breadcrumb: 'Default', roles: config.authRoles.sa }
+    // canActivate: [AuthGuard,UserRoleGuard],
+    data: { title: 'Default', breadcrumb: 'Default', roles: "ROLE_TEACHER" }
   },
   {
     path: 'learning-management',

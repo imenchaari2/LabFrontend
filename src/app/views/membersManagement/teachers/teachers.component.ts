@@ -1,5 +1,4 @@
-import {NgZone, OnInit} from '@angular/core';
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AppConfirmService} from '../../../shared/services/app-confirm/app-confirm.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -9,8 +8,9 @@ import {Member} from "../../../shared/models/member";
 import {AddTeacherComponent} from "../add-Teacher/add-teacher.component";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
-import {FileUploader} from "ng2-file-upload";
 import {HttpErrorResponse} from "@angular/common/http";
+import {JwtAuthService} from "../../../shared/services/auth/jwt-auth.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-teachers',
@@ -21,6 +21,10 @@ export class TeachersComponent implements OnInit {
     rows: any[];
     temp = [];
     columns = [
+        {
+            prop: 'data:image/jpeg;base64,',
+            name: 'Photo'
+        },
         {
             prop: 'firstName',
             name: 'First Name'
@@ -68,19 +72,25 @@ export class TeachersComponent implements OnInit {
     grade = '';
     cin = '';
     etablishment = '';
-
+    myDatePipe: any;
     public refresh: Subject<any> = new Subject();
+
     constructor(private memberService: MemberService,
                 private dialog: MatDialog,
                 private snack: MatSnackBar,
+                datepipe: DatePipe,
                 private confirmService: AppConfirmService,
                 private loader: AppLoaderService,
+                private authService: JwtAuthService,
                 private router: Router,
-                private ngZone: NgZone,) {
+                private ngZone: NgZone) {
+        this.myDatePipe = datepipe;
+
     }
 
     ngOnInit(): void {
         this.getListTeachers();
+        console.log(this.authService.getUser())
     }
 
     private getListTeachers() {
@@ -106,21 +116,23 @@ export class TeachersComponent implements OnInit {
         dialogRef.afterClosed()
             .subscribe(res => {
                 const member = res.member;
-
+                const cv = res.cv;
+                const photo = res.photo;
+                member.birthDate = this.myDatePipe.transform(member.birthDate, 'yyyy-MM-dd');
                 if (!res) {
                     // If user press cancel
                     return;
                 }
                 if (isNew) {
                     console.log(member)
-                    this.memberService.addTeacher(member).subscribe(res => {
+                    this.memberService.addTeacher(member, cv, photo).subscribe(res => {
                         this.snack.open('your informations have been added successfully', '', {duration: 1000});
                         this.getListTeachers();
                         this.refresh.next();
 
                     });
                 } else {
-                    this.memberService.updateTeacher(member, member.id).subscribe(res => {
+                    this.memberService.updateTeacher(member, member.id,cv, photo).subscribe(res => {
                         this.snack.open('your informations have been added successfully', '', {duration: 1000});
                         this.getListTeachers();
                         this.refresh.next();
@@ -145,6 +157,7 @@ export class TeachersComponent implements OnInit {
                 }
             });
     }
+
     filterBySearchField(event) {
         switch (event.target.placeholder) {
             case 'filter by firstName': {
@@ -171,7 +184,7 @@ export class TeachersComponent implements OnInit {
                 break;
             }
         }
-        this.memberService.findTeacherBySearch(this.firstName, this.lastName, this.cin, this.etablishment,this.grade).subscribe(value => {
+        this.memberService.findTeacherBySearch(this.firstName, this.lastName, this.cin, this.etablishment, this.grade).subscribe(value => {
             if (!!value) {
                 this.rows = this.temp = value;
                 console.log(this.rows);
@@ -179,6 +192,7 @@ export class TeachersComponent implements OnInit {
         });
         return this.rows;
     }
+
     onDownloadFile(filename: string): void {
         this.memberService.download(filename).subscribe(
             event => {

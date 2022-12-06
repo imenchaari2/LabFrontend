@@ -80,7 +80,7 @@ export class AddStudentComponent {
             birthDate: new UntypedFormControl(!!this.data?.payload?.birthDate ? this.data?.payload?.birthDate : ''),
             diploma: new UntypedFormControl(!!this.data?.payload?.diploma ? this.data?.payload?.diploma : ''),
             inscriptionDate: new UntypedFormControl(!!this.data?.payload?.inscriptionDate ? this.data?.payload?.inscriptionDate : ''),
-            // cv: new UntypedFormControl(!!this.data?.payload?.cv ? this.data?.payload?.cv : ''),
+            // cvFile: new UntypedFormControl(!!this.data?.payload?.cv ? this.data?.payload?.cv : ''),
             // photo: new UntypedFormControl(!!this.data?.payload?.photo ? this.data?.payload?.photo : ''),
             password,
             confirmPassword,

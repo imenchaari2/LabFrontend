@@ -16,16 +16,16 @@
       />
     </div>
 
-    <form [formGroup]="signupForm" class="signup3-form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="signinForm" class="signup3-form" (ngSubmit)="onSubmit()">
       <div>
         <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Username</mat-label>
+          <mat-label>Email</mat-label>
           <input
             matInput
-            formControlName="username"
+            formControlName="email"
             type="text"
-            name="username"
-            placeholder="Username"
+            name="email"
+            placeholder="email"
           />
         </mat-form-field>
 

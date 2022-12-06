@@ -15,3 +15,8 @@ table {
 .filter-button {
   height: 55px;
 }
+.image{
+  width: 40%;
+  height: auto;
+  border-radius: 50%;
+}

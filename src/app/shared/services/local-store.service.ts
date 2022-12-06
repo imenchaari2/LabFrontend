@@ -26,4 +26,5 @@ export class LocalStoreService {
   public clear() {
     this.ls.clear();
   }
+
 }
