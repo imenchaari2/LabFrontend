@@ -1,7 +1,7 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 // import {DialogComponent} from '../dialog/dialog.component';
-// import {SelectAuteurComponent} from '../select-auteur/select-auteur.component';
+// import {SelectMemberComponent} from '../select-auteur/select-auteur.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MemberService} from '../../../shared/services/labServices/memberService';
 import {Article} from '../../../shared/models/article';

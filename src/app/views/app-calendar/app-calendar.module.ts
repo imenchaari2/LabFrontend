@@ -21,6 +21,8 @@ import { AppCalendarComponent } from './app-calendar.component';
 import { CalendarRoutes } from "./app-calendar.routing";
 import { CalendarFormDialogComponent } from './calendar-form-dialog/calendar-form-dialog.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {SelectMemberComponent} from "./affect-Member/select-member.component";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -44,13 +46,15 @@ import {MatTooltipModule} from "@angular/material/tooltip";
             useFactory: adapterFactory
         }),
         RouterModule.forChild(CalendarRoutes),
-        MatTooltipModule
+        MatTooltipModule,
+        MatSelectModule
     ],
   providers: [],
   // entryComponents: [CalendarFormDialogComponent],
   declarations: [
     AppCalendarComponent,
-    CalendarFormDialogComponent
+    CalendarFormDialogComponent,
+      SelectMemberComponent
   ]
 })
 export class AppCalendarModule { }

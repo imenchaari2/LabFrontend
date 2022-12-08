@@ -72,7 +72,7 @@
                 <ngx-datatable-column *ngIf='column.name === "url"' name="{{column.name}}">
                     <ng-template ngx-datatable-cell-template let-row="row">
                     <span>
-                    <a href="{{row.url}}">{{row.url}}</a>
+                    <a href="{{row.url}}" target="_blank">{{row.url}}</a>
                     </span>
                     </ng-template>
                 </ngx-datatable-column>

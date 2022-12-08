@@ -21,12 +21,15 @@ export class EventService {
     public getEventById(idMember: string): Observable<any> {
         return this.http.get(`${this.apiUrl}/eventsByMember/${idMember}`);
     }
-    public addEvent(event: EgretCalendarEvent): Observable<EgretCalendarEvent> {
-        return this.http.post<EgretCalendarEvent>(`${this.apiUrl}/addEvent`, event);
+    public addEvent(event: EgretCalendarEvent,id:string): Observable<EgretCalendarEvent> {
+        return this.http.post<EgretCalendarEvent>(`${this.apiUrl}/addEvent/${id}`, event);
     }
 
     public updateEvent(event: EgretCalendarEvent, id: string): Observable<EgretCalendarEvent> {
         return this.http.put<EgretCalendarEvent>(`${this.apiUrl}/updateEvent/${id}`, event);
+    }
+    public affectMembersToEvent( idEvent: string, ids: string[]): Observable<EgretCalendarEvent> {
+        return this.http.put<EgretCalendarEvent>(`${this.apiUrl}/affectMembersToEvent/${idEvent}?membersIds=${ids}`,{});
     }
     public deleteEvent(id: string): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/deleteEvent/${id}`);

@@ -10,6 +10,11 @@ import {AppConfirmService} from '../../shared/services/app-confirm/app-confirm.s
 import {EventService} from '../../shared/services/labServices/eventService';
 import {JwtAuthService} from "../../shared/services/auth/jwt-auth.service";
 import {MemberService} from "../../shared/services/labServices/memberService";
+import {Student} from "../../shared/models/Student";
+import {SelectAuteurComponent} from "../articlesManagement/affect-Author/select-auteur.component";
+import {SelectMemberComponent} from "./affect-Member/select-member.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Member} from "../../shared/models/member";
 
 @Component({
     selector: 'app-calendar',
@@ -28,6 +33,8 @@ export class AppCalendarComponent implements OnInit {
     private actions: CalendarEventAction[];
     role: string;
     fullName: string;
+    membersIds: string[]=[];
+    affectedMembers: Member[];
 
     constructor(
         public dialog: MatDialog,
@@ -35,6 +42,7 @@ export class AppCalendarComponent implements OnInit {
         private eventService: EventService,
         private memberService: MemberService,
         private authService: JwtAuthService,
+        private _snackBar: MatSnackBar,
     ) {
         this.role = this.authService.getUser().role;
         this.actions = [
@@ -56,12 +64,9 @@ export class AppCalendarComponent implements OnInit {
     ngOnInit() {
         this.loadEvents();
         this.loadEventsByMember();
-        console.log(this.role )
     }
 
     private initEvents(events): EgretCalendarEvent[] {
-        console.log('map', events);
-
         return events.map((event) => {
             event.actions = this.actions;
             return new EgretCalendarEvent(event);
@@ -70,9 +75,9 @@ export class AppCalendarComponent implements OnInit {
 
     public loadEvents() {
 
-            this.eventService.getAllEvents().subscribe((events: EgretCalendarEvent[]) => {
-                this.events = this.initEvents(events);
-                console.log(this.events)
+        this.eventService.getAllEvents().subscribe((events: EgretCalendarEvent[]) => {
+            this.events = this.initEvents(events);
+            console.log(this.events)
         });
     }
 
@@ -116,7 +121,7 @@ export class AppCalendarComponent implements OnInit {
             }
             const responseEvent = res.event;
             responseEvent.memberId = this.authService.getUser().id;
-            this.eventService.addEvent(responseEvent).subscribe((events) => {
+            this.eventService.addEvent(responseEvent, this.authService.getUser().id).subscribe((events) => {
                 this.loadEvents();
                 this.loadEventsByMember();
                 console.log(this.events);
@@ -124,6 +129,30 @@ export class AppCalendarComponent implements OnInit {
                 this.refresh.next(true);
             });
         });
+    }
+
+    affect(event: EgretCalendarEvent): void {
+        const isEvent = true;
+        const dialogRef = this.dialog.open(SelectMemberComponent, {
+            width: '450px',
+            data: {payload: event, isEvent, affectedMembers: event.membersIds},
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // result.data.toArray().mapArray()
+                this.affectedMembers = result.data;
+                this.affectedMembers.map(member => {
+                    this.membersIds.push(member.id);
+                });
+                this.eventService.affectMembersToEvent(event._id, this.membersIds).subscribe(res => {
+                    this._snackBar.open('author affected successfully !', '', {duration: 1000});
+                    this.loadEvents();
+                    this.refresh.next();
+                });
+            }
+        });
+
     }
 
     public handleEvent(action: string, event: CalendarEvent): void {

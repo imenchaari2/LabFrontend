@@ -1,0 +1,54 @@
+<div class="p-16 m-0">
+
+    <div fxLayoutAlign="space-between center">
+        <div>
+            <h2 class="green-300-fg">Affect members to {{event}}</h2>
+        </div>
+        <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+
+    <div mat-dialog-content class="p-16 m-0">
+
+
+        <div fxFlex="90">
+            <!--          <mat-select placeholder="Select your author"-->
+            <!--                      matInput-->
+            <!--                      [(ngModel)]="author"-->
+            <!--          >-->
+            <!--            <div>-->
+            <!--              <mat-option *ngFor="let auteur of authors" [value]="auteur">-->
+            <!--                {{auteur.firstName}} {{auteur.lastName}}-->
+            <!--              </mat-option>-->
+            <!--            </div>-->
+            <!--          </mat-select>-->
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Members</mat-label>
+                <mat-select [formControl]="affectedMembers" multiple>
+                    <mat-select-trigger>
+                        <span *ngIf="(affectedMembers.value?.length || 0) >= 1" class="example-additional-selection">{{affectedMembers.value?.length}} member selected</span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let member of members"
+                                [value]="member">{{member.firstName}} {{member.lastName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+    </div>
+
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="center">
+
+        <button
+                mat-stroked-button
+                color="warn"
+                (click)="onSubmit()"
+        >
+            affect members
+        </button>
+    </div>
+</div>
+
