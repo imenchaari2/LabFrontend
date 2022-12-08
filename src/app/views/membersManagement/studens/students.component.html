@@ -15,14 +15,18 @@
           (keyup)='filterBySearchField($event)'
   >
 </mat-form-field>
-<mat-form-field class=" pr-16" appearance="outline">
-  <input
-          matInput
-          placeholder="filter by Diploma"
-          value=""
-          (keyup)='filterBySearchField($event)'
-  >
-</mat-form-field>
+    <mat-form-field class=" pr-16" appearance="outline">
+        <mat-select
+                matInput
+                placeholder="filter by Type"
+                value=""
+                (selectionChange)='filterByType($event)'
+        >
+            <mat-option [value]="this.master">master degree</mat-option>
+            <mat-option [value]="this.thesis">thesis</mat-option>
+        </mat-select>
+    </mat-form-field>
+
     <mat-form-field class=" pr-16" appearance="outline">
         <input
                 matInput

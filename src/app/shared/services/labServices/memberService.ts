@@ -44,6 +44,10 @@ export class MemberService {
     public getAllMembers(): Observable<Member[]> {
         return this.http.get<Member[]>(`${this.apiUrl}/members`);
     }
+    public getAllAuthors(): Observable<Member[]> {
+        return this.http.get<Member[]>(`${this.apiUrl}/authors`);
+    }
+
 
     public getAllStudents(): Observable<Student[]> {
         return this.http.get<Student[]>(`${this.apiUrl}/students`);
@@ -53,8 +57,8 @@ export class MemberService {
         return this.http.get<Teacher[]>(`${this.apiUrl}/findTeacherBySearch?firstName=${firstName}&lastName=${lastName}&cin=${cin}&etablishment=${etablishment}&grade=${grade}`);
     }
 
-    public findStudentBySearch(firstName: string, lastName: string, cin: string, diploma: string): Observable<Student[]> {
-        return this.http.get<Student[]>(`${this.apiUrl}/findStudentBySearch?firstName=${firstName}&lastName=${lastName}&cin=${cin}&diploma=${diploma}`);
+    public findStudentBySearch(firstName: string, lastName: string, cin: string, type: string): Observable<Student[]> {
+        return this.http.get<Student[]>(`${this.apiUrl}/findStudentBySearch?firstName=${firstName}&lastName=${lastName}&cin=${cin}&type=${type}`);
     }
 
     public getAllTeachers(): Observable<Teacher[]> {

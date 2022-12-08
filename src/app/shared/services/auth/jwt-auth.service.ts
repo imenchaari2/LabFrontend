@@ -48,6 +48,7 @@ export class JwtAuthService{
         return this.http.post(`${environment.apiURL}/auth/signup`, {email, password});
     }
 
+
     /*
       checkTokenIsValid is called inside constructor of
       shared/components/layouts/admin-layout/admin-layout.component.ts
@@ -57,7 +58,7 @@ export class JwtAuthService{
         return of(this.user)
             .pipe(
                 map((profile: User) => {
-                    this.setUserAndToken(this.getJwtToken(), profile, true);
+                    this.setUserAndToken(this.getJwtToken(), this.getUser(), true);
                     this.signingIn = false;
                     return profile;
                 }),
@@ -76,13 +77,6 @@ export class JwtAuthService{
     isLoggedIn(): Boolean {
         return !!this.getJwtToken();
     }
-    // isAdmin(): boolean {
-    //     return !!this.user.role.includes('admin');
-    // }
-    //
-    // isUser(): boolean {
-    //     return !!this.user.role.includes('user');
-    // }
 
     getJwtToken() {
         return this.ls.getItem(this.JWT_TOKEN);

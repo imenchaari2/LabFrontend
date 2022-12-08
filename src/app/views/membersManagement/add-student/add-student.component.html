@@ -62,12 +62,12 @@
 
                             <div>
                                 <mat-form-field class="full-width" appearance="outline">
-                                    <mat-select placeholder="role"
-                                                name="role"
-                                                formControlName="role"
+                                    <mat-select placeholder="type"
+                                                name="type"
+                                                formControlName="type"
                                     >
-                                        <mat-option *ngFor="let r of roles" [value]="r.role">
-                                            {{ r.role }}
+                                        <mat-option *ngFor="let t of types" [value]="t.type">
+                                            {{ t.type }}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

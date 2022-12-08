@@ -22,9 +22,10 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getMemberById('2');
-        // this.activeView = this.router.snapshot.params["view"];
-        // this.user = this.jwtAuth.user$;
+        this.member = this.jwtAuth.getUser();
+        console.log(this.jwtAuth.getJwtToken())
+        console.log(this.jwtAuth.getUser())
+        this.getMemberById(this.member.id);
     }
 
     private getMemberById(id: string) {

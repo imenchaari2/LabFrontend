@@ -59,17 +59,24 @@
                                 </mat-form-field>
                                 <mat-datepicker #appDatepicker></mat-datepicker>
                             </div>
-                            <div>
-                                <mat-form-field class="full-width" appearance="outline">
-                                    <mat-select placeholder="role"
-                                                name="role"
-                                                formControlName="role"
-                                    >
-                                        <mat-option *ngFor="let r of roles" [value]="r.role">
-                                            {{ r.role }}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+<!--                            <div>-->
+<!--                                <mat-form-field class="full-width" appearance="outline">-->
+<!--                                    <mat-select placeholder="role"-->
+<!--                                                name="role"-->
+<!--                                                formControlName="role"-->
+<!--                                    >-->
+<!--                                        <mat-option *ngFor="let r of roles" [value]="r.role">-->
+<!--                                            {{ r.role }}-->
+<!--                                        </mat-option>-->
+<!--                                    </mat-select>-->
+<!--                                </mat-form-field>-->
+<!--                            </div>-->
+                            <div class="mb-16">
+                                <p>Upload a profile picture</p>
+                                <input
+                                        type="file"
+                                        (change)="selectPhotoFile($event)"
+                                >
                             </div>
 
                         </div>
@@ -191,13 +198,7 @@
                                         class="form-error-msg"> Password mismatch </small>
 
                             </div>
-                            <div class="mb-16">
-                                <p>Upload a profile picture</p>
-                                <input
-                                        type="file"
-                                        (change)="selectPhotoFile($event)"
-                                >
-                            </div>
+
 
 
                         </div>
@@ -210,7 +211,8 @@
 
 <div style="margin-top:10px ">
     <span fxFlex></span>
-    <button mat-strocked-button color="warn" type="button"
+    <button mat-stroked-button
+            color="warn" type="button"
             (click)="dialogRef.close({action: 'save', member: basicForm.value, cv: selectedCvFile,photo: selectedPhotoFile})"
             [disabled]="basicForm.invalid"
     >{{buttonTitle}}</button>

@@ -15,6 +15,8 @@ export class EgretCalendarEvent implements CalendarEvent {
   start: Date;
   end?: Date;
   title: string;
+  memberId: string;
+  memberName: string;
   color?: {
     primary: string;
     secondary: string;
@@ -28,7 +30,9 @@ export class EgretCalendarEvent implements CalendarEvent {
     this.start = new Date(data.start) || startOfDay(new Date());
     this.end = data.end ? new Date(data.end) : null;
     this._id = data._id || '';
+    this.memberId = data.memberId || '';
     this.title = data.title || '';
+    this.memberName = data.memberName || '';
     this.location = data.location || '';
     this.color = {
       primary: data.color && data.color.primary || '#247ba0',

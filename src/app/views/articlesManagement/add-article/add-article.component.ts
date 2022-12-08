@@ -23,6 +23,7 @@ export class AddArticleComponent{
     action: string;
     dialogTitle: string;
     buttonTitle: string;
+    selectedSourceFile: File;
 
     constructor(private formBuilder: UntypedFormBuilder,
                 public dialogRef: MatDialogRef<AddArticleComponent>,
@@ -41,13 +42,18 @@ export class AddArticleComponent{
         this.basicForm = this.buildArticleForm();
 
     }
+    selectSourceFile(event) {
+        this.selectedSourceFile = event.target.files[0];
+        console.log(this.selectedSourceFile);
+    }
+
     buildArticleForm() {
         console.log(this.data)
         return new UntypedFormGroup({
             articleId: new UntypedFormControl(!!this.data?.payload?.articleId ? this.data?.payload?.articleId : ''),
             title: new UntypedFormControl(!!this.data?.payload?.title ? this.data?.payload?.title : ''),
             createdDate: new UntypedFormControl(!!this.data?.payload?.createdDate ? this.data?.payload?.createdDate : ''),
-            pdfSource: new UntypedFormControl(!!this.data?.payload?.pdfSource ? this.data?.payload?.pdfSource : ''),
+            // pdfSource: new UntypedFormControl(!!this.data?.payload?.pdfSource ? this.data?.payload?.pdfSource : ''),
             type: new UntypedFormControl(!!this.data?.payload?.type ? this.data?.payload?.type : ''),
             url: new UntypedFormControl(!!this.data?.payload?.url ? this.data?.payload?.url : ''),
         });

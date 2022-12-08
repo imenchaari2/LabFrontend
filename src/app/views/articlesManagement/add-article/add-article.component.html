@@ -54,20 +54,20 @@
                                         *ngIf="basicForm.get('url').hasError('required') && basicForm.get('url').touched"
                                         class="form-error-msg">url is required </small>
                             </div>
-                            <div>
-                                <mat-form-field class="full-width" appearance="outline">
-                                    <mat-label>Pdf source</mat-label>
-                                    <input
-                                            matInput
-                                            name="pdfSource"
-                                            formControlName="pdfSource"
-                                            placeholder="pdfSource"
-                                            value="">
-                                </mat-form-field>
-                                <small
-                                        *ngIf="basicForm.get('pdfSource').hasError('required') && basicForm.get('pdfSource').touched"
-                                        class="form-error-msg">Pdf source is required </small>
-                            </div>
+<!--                            <div>-->
+<!--                                <mat-form-field class="full-width" appearance="outline">-->
+<!--                                    <mat-label>Pdf source</mat-label>-->
+<!--                                    <input-->
+<!--                                            matInput-->
+<!--                                            name="pdfSource"-->
+<!--                                            formControlName="pdfSource"-->
+<!--                                            placeholder="pdfSource"-->
+<!--                                            value="">-->
+<!--                                </mat-form-field>-->
+<!--                                <small-->
+<!--                                        *ngIf="basicForm.get('pdfSource').hasError('required') && basicForm.get('pdfSource').touched"-->
+<!--                                        class="form-error-msg">Pdf source is required </small>-->
+<!--                            </div>-->
 
                             <div>
                                 <mat-form-field fxFlex.gt-xs="100" appearance="outline">
@@ -83,6 +83,13 @@
                                         *ngIf="basicForm.get('createdDate').hasError('required') && basicForm.get('createdDate').touched"
                                         class="form-error-msg">created date is required </small>
                             </div>
+                            <div class="mb-16">
+                                <p>Upload a Source</p>
+                                <input
+                                        type="file"
+                                        (change)="selectSourceFile($event)"
+                                >
+                            </div>
                         </div>
 
 
@@ -94,7 +101,7 @@
 <div style="margin-top:10px ">
     <span fxFlex></span>
     <button mat-stroked-button color="warn" type="button"
-            (click)="dialogRef.close({action: 'save', article: basicForm.value})"
+            (click)="dialogRef.close({action: 'save', article: basicForm.value ,source: selectedSourceFile})"
             [disabled]="basicForm.invalid"
     >{{buttonTitle}}</button>
 </div>

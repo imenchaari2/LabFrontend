@@ -6,6 +6,8 @@ import {Student} from "../../../shared/models/Student";
 import {Subject} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute, Router} from "@angular/router";
+import {JwtAuthService} from "../../../shared/services/auth/jwt-auth.service";
+import {Member} from "../../../shared/models/member";
 
 @Component({
     selector: 'app-profile-settings',
@@ -16,7 +18,7 @@ export class ProfileSettingsComponent implements OnInit {
     public uploader: FileUploader = new FileUploader({url: 'upload_url'});
     public hasBaseDropZoneOver: boolean = false;
     selectedPhotoFile: File;
-    member!: Student;
+    member!: Member;
     public refresh: Subject<any> = new Subject();
 
     constructor(private memberService: MemberService,
@@ -24,12 +26,14 @@ export class ProfileSettingsComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private ngZone: NgZone,
+                public jwtAuth: JwtAuthService
     ) {
     }
 
     ngOnInit() {
-        this.getMemberById('2');
-
+        this.member = this.jwtAuth.getUser();
+        console.log(this.jwtAuth.getUser());
+        this.getMemberById(this.member.id);
     }
 
     public fileOverBase(e: any): void {
@@ -43,7 +47,7 @@ export class ProfileSettingsComponent implements OnInit {
 
         this.memberService.updatePhoto(idMember, idPhoto, photo).subscribe(
             event => {
-                this._snackBar.open('your iprofile photo has been updated successfully', '', {duration: 1000});
+                this._snackBar.open('your profile photo has been updated successfully', '', {duration: 1000});
                 this.ngZone.run(() => this.router.navigateByUrl('profile')).then(r => console.log(r));
                 window.location.reload();
             },

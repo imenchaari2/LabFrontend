@@ -3,163 +3,214 @@
         fxFlex.gt-sm="33.33"
         fxFlex.sm="35"
 >
-
-  <div fxLayout="row wrap">
-    <mat-icon class="text-muted pt-16 pl-32">date_range</mat-icon>
-    <h2 class="pt-16 pb-16 pl-32"  style="color: #c0320d">Upcoming events details</h2>
-  </div>
-
-  <mat-divider></mat-divider>
-
-  <div *ngIf="events.length===0" class="pl-16 pt-16">
-    <h4 style="color: #001844 "> there is no events coming yet </h4>
-  </div>
-  <mat-card class="p-0" style="border-radius: 10px">
-
-    <div *ngFor="let event of events" fxLayout="column wrap">
-
-      <div class=" pt-16 pb-16 border-right-light" style="padding: 20px">
-        <div fxLayout="column wrap">
-          <h2 style="color: #0b72e7">{{event.title}}</h2>
-          <h4 style="color: #0e3159">Hosted by {{event.title}}</h4>
-          <h4 style="color: #0d243f">Location : {{event.location}}</h4>
-          <h5 class=" text-muted">{{event.start | date: 'MMM d, y'}} -- {{event.end | date: 'MMM d, y'}}</h5>
-        </div>
-
-        <span fxFlex></span>
-        <div fxLayoutAlign="center center">
-          <button mat-icon-button color="warn"><mat-icon>add_task</mat-icon></button>
-
-          <button mat-icon-button mat-sm-button
-                  style="color: green"
-                  (click)="handleEvent('edit', event)"
-                  >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-                  mat-icon-button color="warn"
-                  aria-label="Delete"
-                  matTooltip="Delete"
-                  (click)="removeEvent(event)"
-
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </div>
-      <mat-divider></mat-divider>
+    <!--  events by member-->
+<div *ngIf="role!=='ROLE_ADMIN'" >
+    <div fxLayout="row wrap">
+        <mat-icon class="text-muted pt-16 pl-32">date_range</mat-icon>
+        <h2 class="pt-16 pb-16 pl-32" style="color: #c0320d">Your upcoming events details</h2>
     </div>
-  </mat-card>
 
+    <mat-divider></mat-divider>
+
+    <div *ngIf="eventsByMember.length===0" class="pl-16 pt-16">
+        <h4 style="color: #001844 "> there is no events coming yet </h4>
+    </div>
+    <mat-card class="p-0" style="border-radius: 10px">
+
+        <div *ngFor="let event of eventsByMember" fxLayout="column wrap">
+
+            <div class=" pt-16 pb-16 border-right-light" style="padding: 20px">
+                <div fxLayout="column wrap">
+                    <h2 style="color: #0b72e7">{{event.title}}</h2>
+                    <h4 style="color: #094f9d">Hosted by {{event.memberName}}</h4>
+                    <h4 style="color: #0d243f">Location : {{event.location}}</h4>
+                    <h5 class=" text-muted">{{event.start | date: 'MMM d, y'}} -- {{event.end | date: 'MMM d, y'}}</h5>
+                </div>
+
+                <span fxFlex></span>
+                <div fxLayoutAlign="center center">
+                    <button mat-icon-button mat-sm-button
+                            style="color: green"
+                            (click)="handleEvent('edit', event)"
+                    >
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                            mat-icon-button color="warn"
+                            aria-label="Delete"
+                            matTooltip="Delete"
+                            (click)="removeEvent(event)"
+
+                    >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-card>
+    </div>
+
+
+    <!--  events by all-->
+
+    <div fxLayout="row wrap">
+        <mat-icon class="text-muted pt-16 pl-32">date_range</mat-icon>
+        <h2 class="pt-16 pb-16 pl-32" style="color: #c0320d">All Lab's members events details</h2>
+    </div>
+
+
+    <mat-divider></mat-divider>
+
+    <div *ngIf="events.length===0" class="pl-16 pt-16">
+        <h4 style="color: #001844 "> there is no events coming yet </h4>
+    </div>
+    <mat-card class="p-0" style="border-radius: 10px">
+
+        <div *ngFor="let event of events" fxLayout="column wrap">
+
+            <div class=" pt-16 pb-16 border-right-light" style="padding: 20px">
+                <div fxLayout="column wrap">
+                    <h2 style="color: #0b72e7">{{event.title}}</h2>
+                    <h4 style="color: #094f9d">Hosted by {{event.memberName}}</h4>
+                    <h4 style="color: #0d243f">Location : {{event.location}}</h4>
+                    <h5 class=" text-muted">{{event.start | date: 'MMM d, y'}} -- {{event.end | date: 'MMM d, y'}}</h5>
+                </div>
+
+                <span fxFlex></span>
+                <div *ngIf="role==='ROLE_ADMIN'"  fxLayoutAlign="center center">
+                    <button mat-icon-button mat-sm-button
+                            style="color: green"
+                            (click)="handleEvent('edit', event)"
+                    >
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                            mat-icon-button color="warn"
+                            aria-label="Delete"
+                            matTooltip="Delete"
+                            (click)="removeEvent(event)"
+
+                    >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-card>
 
 </div>
+
+
 <div
         fxFlex="100"
         fxFlex.gt-sm="66.66"
         fxFlex.sm="65"
 >
-  <div fxLayout="column wrap">
-    <div fxLayout="row wrap">
-      <span fxFlex></span>
-      <div class="m-333">
-        <button mat-button class="button-add" (click)="addEvent()">
-          <mat-icon  style="color: #c0320d">add_circle</mat-icon>
-          Add Event
-        </button>
-      </div>
-    </div>
-<!--<div class="m-333">-->
-<!--  <button mat-raised-button class="mb-8" color="accent" (click)="addEvent()">Add Event</button>-->
-<!--</div>-->
-<mat-card class="p-0" [@animate]="{value:'*',params:{delay:'200ms',y:'40px'}}">
-  <mat-card-title class="mat-bg-primary">
-    <div [ngStyle]="{overflow: 'hidden'}" class="card-title-text calendar-title">
-      <!-- Arrow navigations -->
-      <div class="cal-top-col text-center">
-        <button
-        mat-icon-button
-        mwlCalendarPreviousView
-        [view]="view"
-        [(viewDate)]="viewDate">
-          <mat-icon class="text-white">chevron_left</mat-icon>
-        </button>
-        <button
-        mat-icon-button
-        mwlCalendarToday
-        [(viewDate)]="viewDate">
-          <mat-icon class="text-white">today</mat-icon>
-        </button>
-        <button
-        mat-icon-button
-        mwlCalendarNextView
-        [view]="view"
-        [(viewDate)]="viewDate">
-        <mat-icon class="text-white">chevron_right</mat-icon>
-        </button>
-      </div>
+    <div fxLayout="column wrap">
+        <div fxLayout="row wrap">
+            <span fxFlex></span>
+            <div class="m-333">
+                <button mat-button class="button-add" (click)="addEvent()">
+                    <mat-icon style="color: #c0320d">add_circle</mat-icon>
+                    Add Event
+                </button>
+            </div>
+        </div>
+        <!--<div class="m-333">-->
+        <!--  <button mat-raised-button class="mb-8" color="accent" (click)="addEvent()">Add Event</button>-->
+        <!--</div>-->
+        <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'200ms',y:'40px'}}">
+            <mat-card-title class="mat-bg-primary">
+                <div [ngStyle]="{overflow: 'hidden'}" class="card-title-text calendar-title">
+                    <!-- Arrow navigations -->
+                    <div class="cal-top-col text-center">
+                        <button
+                                mat-icon-button
+                                mwlCalendarPreviousView
+                                [view]="view"
+                                [(viewDate)]="viewDate">
+                            <mat-icon class="text-white">chevron_left</mat-icon>
+                        </button>
+                        <button
+                                mat-icon-button
+                                mwlCalendarToday
+                                [(viewDate)]="viewDate">
+                            <mat-icon class="text-white">today</mat-icon>
+                        </button>
+                        <button
+                                mat-icon-button
+                                mwlCalendarNextView
+                                [view]="view"
+                                [(viewDate)]="viewDate">
+                            <mat-icon class="text-white">chevron_right</mat-icon>
+                        </button>
+                    </div>
 
-      <!-- Date title -->
-      <div class="cal-top-col text-center">
-        <h5 class="m-0 text-white" [style.lineHeight]="'40px'">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h5>
-      </div>
+                    <!-- Date title -->
+                    <div class="cal-top-col text-center">
+                        <h5 class="m-0 text-white"
+                            [style.lineHeight]="'40px'">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h5>
+                    </div>
 
-      <!-- Month, day, week view toggle buttons -->
-      <div class="cal-top-col text-center">
-        <button
-        mat-icon-button
-        matTooltip="Month View"
-        (click)="view = 'month'"
-        [class.active]="view === 'month'">
-          <mat-icon class="text-white">view_comfy</mat-icon>
-        </button>
-        <button
-        mat-icon-button
-        matTooltip="Week View"
-        (click)="view = 'week'"
-        [class.active]="view === 'week'">
-          <mat-icon class="text-white">view_week</mat-icon>
-        </button>
-        <button
-        mat-icon-button
-        matTooltip="Day View"
-        (click)="view = 'day'"
-        [class.active]="view === 'day'">
-          <mat-icon class="text-white">view_day</mat-icon>
-        </button>
-      </div>
-    </div>
-    <mat-divider></mat-divider>
-  </mat-card-title>
+                    <!-- Month, day, week view toggle buttons -->
+                    <div class="cal-top-col text-center">
+                        <button
+                                mat-icon-button
+                                matTooltip="Month View"
+                                (click)="view = 'month'"
+                                [class.active]="view === 'month'">
+                            <mat-icon class="text-white">view_comfy</mat-icon>
+                        </button>
+                        <button
+                                mat-icon-button
+                                matTooltip="Week View"
+                                (click)="view = 'week'"
+                                [class.active]="view === 'week'">
+                            <mat-icon class="text-white">view_week</mat-icon>
+                        </button>
+                        <button
+                                mat-icon-button
+                                matTooltip="Day View"
+                                (click)="view = 'day'"
+                                [class.active]="view === 'day'">
+                            <mat-icon class="text-white">view_day</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+            </mat-card-title>
 
-  <!-- Calendar -->
-  <mat-card-content class="p-0">
-    <div [ngSwitch]="view">
-      <mwl-calendar-month-view
-        *ngSwitchCase="'month'"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)"
-        (eventClicked)="handleEvent('edit', $event.event)">
-      </mwl-calendar-month-view>
-      <mwl-calendar-week-view
-        *ngSwitchCase="'week'"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        (eventClicked)="handleEvent('edit', $event.event)">
-      </mwl-calendar-week-view>
-      <mwl-calendar-day-view
-        *ngSwitchCase="'day'"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        (eventClicked)="handleEvent('edit', $event.event)">
-      </mwl-calendar-day-view>
+            <!-- Calendar -->
+            <mat-card-content class="p-0">
+                <div [ngSwitch]="view">
+                    <mwl-calendar-month-view
+                            *ngSwitchCase="'month'"
+                            [viewDate]="viewDate"
+                            [events]="events"
+                            [refresh]="refresh"
+                            [activeDayIsOpen]="activeDayIsOpen"
+                            (dayClicked)="dayClicked($event.day)"
+                            (eventClicked)="handleEvent('edit', $event.event)">
+                    </mwl-calendar-month-view>
+                    <mwl-calendar-week-view
+                            *ngSwitchCase="'week'"
+                            [viewDate]="viewDate"
+                            [events]="events"
+                            [refresh]="refresh"
+                            (eventClicked)="handleEvent('edit', $event.event)">
+                    </mwl-calendar-week-view>
+                    <mwl-calendar-day-view
+                            *ngSwitchCase="'day'"
+                            [viewDate]="viewDate"
+                            [events]="events"
+                            [refresh]="refresh"
+                            (eventClicked)="handleEvent('edit', $event.event)">
+                    </mwl-calendar-day-view>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </div>
-  </mat-card-content>
-</mat-card>
-  </div>
 </div>
 

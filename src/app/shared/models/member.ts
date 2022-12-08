@@ -8,9 +8,8 @@ export class Member {
     firstName: string;
     lastName: string;
     createdDate: string;
-    cv: string;
+    cv: File;
     photo: File;
-    type: string;
     email: string;
     password: string;
     birthDate: string;

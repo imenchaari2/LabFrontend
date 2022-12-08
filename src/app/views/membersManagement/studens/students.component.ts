@@ -66,6 +66,10 @@ export class StudentsComponent implements OnInit {
             name: 'Diploma'
         },
         {
+            prop: 'type',
+            name: 'Type'
+        },
+        {
             prop: 'supervisor.fullName',
             name: 'Supervisor'
         },
@@ -79,14 +83,16 @@ export class StudentsComponent implements OnInit {
 
     firstName = '';
     lastName = '';
-    diploma = '';
+    type = '';
+    master = 'master degree';
+    thesis = 'thesis';
+
     cin = '';
     supervisor = '';
     myDatePipe!: any;
-    retrievedImage: any [] = [];
     base64Data: any;
-    image: any;
     selectedCvFile: File;
+
     constructor(private memberService: MemberService,
                 private dialog: MatDialog,
                 datepipe: DatePipe,
@@ -105,6 +111,7 @@ export class StudentsComponent implements OnInit {
         this.selectedCvFile = event.target.files[0];
         console.log(this.selectedCvFile);
     }
+
     private getListStudents() {
         this.memberService.getAllStudents().subscribe(value => {
             if (!!value) {
@@ -144,25 +151,36 @@ export class StudentsComponent implements OnInit {
         });
     }
 
+    filterByType(event) {
+            this.type = event.value;
+
+        this.memberService.findStudentBySearch(this.firstName, this.lastName, this.cin, this.type).subscribe(value => {
+            if (!!value) {
+                this.rows = this.temp = value;
+                console.log(this.rows);
+            }
+        });
+        return this.rows;
+    }
     filterBySearchField(event) {
-        switch (event.target.placeholder) {
-            case 'filter by Name': {
-                this.firstName = event.target.value;
-                break;
-            }
-            case 'filter by Cin': {
-                this.cin = event.target.value;
-                break;
-            }
-            case 'filter by Diploma': {
-                this.diploma = event.target.value;
-                break;
-            }
-            default: {
-                break;
-            }
+        if (event.value === 'thesis' || event.value === 'master degree'){
+            this.type = event.value;
         }
-        this.memberService.findStudentBySearch(this.firstName, this.lastName, this.cin, this.diploma).subscribe(value => {
+            switch (event.target.placeholder) {
+                case 'filter by Name': {
+                    this.firstName = event.target.value;
+                    break;
+                }
+                case 'filter by Cin': {
+                    this.cin = event.target.value;
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+
+        this.memberService.findStudentBySearch(this.firstName, this.lastName, this.cin, this.type).subscribe(value => {
             if (!!value) {
                 this.rows = this.temp = value;
                 console.log(this.rows);
@@ -208,6 +226,7 @@ export class StudentsComponent implements OnInit {
         });
 
     }
+
     openPopUp(data: any = {}, isNew?) {
         const title = isNew ? 'Add new member' : 'Update member';
         const action = isNew ? 'add' : 'edit';
@@ -238,7 +257,7 @@ export class StudentsComponent implements OnInit {
 
                     });
                 } else {
-                    this.memberService.updateStudent(member, member.id,cv, photo).subscribe(res => {
+                    this.memberService.updateStudent(member, member.id, cv, photo).subscribe(res => {
                         this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
                         this.getListStudents();
                         this.refresh.next();

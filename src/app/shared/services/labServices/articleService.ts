@@ -61,9 +61,26 @@ export class ArticleService {
   public getArticleById(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/findArticle/${id}`);
   }
-  public addArticle(article: Article): Observable<Article> {
-    return this.http.post<Article>(`${this.apiUrl}/addArticle`, article);
+  public addArticle(article: Article , source: File): Observable<Article> {
+    const formData = new FormData();
+    for (const key in article ) {
+      formData.append(key, article[key]);
+    }
+    formData.append('file', source);
+    return this.http.post<Article>(`${this.apiUrl}/addArticle`, formData);
   }
+  public updateArticle(article: Article , id: string, source: File): Observable<Article> {
+    const formData = new FormData();
+    for (const key in article ) {
+      formData.append(key, article[key]);
+    }
+    formData.append('file', source);
+    return this.http.put<Article>(`${this.apiUrl}/updateArticle/${id}`, formData);
+  }
+  public affectAuthorToArticle(idMember: string , idArticle: string): Observable<Article> {
+    return this.http.put<Article>(`${this.apiUrl}/affectAuthor/${idMember}/${idArticle}`, {});
+  }
+
   public findArticleBySearch(title: string, type: string): Observable<Article[]> {
     return this.http.get<Article[]>(`${this.apiUrl}/findArticleBySearch?title=${title}&type=${type}`);
   }
@@ -73,9 +90,7 @@ export class ArticleService {
   public findArticleByCreatedDatePeriod(createdDateGT: Date, createdDateLT: Date): Observable<Article[]> {
     return this.http.get<Article[]>(`${this.apiUrl}/findByCreatedDatePeriod?createdDateGT=${createdDateGT}&createdDateLT=${createdDateLT}`);
   }
-  public updateArticle(article: Article , id: string): Observable<Article> {
-    return this.http.put<Article>(`${this.apiUrl}/updateArticle/${id}`, article);
-  }
+
 
   public deleteArticle(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/deleteArticle/${id}`);

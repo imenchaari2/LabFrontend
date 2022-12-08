@@ -40,9 +40,9 @@ export class AddStudentComponent {
     buttonTitle: string;
     selectedCvFile: File;
     selectedPhotoFile: File;
-    roles = [
-        {role: 'teacher'},
-        {role: 'student'}
+    types = [
+        {type: 'master degree'},
+        {type: 'thesis'}
     ];
 
     constructor(private formBuilder: UntypedFormBuilder,
@@ -75,7 +75,7 @@ export class AddStudentComponent {
             firstName: new UntypedFormControl(!!this.data?.payload?.firstName ? this.data?.payload?.firstName : ''),
             lastName: new UntypedFormControl(!!this.data?.payload?.lastName ? this.data?.payload?.lastName : ''),
             cin: new UntypedFormControl(!!this.data?.payload?.cin ? this.data?.payload?.cin : ''),
-            role: new UntypedFormControl(!!this.data?.payload?.role ? this.data?.payload?.role : ''),
+            type: new UntypedFormControl(!!this.data?.payload?.type ? this.data?.payload?.type : ''),
             email: new UntypedFormControl(!!this.data?.payload?.email ? this.data?.payload?.email : ''),
             birthDate: new UntypedFormControl(!!this.data?.payload?.birthDate ? this.data?.payload?.birthDate : ''),
             diploma: new UntypedFormControl(!!this.data?.payload?.diploma ? this.data?.payload?.diploma : ''),

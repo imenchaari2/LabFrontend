@@ -18,8 +18,8 @@ export class EventService {
     public getAllEvents(): Observable<EgretCalendarEvent[]> {
         return this.http.get<EgretCalendarEvent[]>(`${this.apiUrl}/events`);
     }
-    public getEventById(id: string): Observable<any> {
-        return this.http.get(`${this.apiUrl}/findEvent/${id}`);
+    public getEventById(idMember: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}/eventsByMember/${idMember}`);
     }
     public addEvent(event: EgretCalendarEvent): Observable<EgretCalendarEvent> {
         return this.http.post<EgretCalendarEvent>(`${this.apiUrl}/addEvent`, event);

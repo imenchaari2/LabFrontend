@@ -71,7 +71,6 @@ export class AddTeacherComponent {
             birthDate: new UntypedFormControl(!!this.data?.payload?.birthDate ? this.data?.payload?.birthDate : ''),
             grade: new UntypedFormControl(!!this.data?.payload?.grade ? this.data?.payload?.grade : ''),
             etablishment: new UntypedFormControl(!!this.data?.payload?.etablishment ? this.data?.payload?.etablishment : ''),
-            role: new UntypedFormControl(!!this.data?.payload?.role ? this.data?.payload?.role : ''),
             password,
             confirmPassword,
         });

@@ -1,25 +1,27 @@
-import {Component, Input, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 // import {DialogComponent} from '../dialog/dialog.component';
 // import {SelectAuteurComponent} from '../select-auteur/select-auteur.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {MemberService} from "../../../shared/services/labServices/memberService";
-import {Article} from "../../../shared/models/article";
-import {ArticleService} from "../../../shared/services/labServices/articleService";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {AppConfirmService} from "../../../shared/services/app-confirm/app-confirm.service";
-import {AppLoaderService} from "../../../shared/services/app-loader/app-loader.service";
-import {AddArticleComponent} from "../add-article/add-article.component";
-import {Router} from "@angular/router";
-import {Observable, Subject} from "rxjs";
+import {MemberService} from '../../../shared/services/labServices/memberService';
+import {Article} from '../../../shared/models/article';
+import {ArticleService} from '../../../shared/services/labServices/articleService';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {AppConfirmService} from '../../../shared/services/app-confirm/app-confirm.service';
+import {AppLoaderService} from '../../../shared/services/app-loader/app-loader.service';
+import {AddArticleComponent} from '../add-article/add-article.component';
+import {Router} from '@angular/router';
+import {Observable, Subject} from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {map, startWith} from "rxjs/operators";
-import {Teacher} from "../../../shared/models/Teacher";
+import {map, startWith} from 'rxjs/operators';
+import {Teacher} from '../../../shared/models/Teacher';
 import {SelectAuteurComponent} from '../affect-Author/select-auteur.component';
-import {Member} from "../../../shared/models/member";
+import {Member} from '../../../shared/models/member';
 import {
     FilterByCreatedDatePeriodComponent
 } from '../../membersManagement/filterDate/filterByCreatedDatePeriod.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-articles',
@@ -69,15 +71,17 @@ export class ArticlesComponent implements OnInit {
     supervisors: string[] = [];
     options: Teacher[] = [];
     filteredOptions: Observable<string[]>;
-
+    myDatePipe!: any;
     constructor(private articleService: ArticleService, private memberService: MemberService, private dialog: MatDialog,
                 private snack: MatSnackBar,
+                datepipe: DatePipe,
                 private confirmService: AppConfirmService,
                 private loader: AppLoaderService,
                 private router: Router,
                 private ngZone: NgZone,
                 private _snackBar: MatSnackBar,
     ) {
+        this.myDatePipe = datepipe;
     }
 
     ngOnInit(): void {
@@ -89,7 +93,17 @@ export class ArticlesComponent implements OnInit {
         );
 
     }
-
+    onDownloadFile(filename: string): void {
+        this.memberService.download(filename).subscribe(
+            event => {
+                console.log(event);
+                // this.resportProgress(event);
+            },
+            (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        );
+    }
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
 
@@ -97,10 +111,10 @@ export class ArticlesComponent implements OnInit {
     }
 
     private getAllMembers() {
-        this.memberService.getAllMembers().subscribe(value => {
+        this.memberService.getAllAuthors().subscribe(value => {
             if (!!value) {
                 value.map(member => {
-                    this.supervisors.push(member.firstName + " " + member.lastName);
+                    this.supervisors.push(member.firstName + ' ' + member.lastName);
                 });
             }
         });
@@ -126,20 +140,22 @@ export class ArticlesComponent implements OnInit {
         dialogRef.afterClosed()
             .subscribe(res => {
                 const article = res.article;
+                const source = res.source;
+                article.createdDate = this.myDatePipe.transform(article.createdDate, 'yyyy-MM-dd');
                 if (!res) {
                     // If user press cancel
                     return;
                 }
                 if (isNew) {
-                    console.log(article)
-                    this.articleService.addArticle(article).subscribe(async () => {
+                    console.log(article);
+                    this.articleService.addArticle(article, source).subscribe(async () => {
                         this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
                         await this.getListArticles();
                         this.refresh.next();
 
                     });
                 } else {
-                    this.articleService.updateArticle(article, article.articleId).subscribe(async () => {
+                    this.articleService.updateArticle(article, article.articleId, source).subscribe(async () => {
                         this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
                         await this.getListArticles();
                         this.refresh.next();
@@ -157,8 +173,8 @@ export class ArticlesComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                article.authorId = result.data.id;
-                this.articleService.updateArticle(article, article.articleId).subscribe(res => {
+                console.log(result.data.id)
+                this.articleService.affectAuthorToArticle( result.data.id, article.articleId).subscribe(res => {
                     this._snackBar.open('author affected successfully !', '', {duration: 1000});
                     this.getListArticles();
                     this.refresh.next();

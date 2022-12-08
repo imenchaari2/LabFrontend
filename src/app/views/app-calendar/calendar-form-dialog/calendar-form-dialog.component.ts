@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CalendarEvent} from 'angular-calendar';
 import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup} from '@angular/forms';
 import {EgretCalendarEvent} from '../../../shared/models/event.model';
+import {JwtAuthService} from "../../../shared/services/auth/jwt-auth.service";
 
 interface DialogData {
     event?: EgretCalendarEvent,
