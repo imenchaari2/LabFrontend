@@ -45,59 +45,60 @@
         </button>
     </div>
 </div>
-<mat-card class="p-0">
-    <div class="mat-box-shadow">
-        <ngx-datatable class="material"
-                       [columnMode]="'force'"
-                       [headerHeight]="50"
-                       [rowHeight]="50"
-                       [footerHeight]="50"
-                       [limit]="10"
-                       [rows]="rows"
-                       [columns]="columns"
-        >
-            <ng-container *ngFor='let column of columns'>
-                <ngx-datatable-column
-                        *ngIf='column.name !== "Actions" &&column.name !== "Pdf source"&&column.name !== "url"'
-                        name="{{column.name}}"
-                        prop="{{column.prop}}">
-                </ngx-datatable-column>
-                <ngx-datatable-column *ngIf='column.name === "Pdf source"' name="{{column.name}}">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                    <span>
-                        <button mat-icon-button color="primary" (click)="onDownloadFile(row.pdfSource.name)"><mat-icon>cloud_download</mat-icon></button>
-                    </span>
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column *ngIf='column.name === "url"' name="{{column.name}}">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-                    <span>
-                    <a href="{{row.url}}" target="_blank">{{row.url}}</a>
-                    </span>
-                    </ng-template>
-                </ngx-datatable-column>
+
+<mat-card-content>
+
+    <div fxLayout="row wrap">
+        <!-- Pricing box -->
+        <div *ngFor="let article of rows" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-card class="plan-pricing text-center p-0">
+                <mat-card-title class="light-gray mb-16">
+                    <div class="card-title-text">
+                        <div class=""><h1><strong>{{article.title}}</strong></h1>
+                            <div class="text-sm text-muted">type : {{article.type}}</div>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                </mat-card-title>
+                <mat-card-content>
+                    <div class=" pt-16 pb-16 border-right-light" style="padding-right: 20px">
+                        <div fxLayout="column wrap">
+                            <h3 style="color: #0b72e7">
+                                <mat-icon>event_available</mat-icon>
+                                Created date :  {{article.createdDate}}</h3>
+                            <h4 style="color: #0d243f">
+                                <mat-icon>people_outline</mat-icon>
+                                authored by :
+                            </h4>
+                            <h5 *ngFor="let member of article.membersNames" style="color: #094f9d">-- {{member}}</h5>
+                            <div class="text-sm text-muted">url : <a href="{{article.url}}"
+                                                                     target="_blank">{{article.url}}</a></div>
+
+                        </div>
+                    </div>
+                    <button mat-icon-button class="mr-8" color="primary"
+                            (click)="onDownloadFile(article.pdfSource.name)">
+                        <mat-icon>cloud_download</mat-icon>
+                    </button>
+
+                    <button *ngIf="contains(article,currentUserId)" mat-icon-button mat-sm-button class="mr-8"
+                            style="color: green"
+                            (click)="openPopUp(article,false)"
+                    >
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button class="mr-8" color="warn" (click)="affect(article)">
+                        <mat-icon>add_task</mat-icon>
+                    </button>
+
+                    <button *ngIf="role==='ROLE_ADMIN'" mat-icon-button mat-sm-button color="warn"
+                            (click)="deleteItem(article.title, article.articleId)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-card-content>
+            </mat-card>
+        </div>
 
 
-                <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
-                    <ng-template ngx-datatable-cell-template let-row="row">
-
-                    <span>
-
-                        <button mat-icon-button mat-sm-button class="mr-8" style="color: green"
-                                (click)="openPopUp(row,false)"
-                        ><mat-icon>edit</mat-icon></button>
-                              <button mat-icon-button color="warn" (click)="affect(row)"><mat-icon>add_task</mat-icon></button>
-
-                        <button mat-icon-button mat-sm-button color="warn"
-                                (click)="deleteItem(row.title, row.articleId)"><mat-icon>delete</mat-icon></button>
-
-                    </span>
-                    </ng-template>
-                </ngx-datatable-column>
-            </ng-container>
-
-        </ngx-datatable>
     </div>
-</mat-card>
-
-
+</mat-card-content>

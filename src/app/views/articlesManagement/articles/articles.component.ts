@@ -22,6 +22,8 @@ import {
 } from '../../membersManagement/filterDate/filterByCreatedDatePeriod.component';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DatePipe} from "@angular/common";
+import {SelectMemberComponent} from "../../app-calendar/affect-Member/select-member.component";
+import {JwtAuthService} from "../../../shared/services/auth/jwt-auth.service";
 
 @Component({
     selector: 'app-articles',
@@ -72,6 +74,11 @@ export class ArticlesComponent implements OnInit {
     options: Teacher[] = [];
     filteredOptions: Observable<string[]>;
     myDatePipe!: any;
+    membersIds: string[] = [];
+    affectedMembers: Member[];
+    role: string;
+    currentUserId: string;
+
     constructor(private articleService: ArticleService, private memberService: MemberService, private dialog: MatDialog,
                 private snack: MatSnackBar,
                 datepipe: DatePipe,
@@ -80,8 +87,12 @@ export class ArticlesComponent implements OnInit {
                 private router: Router,
                 private ngZone: NgZone,
                 private _snackBar: MatSnackBar,
+                private authService: JwtAuthService,
     ) {
         this.myDatePipe = datepipe;
+        this.role = this.authService.getUser().role;
+        this.currentUserId = this.authService.getUser().id;
+
     }
 
     ngOnInit(): void {
@@ -93,6 +104,11 @@ export class ArticlesComponent implements OnInit {
         );
 
     }
+
+    contains(article: Article, id: string): boolean {
+        return article.membersIds.indexOf(id) !== -1;
+    }
+
     onDownloadFile(filename: string): void {
         this.memberService.download(filename).subscribe(
             event => {
@@ -104,6 +120,7 @@ export class ArticlesComponent implements OnInit {
             }
         );
     }
+
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
 
@@ -120,8 +137,8 @@ export class ArticlesComponent implements OnInit {
         });
     }
 
-    async  getListArticles() {
-        this.articleService.getAllArticles().subscribe( value => {
+    async getListArticles() {
+        this.articleService.getAllArticles().subscribe(value => {
             if (!!value) {
                 this.rows = this.temp = value;
             }
@@ -165,19 +182,26 @@ export class ArticlesComponent implements OnInit {
     }
 
     affect(article: Article): void {
-        const isStudent = false;
-        const dialogRef = this.dialog.open(SelectAuteurComponent, {
+        const isArticle = true;
+        const dialogRef = this.dialog.open(SelectMemberComponent, {
             width: '450px',
-            data: {payload: article , isStudent},
+            data: {payload: article, isArticle},
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result.data.id)
-                this.articleService.affectAuthorToArticle( result.data.id, article.articleId).subscribe(res => {
-                    this._snackBar.open('author affected successfully !', '', {duration: 1000});
+                console.log(result.data)
+                this.affectedMembers = result.data;
+                this.affectedMembers.map(member => {
+                    this.membersIds.push(member.id);
+                });
+                this.articleService.affectAuthorsToArticle(article.articleId, this.membersIds).subscribe(res => {
                     this.getListArticles();
                     this.refresh.next();
+
+                    this._snackBar.open('members affected successfully !', '', {duration: 1000});
+
+
                 });
             }
         });
@@ -232,6 +256,7 @@ export class ArticlesComponent implements OnInit {
         });
         return this.rows;
     }
+
     filterByAuthorName(event) {
         switch (event.target.placeholder) {
             case 'filter by Author': {

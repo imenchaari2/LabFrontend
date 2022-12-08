@@ -17,13 +17,18 @@ export class SelectMemberComponent implements OnInit {
     membersSelected: Member[]=[];
     affectedMembers = new FormControl('');
     event = '';
+    article = '';
     membersIds: string[];
     constructor(private memberService: MemberService,
                 private matDialog: MatDialog,
                 public dialogRef: MatDialogRef<SelectMemberComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
-            this.event = this.data.payload.title;
         // this.affectedMembers =  new FormControl(data.payload.membersIds);
+        if (data.isArticle === true) {
+            this.article = this.data.payload.title;
+        } else {
+            this.event = this.data.payload.title;
+        }
     }
 
     ngOnInit(): void {

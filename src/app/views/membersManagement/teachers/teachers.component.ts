@@ -71,6 +71,7 @@ export class TeachersComponent implements OnInit {
     lastName = '';
     grade = '';
     cin = '';
+    role = '';
     etablishment = '';
     myDatePipe: any;
     public refresh: Subject<any> = new Subject();
@@ -78,13 +79,14 @@ export class TeachersComponent implements OnInit {
     constructor(private memberService: MemberService,
                 private dialog: MatDialog,
                 private snack: MatSnackBar,
+                private authService: JwtAuthService,
                 datepipe: DatePipe,
                 private confirmService: AppConfirmService,
                 private loader: AppLoaderService,
-                private authService: JwtAuthService,
                 private router: Router,
                 private ngZone: NgZone) {
         this.myDatePipe = datepipe;
+        this.role = this.authService.getUser().role;
 
     }
 

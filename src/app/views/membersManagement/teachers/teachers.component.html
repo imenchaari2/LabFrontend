@@ -41,7 +41,7 @@
     </mat-form-field>
 
     <span fxFlex></span>
-    <div class="m-333">
+    <div *ngIf="role==='ROLE_ADMIN'" class="m-333">
         <button mat-button class="button-add" (click)="openPopUp({},true)">
             <mat-icon  style="color: #c0320d">add_circle</mat-icon>
             Add Teacher
@@ -75,7 +75,7 @@
                     </span>
               </ng-template>
           </ngx-datatable-column>
-        <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
+        <ngx-datatable-column *ngIf='column.name === "Actions" && role==="ROLE_ADMIN"' name="Actions" prop="actions">
           <ng-template ngx-datatable-cell-template let-row="row">
                     <span>
                         <button mat-icon-button mat-sm-button class="mr-8" style="color: green"

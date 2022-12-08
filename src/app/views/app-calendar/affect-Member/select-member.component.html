@@ -2,7 +2,8 @@
 
     <div fxLayoutAlign="space-between center">
         <div>
-            <h2 class="green-300-fg">Affect members to {{event}}</h2>
+            <h2 *ngIf="data.isArticle===true" class="green-300-fg">Affect members to article :  {{article}}</h2>
+            <h2 *ngIf="data.isArticle===false" class="green-300-fg">Affect members to event :  {{event}}</h2>
         </div>
         <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
             <mat-icon>close</mat-icon>
@@ -14,17 +15,6 @@
 
 
         <div fxFlex="90">
-            <!--          <mat-select placeholder="Select your author"-->
-            <!--                      matInput-->
-            <!--                      [(ngModel)]="author"-->
-            <!--          >-->
-            <!--            <div>-->
-            <!--              <mat-option *ngFor="let auteur of authors" [value]="auteur">-->
-            <!--                {{auteur.firstName}} {{auteur.lastName}}-->
-            <!--              </mat-option>-->
-            <!--            </div>-->
-            <!--          </mat-select>-->
-
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Members</mat-label>
                 <mat-select [formControl]="affectedMembers" multiple>

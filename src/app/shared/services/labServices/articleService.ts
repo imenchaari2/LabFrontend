@@ -4,6 +4,7 @@ import {Article} from "../../models/article";
 import {Observable} from "rxjs";
 import {Student} from "../../models/Student";
 import {environment} from "../../../../environments/environment";
+import {EgretCalendarEvent} from "../../models/event.model";
 
 
 @Injectable({
@@ -77,8 +78,8 @@ export class ArticleService {
     formData.append('file', source);
     return this.http.put<Article>(`${this.apiUrl}/updateArticle/${id}`, formData);
   }
-  public affectAuthorToArticle(idMember: string , idArticle: string): Observable<Article> {
-    return this.http.put<Article>(`${this.apiUrl}/affectAuthor/${idMember}/${idArticle}`, {});
+  public affectAuthorsToArticle( idArticle: string, ids: string[]): Observable<Article> {
+    return this.http.put<Article>(`${this.apiUrl}/affectAuthors/${idArticle}?membersIds=${ids}`,{});
   }
 
   public findArticleBySearch(title: string, type: string): Observable<Article[]> {

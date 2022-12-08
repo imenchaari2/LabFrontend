@@ -41,7 +41,7 @@
     <mat-icon class="pr-16">date_range</mat-icon>Filter by inscription period</button>
 
     <span fxFlex></span>
-    <div class="m-333">
+    <div *ngIf="role==='ROLE_ADMIN'" class="m-333">
         <button mat-button class="button-add" (click)="openPopUp({},true)">
             <mat-icon  style="color: #c0320d">add_circle</mat-icon>
             Add Student
@@ -79,14 +79,14 @@
                     </span>
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
+                <ngx-datatable-column *ngIf='column.name === "Actions" && role!=="ROLE_STUDENT"' name="Actions" prop="actions">
                     <ng-template ngx-datatable-cell-template let-row="row">
                     <span>
                         <button mat-icon-button color="warn" (click)="affect(row)"><mat-icon>add_task</mat-icon></button>
 
-                        <button mat-icon-button mat-sm-button class="mr-8" style="color: green"
+                        <button *ngIf="role==='ROLE_ADMIN'" mat-icon-button mat-sm-button class="mr-8" style="color: green"
                                 (click)="openPopUp(row,false)"><mat-icon>edit</mat-icon></button>
-                        <button mat-icon-button mat-sm-button color="warn" (click)="deleteItem(row, row.id)"><mat-icon>delete</mat-icon></button>
+                        <button *ngIf="role==='ROLE_ADMIN'" mat-icon-button mat-sm-button color="warn" (click)="deleteItem(row, row.id)"><mat-icon>delete</mat-icon></button>
                     </span>
                     </ng-template>
                 </ngx-datatable-column>

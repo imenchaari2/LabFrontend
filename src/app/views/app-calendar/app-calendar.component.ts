@@ -146,7 +146,7 @@ export class AppCalendarComponent implements OnInit {
                     this.membersIds.push(member.id);
                 });
                 this.eventService.affectMembersToEvent(event._id, this.membersIds).subscribe(res => {
-                    this._snackBar.open('author affected successfully !', '', {duration: 1000});
+                    this._snackBar.open('members affected successfully !', '', {duration: 1000});
                     this.loadEvents();
                     this.refresh.next();
                 });

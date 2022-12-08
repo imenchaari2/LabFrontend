@@ -15,6 +15,7 @@ import {Teacher} from '../../../shared/models/Teacher';
 import {Student} from '../../../shared/models/Student';
 import {HttpErrorResponse} from "@angular/common/http";
 import {DatePipe} from "@angular/common";
+import {JwtAuthService} from "../../../shared/services/auth/jwt-auth.service";
 
 @Component({
     selector: 'app-students',
@@ -86,7 +87,7 @@ export class StudentsComponent implements OnInit {
     type = '';
     master = 'master degree';
     thesis = 'thesis';
-
+    role = '';
     cin = '';
     supervisor = '';
     myDatePipe!: any;
@@ -97,9 +98,11 @@ export class StudentsComponent implements OnInit {
                 private dialog: MatDialog,
                 datepipe: DatePipe,
                 private _snackBar: MatSnackBar,
+                private authService: JwtAuthService,
                 private confirmService: AppConfirmService,
                 private loader: AppLoaderService) {
         this.myDatePipe = datepipe;
+        this.role = this.authService.getUser().role;
 
     }
 
@@ -152,7 +155,7 @@ export class StudentsComponent implements OnInit {
     }
 
     filterByType(event) {
-            this.type = event.value;
+        this.type = event.value;
 
         this.memberService.findStudentBySearch(this.firstName, this.lastName, this.cin, this.type).subscribe(value => {
             if (!!value) {
@@ -162,23 +165,24 @@ export class StudentsComponent implements OnInit {
         });
         return this.rows;
     }
+
     filterBySearchField(event) {
-        if (event.value === 'thesis' || event.value === 'master degree'){
+        if (event.value === 'thesis' || event.value === 'master degree') {
             this.type = event.value;
         }
-            switch (event.target.placeholder) {
-                case 'filter by Name': {
-                    this.firstName = event.target.value;
-                    break;
-                }
-                case 'filter by Cin': {
-                    this.cin = event.target.value;
-                    break;
-                }
-                default: {
-                    break;
-                }
+        switch (event.target.placeholder) {
+            case 'filter by Name': {
+                this.firstName = event.target.value;
+                break;
             }
+            case 'filter by Cin': {
+                this.cin = event.target.value;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
 
         this.memberService.findStudentBySearch(this.firstName, this.lastName, this.cin, this.type).subscribe(value => {
             if (!!value) {

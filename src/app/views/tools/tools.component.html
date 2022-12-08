@@ -1,1 +1,54 @@
-<p>tools works!</p>
+<!--<mat-card class="p-0">-->
+<!--    <div class="mat-box-shadow">-->
+<!--        <ngx-datatable class="material"-->
+<!--                       [columnMode]="'force'"-->
+<!--                       [headerHeight]="50"-->
+<!--                       [rowHeight]="50"-->
+<!--                       [footerHeight]="50"-->
+<!--                       [limit]="10"-->
+<!--                       [rows]="rows"-->
+<!--                       [columns]="columns"-->
+<!--        >-->
+<!--            <ng-container *ngFor='let column of columns'>-->
+<!--                <ngx-datatable-column-->
+<!--                        *ngIf='column.name !== "Actions" &&column.name !== "Pdf source"&&column.name !== "url"'-->
+<!--                        name="{{column.name}}"-->
+<!--                        prop="{{column.prop}}">-->
+<!--                </ngx-datatable-column>-->
+<!--                <ngx-datatable-column *ngIf='column.name === "Pdf source"' name="{{column.name}}">-->
+<!--                    <ng-template ngx-datatable-cell-template let-row="row">-->
+<!--                    <span>-->
+<!--                        <button mat-icon-button color="primary" (click)="onDownloadFile(row.pdfSource.name)"><mat-icon>cloud_download</mat-icon></button>-->
+<!--                    </span>-->
+<!--                    </ng-template>-->
+<!--                </ngx-datatable-column>-->
+<!--                <ngx-datatable-column *ngIf='column.name === "url"' name="{{column.name}}">-->
+<!--                    <ng-template ngx-datatable-cell-template let-row="row">-->
+<!--                    <span>-->
+<!--                    <a href="{{row.url}}" target="_blank">{{row.url}}</a>-->
+<!--                    </span>-->
+<!--                    </ng-template>-->
+<!--                </ngx-datatable-column>-->
+
+
+<!--                <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">-->
+<!--                    <ng-template ngx-datatable-cell-template let-row="row">-->
+
+<!--                    <span>-->
+
+<!--                        <button mat-icon-button mat-sm-button class="mr-8" style="color: green"-->
+<!--                                (click)="openPopUp(row,false)"-->
+<!--                        ><mat-icon>edit</mat-icon></button>-->
+<!--                              <button mat-icon-button color="warn" (click)="affect(row)"><mat-icon>add_task</mat-icon></button>-->
+
+<!--                        <button mat-icon-button mat-sm-button color="warn"-->
+<!--                                (click)="deleteItem(row.title, row.articleId)"><mat-icon>delete</mat-icon></button>-->
+
+<!--                    </span>-->
+<!--                    </ng-template>-->
+<!--                </ngx-datatable-column>-->
+<!--            </ng-container>-->
+
+<!--        </ngx-datatable>-->
+<!--    </div>-->
+<!--</mat-card>-->

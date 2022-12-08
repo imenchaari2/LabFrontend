@@ -53,6 +53,7 @@ import { FilterByCreatedDatePeriodComponent } from './views/membersManagement/fi
 import { SharedPipesModule } from './shared/pipes/shared-pipes.module';
 import { DatePipe } from '@angular/common';
 import {FileUploadModule} from "ng2-file-upload";
+import {MatListModule} from "@angular/material/list";
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient);
 }
@@ -99,6 +100,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         MatAutocompleteModule,
         FormsModule,
         FileUploadModule,
+        MatListModule,
     ],
     declarations: [
         AppComponent,
