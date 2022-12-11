@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DatePipe, formatDate} from '@angular/common';
 import {ArticleService} from "../../../shared/services/labServices/articleService";
 import {MemberService} from "../../../shared/services/labServices/memberService";
+import {ToolService} from "../../../shared/services/labServices/ToolService";
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -23,6 +24,7 @@ export class FilterByCreatedDatePeriodComponent {
                 @Inject(MAT_DIALOG_DATA) public data: any,
                 private articleService: ArticleService,
                 private memberService: MemberService,
+                private toolService: ToolService,
     ) {
         this.myDatepipe = datepipe;
         this.basicForm = this.formBuilder.group({
@@ -38,6 +40,16 @@ export class FilterByCreatedDatePeriodComponent {
         const ConvertedcreatedDateGT = this.myDatepipe.transform(this.basicForm.value.createdDateGT, 'yyyy-MM-dd');
         const ConvertedcreatedDateLT = this.myDatepipe.transform(this.basicForm.value.createdDateLT, 'yyyy-MM-dd');
         this.articleService.findArticleByCreatedDatePeriod(ConvertedcreatedDateGT, ConvertedcreatedDateLT).subscribe(value => {
+            if (!!value) {
+                console.log(value);
+                this.dialogRef.close({data: value});
+            }
+        });
+    }
+    applyToolCreatedDatePeriodFilter() {
+        const ConvertedcreatedDateGT = this.myDatepipe.transform(this.basicForm.value.createdDateGT, 'yyyy-MM-dd');
+        const ConvertedcreatedDateLT = this.myDatepipe.transform(this.basicForm.value.createdDateLT, 'yyyy-MM-dd');
+        this.toolService.findToolByCreatedDatePeriod(ConvertedcreatedDateGT, ConvertedcreatedDateLT).subscribe(value => {
             if (!!value) {
                 console.log(value);
                 this.dialogRef.close({data: value});

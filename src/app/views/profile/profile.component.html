@@ -1,50 +1,3 @@
-<!--<div fxLayout="row wrap">-->
-<!--  <div fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">-->
-<!--    <mat-card class="profile-sidebar mb-16 pb-0">-->
-<!--      <div class="propic text-center">-->
-<!--        <img src="assets/images/sq-face-220.jpg" alt="">-->
-<!--      </div>-->
-<!--      <div class="profile-title text-center mb-16">-->
-<!--&lt;!&ndash;        <div class="main-title">{{(user | async)?.displayName}}</div>&ndash;&gt;-->
-<!--        <div class="subtitle mb-8">Big Data Expert</div>-->
-<!--        <div class="text-muted">Hi I'm Jhone, sit amet consectetur adipisicing elit. Aperiam repellendus nam perspiciatis.</div>-->
-<!--      </div>-->
-
-<!--      <div class="profile-nav">-->
-<!--        <mat-nav-list>-->
-<!--          <mat-list-item routerLink="/profile/overview" routerLinkActive="list-item-active">-->
-<!--            <mat-icon>home</mat-icon>-->
-<!--            Overview-->
-<!--          </mat-list-item>-->
-<!--          <mat-divider></mat-divider>-->
-<!--          <mat-list-item routerLink="/profile/settings" routerLinkActive="list-item-active">-->
-<!--            <mat-icon>settings</mat-icon>-->
-<!--            Settings-->
-<!--          </mat-list-item>-->
-
-<!--        </mat-nav-list>-->
-<!--      </div>-->
-<!--    </mat-card>-->
-
-<!--    &lt;!&ndash; Contact Information &ndash;&gt;-->
-<!--    <mat-card class="default">-->
-<!--      <mat-card-title>Contact Information</mat-card-title>-->
-<!--      <mat-card-content class="pt-0">-->
-<!--        <mat-list>-->
-<!--          <mat-list-item><mat-icon class="mr-16">public</mat-icon> www.mhrafi.com</mat-list-item>-->
-<!--          <mat-list-item><mat-icon class="mr-16">email</mat-icon> example@gmail.com</mat-list-item>-->
-<!--          <mat-list-item><mat-icon class="mr-16">phone</mat-icon> 8801822778800</mat-list-item>-->
-<!--          <mat-list-item><mat-icon class="mr-16">add_location</mat-icon> SUST, Sylhet, BD</mat-list-item>-->
-<!--        </mat-list>-->
-<!--      </mat-card-content>-->
-<!--    </mat-card>-->
-<!--  </div>-->
-
-<!--&lt;!&ndash; Profile Views &ndash;&gt;-->
-<!--  <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">-->
-<!--    <router-outlet></router-outlet>-->
-<!--  </div>-->
-<!--</div>-->
 <div fxLayout="row wrap">
     <div fxFlex="100" fxFlex.gt-md="400px" fxFlex.gt-sm="50">
         <mat-card class="profile-sidebar mb-16 pb-0">
@@ -54,97 +7,26 @@
             <div class="profile-title text-center mb-16">
                 <!--        <div class="main-title">{{(user | async)?.displayName}}</div>-->
                 <div class="subtitle mb-8">{{member.firstName +" "+member.lastName}}</div>
-                <div class="text-muted">diploma
-                </div>
+                <div class="text-muted">diploma</div>
             </div>
-
             <div class="profile-nav">
                 <mat-nav-list>
-                    <mat-card-content class="pl-16">
-                        <mat-list>
-                            <mat-list-item>
-                                <mat-icon class="mr-16">public</mat-icon>
-                                www.mhrafi.com
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon class="mr-16">email</mat-icon>
-                                {{member.email}}
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon class="mr-16">phone</mat-icon>
-                                8801822778800
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon class="mr-16">add_location</mat-icon>
-                                SUST, Sylhet, BD
-                            </mat-list-item>
-                        </mat-list>
-                    </mat-card-content>
                     <mat-divider></mat-divider>
                     <mat-list-item routerLink="/profile/settings" routerLinkActive="list-item-active">
                         <mat-icon>settings</mat-icon>
                         Settings
                     </mat-list-item>
-
-                </mat-nav-list>
-            </div>
-        </mat-card>
-
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="calc(100% - 400px)" fxFlex.gt-sm="50">
-        <mat-card class="profile-sidebar mb-16 pb-0">
-            <div class="propic text-center">
-                <img src="assets/images/sq-face-220.jpg" alt="">
-            </div>
-            <div class="profile-title text-center mb-16">
-                <!--        <div class="main-title">{{(user | async)?.displayName}}</div>-->
-                <div class="subtitle mb-8">Big Data Expert</div>
-                <div class="text-muted">Hi I'm Jhone, sit amet consectetur adipisicing elit. Aperiam repellendus nam
-                    perspiciatis.
-                </div>
-            </div>
-
-            <div class="profile-nav">
-                <mat-nav-list>
-                    <mat-card-content class="pl-16">
-                        <mat-list>
-                            <mat-list-item>
-                                <mat-icon class="mr-16">public</mat-icon>
-                                www.mhrafi.com
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon class="mr-16">email</mat-icon>
-                                {{member.email}}
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon class="mr-16">phone</mat-icon>
-                                8801822778800
-                            </mat-list-item>
-                            <mat-list-item>
-                                <mat-icon class="mr-16">add_location</mat-icon>
-                                SUST, Sylhet, BD
-                            </mat-list-item>
-                        </mat-list>
-                    </mat-card-content>
-                    <mat-list-item routerLink="/profile/overview" routerLinkActive="list-item-active">
-                        <mat-icon>home</mat-icon>
-                        Overview
-                    </mat-list-item>
                     <mat-divider></mat-divider>
-                    <mat-list-item routerLink="/profile/settings" routerLinkActive="list-item-active">
-                        <mat-icon>settings</mat-icon>
-                        Settings
-                    </mat-list-item>
 
                 </mat-nav-list>
             </div>
         </mat-card>
 
-    </div>
 
+    </div>
 
     <!-- Profile Views -->
-    <div>
+    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 400px)">
         <router-outlet></router-outlet>
     </div>
 </div>

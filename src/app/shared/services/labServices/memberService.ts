@@ -44,6 +44,7 @@ export class MemberService {
     public getAllMembers(): Observable<Member[]> {
         return this.http.get<Member[]>(`${this.apiUrl}/members`);
     }
+
     public getAllAuthors(): Observable<Member[]> {
         return this.http.get<Member[]>(`${this.apiUrl}/authors`);
     }
@@ -68,41 +69,59 @@ export class MemberService {
     public getMemberById(id: string): Observable<any> {
         return this.http.get(`${this.apiUrl}/member/${id}`);
     }
+
     public getMemberPhoto(imageName: string): Observable<any> {
         return this.http.get(`${this.apiUrl}/get/${imageName}`);
     }
 
     public addStudent(student: Student, cv: File, photo: File): Observable<any> {
         const formData = new FormData();
-        for (const key in student ) {
+        for (const key in student) {
             formData.append(key, student[key]);
         }
         formData.append('cvFile', cv);
         formData.append('photoFile', photo);
         return this.http.post<Student>(`${this.apiUrl}/addStudent`, formData);
     }
+
     public updateStudent(student: Student, id: string, cv: File, photo: File): Observable<Student> {
         const formData = new FormData();
-        for (const key in student ) {
+        for (const key in student) {
             formData.append(key, student[key]);
         }
         formData.append('cvFile', cv);
         formData.append('photoFile', photo);
         return this.http.put<Student>(`${this.apiUrl}/updateStudent/${id}`, formData);
     }
+    public updateStudentInfos(id: string , student: Student): Observable<Student> {
+        const formData = new FormData();
+        for (const key in student) {
+            formData.append(key, student[key]);
+        }
+        return this.http.put<Student>(`${this.apiUrl}/updateStudent/${id}`, formData);
+    }
 
     public updateTeacher(teacher: Teacher, id: string, cv: File, photo: File): Observable<Teacher> {
         const formData = new FormData();
-        for (const key in teacher ) {
+        for (const key in teacher) {
             formData.append(key, teacher[key]);
         }
         formData.append('cvFile', cv);
         formData.append('photoFile', photo);
         return this.http.put<Teacher>(`${this.apiUrl}/updateTeacherResearcher/${id}`, formData);
     }
+
+    public updateTeacherInfos(id: string, teacher: Teacher): Observable<Teacher> {
+        const formData = new FormData();
+        for (const key in teacher) {
+            formData.append(key, teacher[key]);
+        }
+        return this.http.put<Teacher>(`${this.apiUrl}/updateTeacherResearcher/${id}`, formData);
+    }
+
     public addTeacher(teacher: Teacher, cv: File, photo: File): Observable<any> {
         const formData = new FormData();
-        for (const key in teacher ) {
+        for (const key in teacher) {
             formData.append(key, teacher[key]);
         }
         formData.append('cvFile', cv);
@@ -117,12 +136,9 @@ export class MemberService {
     }
 
 
-
-
     public affectSupervisorToStudent(student: Student, idSupervisor: string): Observable<any> {
         return this.http.put(`${this.apiUrl}/affectSupervisorToStudent/${idSupervisor}`, student);
     }
-
 
 
     public deleteMember(id: string): Observable<void> {
@@ -143,5 +159,9 @@ export class MemberService {
             observe: 'events',
             responseType: 'blob'
         });
+    }
+
+    public changePassword(id: string, currentPass: string, newPass: string): Observable<any> {
+        return this.http.put<any>(`${this.apiUrl}/changePassword/${id}?currentPass=${currentPass}&newPass=${newPass}`, {});
     }
 }

@@ -23,7 +23,6 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this.member = this.jwtAuth.getUser();
-        console.log(this.jwtAuth.getJwtToken())
         console.log(this.jwtAuth.getUser())
         this.getMemberById(this.member.id);
     }

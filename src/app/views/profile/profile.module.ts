@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -26,31 +26,38 @@ import { ProfileOverviewComponent } from './profile-overview/profile-overview.co
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 import { ProfileBlankComponent } from './profile-blank/profile-blank.component';
 import { ProfileRoutes } from "./profile.routing";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatMenuModule,
-    MatSlideToggleModule,
-    MatGridListModule,
-    MatChipsModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatTabsModule,
-    MatInputModule,
-    MatProgressBarModule,
-    FlexLayoutModule,
-    NgxDatatableModule,
-    ChartsModule,
-    FileUploadModule,
-    SharedPipesModule,
-    RouterModule.forChild(ProfileRoutes)
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatListModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatMenuModule,
+        MatSlideToggleModule,
+        MatGridListModule,
+        MatChipsModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatTabsModule,
+        MatInputModule,
+        MatProgressBarModule,
+        FlexLayoutModule,
+        NgxDatatableModule,
+        ChartsModule,
+        FileUploadModule,
+        SharedPipesModule,
+        RouterModule.forChild(ProfileRoutes),
+        MatDatepickerModule,
+        MatOptionModule,
+        MatSelectModule,
+        ReactiveFormsModule
+    ],
   declarations: [ProfileComponent, ProfileOverviewComponent, ProfileSettingsComponent, ProfileBlankComponent]
 })
 export class ProfileModule { }

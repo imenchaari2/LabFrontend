@@ -54,6 +54,7 @@ import { SharedPipesModule } from './shared/pipes/shared-pipes.module';
 import { DatePipe } from '@angular/common';
 import {FileUploadModule} from "ng2-file-upload";
 import {MatListModule} from "@angular/material/list";
+import {AddToolComponent} from "./views/tools/add-tool/add-tool.component";
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient);
 }
@@ -112,7 +113,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         AddTeacherComponent,
         AddArticleComponent,
         FilterByCreatedDatePeriodComponent,
-        SelectAuteurComponent
+        SelectAuteurComponent,
+        AddToolComponent
     ],
     providers: [
         {provide: ErrorHandler, useClass: ErrorHandlerService},

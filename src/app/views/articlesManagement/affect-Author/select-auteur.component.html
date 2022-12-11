@@ -1,9 +1,9 @@
 
-<div *ngIf="data.isStudent===false" class="p-16 m-0">
+<div *ngIf="data.isTool===true" class="p-16 m-0">
 
   <div  fxLayoutAlign="space-between center">
     <div>
-      <h2 class="green-300-fg">Affect author to {{article}}</h2>
+      <h2 class="green-300-fg">Affect author to this tool</h2>
     </div>
     <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
@@ -15,13 +15,13 @@
 
 
         <div fxFlex="90">
-          <mat-select placeholder="Select your author"
+          <mat-select placeholder="Select member"
                       matInput
-                      [(ngModel)]="author"
+                      [(ngModel)]="member"
           >
             <div>
-              <mat-option *ngFor="let auteur of authors" [value]="auteur">
-                {{auteur.firstName}} {{auteur.lastName}}
+              <mat-option *ngFor="let member of members" [value]="member">
+                {{member.firstName}} {{member.lastName}}
               </mat-option>
             </div>
           </mat-select>
@@ -37,7 +37,7 @@
             color="warn"
             (click)="onSubmit()"
     >
-      affect author
+      affect member
     </button>
   </div>
 </div>

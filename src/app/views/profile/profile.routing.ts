@@ -13,7 +13,7 @@ export const ProfileRoutes: Routes = [
     {
       path: 'settings',
       component: ProfileSettingsComponent,
-      data: { title: 'Settings', breadcrumb: 'SETTINGS' }
+      data: { title: 'Settings' }
     }]
   }
 ];

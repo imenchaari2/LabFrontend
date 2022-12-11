@@ -8,12 +8,8 @@ import {
     UntypedFormGroup,
     Validators
 } from "@angular/forms";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ActivatedRoute, Router} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Member} from "../../../shared/models/member";
-import {MemberService} from "../../../shared/services/labServices/memberService";
-import {Student} from 'app/shared/models/Student';
 import {FileUploader} from "ng2-file-upload";
 import {CustomValidators} from "ngx-custom-validators";
 

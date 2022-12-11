@@ -126,7 +126,6 @@ export class TeachersComponent implements OnInit {
                     return;
                 }
                 if (isNew) {
-                    console.log(member)
                     this.memberService.addTeacher(member, cv, photo).subscribe(res => {
                         this.snack.open('your informations have been added successfully', '', {duration: 1000});
                         this.getListTeachers();
@@ -134,6 +133,7 @@ export class TeachersComponent implements OnInit {
 
                     });
                 } else {
+                    console.log(member.password)
                     this.memberService.updateTeacher(member, member.id,cv, photo).subscribe(res => {
                         this.snack.open('your informations have been added successfully', '', {duration: 1000});
                         this.getListTeachers();

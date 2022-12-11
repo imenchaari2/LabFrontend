@@ -13,12 +13,13 @@ import {Teacher} from "../../../shared/models/Teacher";
 })
 export class SelectAuteurComponent implements OnInit {
 
-    authors: Member[];
     supervisors: Teacher[];
-    author: string;
+    members: Member[];
+    member: string;
     supervisor: string;
     article = '';
     student = '';
+    tool = '';
 
     constructor(private memberService: MemberService,
                 private matDialog: MatDialog,
@@ -34,17 +35,16 @@ export class SelectAuteurComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.data.isStudent === false) {
-            this.getListAuthors();
-        } else {
+        if (this.data.isTool === true) {
+            this.getListMembers();
+        } else if (this.data.isStudent === true) {
             this.getListSupervisors();
         }
     }
-
-    private getListAuthors() {
-        this.memberService.getAllMembers().subscribe(value => {
+    private getListMembers() {
+        this.memberService.getAllAuthors().subscribe(value => {
             if (!!value) {
-                this.authors = value;
+                this.members = value;
             }
         });
     }
@@ -59,9 +59,9 @@ export class SelectAuteurComponent implements OnInit {
 
 
     onSubmit(): void {
-        if (this.data.isStudent === false) {
-            this.dialogRef.close({data: this.author});
-        } else {
+        if (this.data.isTool === true) {
+            this.dialogRef.close({data: this.member});
+        } else if (this.data.isStudent === true) {
             this.dialogRef.close({data: this.supervisor});
         }
 

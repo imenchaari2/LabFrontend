@@ -1,149 +1,408 @@
 <mat-card class="p-0">
-  <mat-tab-group>
-    <mat-tab label="Account Settings">
-      <mat-card-content class="mt-16">
-          <form>
-            <mat-form-field class="full-width">
-              <input
-              matInput
-              name="name"
-              placeholder="Name"
-              value="">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <input
-                matInput
-                name="title"
-                placeholder="Title"
-                value="">
-              </mat-form-field>
-            <mat-form-field class="full-width">
-              <input
-              matInput
-              name="email"
-              placeholder="Email"
-              value="">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <input
-              matInput
-              name="phone"
-              placeholder="Phone"
-              value="">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <input
-              matInput
-              name="address"
-              placeholder="Adresss"
-              value="">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-              <input
-              matInput
-              name="website"
-              placeholder="Website"
-              value="">
-            </mat-form-field>
-            <button mat-raised-button color="primary">Save</button>
-          </form>
-      </mat-card-content>
-    </mat-tab>
-    <mat-tab label="Profile Picture">
-      <mat-card-content  class="mt-16">
-        <div class="mb-16 mt-16">
-          <p>Upload a profile picture</p>
-          <input type="file"
-                 (change)="selectPhotoFile($event)"
-                 ng2FileSelect [uploader]="uploader" />
-        </div>
-
-        <div class="mb-16">
-          <div ng2FileDrop
-          [ngClass]="{'dz-file-over': hasBaseDropZoneOver}"
-          [uploader]="uploader"
-          (fileOver)="fileOverBase($event)"
-          class="fileupload-drop-zone">
-          Drop png/jpeg file here
-          </div>
-        </div>
-        <table class="default-table mat-box-shadow" style="width: 100%">
-          <thead>
-            <tr>
-                <th width="30%">Name</th>
-                <th>Size</th>
-                <th>Progress</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody *ngIf="uploader.queue.length; else tableNoData">
-            <tr *ngFor="let item of uploader.queue">
-                <td>{{ item?.file?.name }}</td>
-                <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-                <td>
-                    <div class="progress" style="margin-bottom: 0;">
-                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                        <mat-progress-bar
-                          class=""
-                          color="primary"
-                          mode="determinate"
-                          [value]="item.progress">
-                        </mat-progress-bar>
+    <mat-tab-group>
+        <mat-tab label="Account Settings">
+            <mat-card-content class="mt-16">
+                <form *ngIf="role==='ROLE_TEACHER'" name="basicForm" [formGroup]="basicForm">
+                    <div fxLayout="row">
+                        <div fxFlex="50" class="pr-16">
+                            <mat-form-field class="full-width" appearance="fill">
+                                <mat-label>FirstName</mat-label>
+                                <input
+                                        matInput
+                                        name="firstName"
+                                        formControlName="firstName"
+                                        placeholder="First name"
+                                        value="">
+                            </mat-form-field>
+                            <small
+                                    *ngIf="basicForm.get('firstName').hasError('required') && basicForm.get('firstName').touched"
+                                    class="form-error-msg"> First name is required </small>
+                        </div>
+                        <div fxFlex="50" class="pr-16">
+                            <mat-form-field class="full-width" appearance="fill">
+                                <mat-label>Lastname</mat-label>
+                                <input
+                                        matInput
+                                        name="lastName"
+                                        formControlName="lastName"
+                                        placeholder="Last name"
+                                        value="">
+                            </mat-form-field>
+                            <small
+                                    *ngIf="basicForm.controls['lastName'].hasError('required') && basicForm.controls['lastName'].touched"
+                                    class="form-error-msg"> Last name is required </small>
+                        </div>
                     </div>
-                </td>
-                <td class="">
-                    <mat-icon *ngIf="item.isSuccess">check</mat-icon>
-                    <mat-icon *ngIf="item.isCancel" color="accent">cancel</mat-icon>
-                    <mat-icon *ngIf="item.isError" color="warn">error</mat-icon>
-                </td>
-                <td nowrap>
-                    <button
-                    mat-raised-button
-                    class="mat-primary"
-                    (click)="updatePhoto(member.id,member.photo.id,selectedPhotoFile)"
-                    [disabled]="item.isReady || item.isUploading || item.isSuccess">Upload</button>
-                    <button
-                    mat-raised-button
-                    class="mat-accent"
-                    (click)="item.cancel()"
-                    [disabled]="!item.isUploading">Cancel</button>
+                    <div fxLayout="row">
+                        <div fxFlex="50" class="pr-16">
+                            <mat-form-field class="full-width" appearance="fill">
+                                <mat-label>Email</mat-label>
+                                <input
+                                        matInput
+                                        type="email"
+                                        formControlName="email"
+                                        placeholder="Your Email"
+                                        class="form-control" required>
+                            </mat-form-field>
+                            <small
+                                    *ngIf="basicForm.controls['email'].hasError('required') && basicForm.controls['email'].touched"
+                                    class="form-error-msg"> Email is required </small>
+                            <small
+                                    *ngIf="basicForm.controls['email'].hasError('email') && basicForm.controls['email'].touched"
+                                    class="form-error-msg"> Invaild email address </small>
+                        </div>
+                        <div fxFlex="50" class="pr-16">
+                            <mat-form-field class="full-width" appearance="fill">
+                                <mat-label>Cin</mat-label>
+                                <input
+                                        matInput
+                                        name="cin"
+                                        formControlName="cin"
+                                        placeholder="Cin card number"
+                                        type="number"
+                                        oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8);">
+                            </mat-form-field>
+                            <small
+                                    *ngIf="basicForm.controls['cin'].hasError('cin') && basicForm.controls['cin'].touched && basicForm.value.cin<0 && basicForm.value.cin.length<8"
+                                    class="form-error-msg"> Invaild cin card number </small>
+                        </div>
+                    </div>
+                    <div fxLayout="row">
+                        <div fxFlex="50" class="pr-16">
+                            <mat-form-field class="full-width" appearance="fill">
+                                <mat-label>Date of birth</mat-label>
+                                <input
+                                        matInput
+                                        name="Birth date"
+                                        formControlName="birthDate"
+                                        placeholder="date of birth"
+                                        [matDatepicker]="appDatepicker"
+                                >
+                                <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
+                            </mat-form-field>
+                            <mat-datepicker #appDatepicker></mat-datepicker>
+                        </div>
+                        <div fxFlex="50" class="pr-16">
+                            <mat-form-field class="full-width" appearance="fill">
+                                <mat-label>Inscription Date</mat-label>
+                                <input
+                                        matInput
+                                        name="inscriptionDate"
+                                        formControlName="inscriptionDate"
+                                        placeholder="inscription Date"
+                                        [matDatepicker]="appDatepicker1"
+                                >
+                                <mat-datepicker-toggle matSuffix [for]="appDatepicker1"></mat-datepicker-toggle>
+                            </mat-form-field>
+                            <mat-datepicker #appDatepicker1></mat-datepicker>
+                        </div>
+                    </div>
 
-                    <button
-                    mat-raised-button
-                    class="mat-warn"
-                    (click)="item.remove()">Remove</button>
-                </td>
-            </tr>
-            </tbody>
-            <ng-template #tableNoData>
-              <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
-            </ng-template>
-        </table>
-      </mat-card-content>
-    </mat-tab>
-    <mat-tab label="Privacy Settings">
-      <mat-card-content>
-        <div class="mb-16 mt-16">
-          <mat-checkbox> Get weekly news in your email.</mat-checkbox>
-        </div>
-        <div class="mb-16">
-          <mat-checkbox> Get notification when someone follows you.</mat-checkbox>
-        </div>
-        <div class="mb-16">
-          <mat-checkbox> Get email when someone follows you.</mat-checkbox>
-        </div>
-        <div class="mb-16">
-            <p>Choose your admin panel color schemes.</p>
-            <mat-radio-group fxLayout="column" fxLayoutGap="4px">
-              <mat-radio-button value="indigo">Indigo</mat-radio-button>
-              <mat-radio-button value="blue">Blue</mat-radio-button>
-              <mat-radio-button value="pink">Pink</mat-radio-button>
-              <mat-radio-button value="purple">Purple</mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <button mat-raised-button color="primary">Save</button>
-      </mat-card-content>
-    </mat-tab>
-  </mat-tab-group>
+
+                    <div fxLayout="row">
+                        <div fxFlex="50" class="pr-16">
+                            <mat-form-field class="full-width" appearance="fill">
+                                <mat-label>Grade</mat-label>
+                                <input
+                                        matInput
+                                        name="grade"
+                                        formControlName="grade"
+                                        placeholder="grade"
+                                        value=""
+                                >
+                            </mat-form-field>
+                            <small
+                                    *ngIf="basicForm.controls['grade'].hasError('required') && basicForm.controls['grade'].touched"
+                                    class="form-error-msg"> Grade is required </small>
+                        </div>
+                        <div fxFlex="50" class="pr-16">
+                            <mat-form-field class="full-width" appearance="fill">
+                                <mat-label>Etablishment</mat-label>
+                                <input
+                                        matInput
+                                        name="etablishment"
+                                        formControlName="etablishment"
+                                        placeholder="etablishment"
+                                        value=""
+                                >
+                            </mat-form-field>
+                            <small
+                                    *ngIf="basicForm.controls['etablishment'].hasError('required') && basicForm.controls['etablishment'].touched"
+                                    class="form-error-msg"> Etablishment is required </small>
+                        </div>
+
+                    </div>
+
+
+                    <!--                    <div>-->
+                    <!--                        <mat-form-field class="full-width" appearance="outline">-->
+                    <!--                            <mat-select placeholder="type"-->
+                    <!--                                        name="type"-->
+                    <!--                                        formControlName="type"-->
+                    <!--                            >-->
+                    <!--                                <mat-option *ngFor="let t of types" [value]="t.type">-->
+                    <!--                                    {{ t.type }}-->
+                    <!--                                </mat-option>-->
+                    <!--                            </mat-select>-->
+                    <!--                        </mat-form-field>-->
+                    <!--                    </div>-->
+
+                    <div style="margin-top:10px ">
+                        <button mat-stroked-button
+                                fxLayoutAlign="center center"
+                                color="warn" type="button"
+                                (click)="updateTeacherInfos(teacher.id)"
+                        >update your informations</button>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-tab>
+
+
+        <mat-tab label="Profile Picture">
+            <mat-card-content class="mt-16">
+                <div class="mb-16 mt-16">
+                    <p>Upload a profile picture</p>
+                    <input type="file"
+                           (change)="selectPhotoFile($event)"
+                           ng2FileSelect [uploader]="uploader"/>
+                </div>
+
+                <div class="mb-16">
+                    <div ng2FileDrop
+                         [ngClass]="{'dz-file-over': hasBaseDropZoneOver}"
+                         [uploader]="uploader"
+                         (fileOver)="fileOverBase($event)"
+                         class="fileupload-drop-zone">
+                        Drop png/jpeg file here
+                    </div>
+                </div>
+                <table class="default-table mat-box-shadow" style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th width="30%">Name</th>
+                        <th>Size</th>
+                        <th>Progress</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="uploader.queue.length; else tableNoData">
+                    <tr *ngFor="let item of uploader.queue">
+                        <td>{{ item?.file?.name }}</td>
+                        <td nowrap>{{ item?.file?.size / 1024 / 1024 | number:'.2' }} MB</td>
+                        <td>
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar"
+                                     [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                <mat-progress-bar
+                                        class=""
+                                        color="primary"
+                                        mode="determinate"
+                                        [value]="item.progress">
+                                </mat-progress-bar>
+                            </div>
+                        </td>
+                        <td class="">
+                            <mat-icon *ngIf="item.isSuccess">check</mat-icon>
+                            <mat-icon *ngIf="item.isCancel" color="accent">cancel</mat-icon>
+                            <mat-icon *ngIf="item.isError" color="warn">error</mat-icon>
+                        </td>
+                        <td nowrap>
+                            <button *ngIf="role==='ROLE_TEACHER'"
+                                    mat-raised-button
+                                    class="mat-primary"
+                                    (click)="updatePhoto(teacher.id,teacher.photo.id,selectedPhotoFile)"
+                                    [disabled]="item.isReady || item.isUploading || item.isSuccess">Upload
+                            </button>
+                            <button *ngIf="role==='ROLE_STUDENT'"
+                                    mat-raised-button
+                                    class="mat-primary"
+                                    (click)="updatePhoto(student.id,student.photo.id,selectedPhotoFile)"
+                                    [disabled]="item.isReady || item.isUploading || item.isSuccess">Upload
+                            </button>
+                            <button *ngIf="role==='ROLE_ADMIN'"
+                                    mat-raised-button
+                                    class="mat-primary"
+                                    (click)="updatePhoto(admin.id,admin.photo.id,selectedPhotoFile)"
+                                    [disabled]="item.isReady || item.isUploading || item.isSuccess">Upload
+                            </button>
+                            <button
+                                    mat-raised-button
+                                    class="mat-accent"
+                                    (click)="item.cancel()"
+                                    [disabled]="!item.isUploading">Cancel
+                            </button>
+
+                            <button
+                                    mat-raised-button
+                                    class="mat-warn"
+                                    (click)="item.remove()">Remove
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <ng-template #tableNoData>
+                        <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                    </ng-template>
+                </table>
+            </mat-card-content>
+        </mat-tab>
+        <mat-tab label="Upload your CV">
+            <mat-card-content class="mt-16">
+                <div class="mb-16 mt-16">
+                    <p>Upload a cv or modify yours</p>
+                    <input type="file"
+                           (change)="selectPhotoFile($event)"
+                           ng2FileSelect [uploader]="uploader"/>
+                </div>
+
+                <div class="mb-16">
+                    <div ng2FileDrop
+                         [ngClass]="{'dz-file-over': hasBaseDropZoneOver}"
+                         [uploader]="uploader"
+                         (fileOver)="fileOverBase($event)"
+                         class="fileupload-drop-zone">
+                        Drop png/jpeg file here
+                    </div>
+                </div>
+                <table class="default-table mat-box-shadow" style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th width="30%">Name</th>
+                        <th>Size</th>
+                        <th>Progress</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="uploader.queue.length; else tableNoData">
+                    <tr *ngFor="let item of uploader.queue">
+                        <td>{{ item?.file?.name }}</td>
+                        <td nowrap>{{ item?.file?.size / 1024 / 1024 | number:'.2' }} MB</td>
+                        <td>
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar"
+                                     [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                <mat-progress-bar
+                                        class=""
+                                        color="primary"
+                                        mode="determinate"
+                                        [value]="item.progress">
+                                </mat-progress-bar>
+                            </div>
+                        </td>
+                        <td class="">
+                            <mat-icon *ngIf="item.isSuccess">check</mat-icon>
+                            <mat-icon *ngIf="item.isCancel" color="accent">cancel</mat-icon>
+                            <mat-icon *ngIf="item.isError" color="warn">error</mat-icon>
+                        </td>
+                        <td nowrap>
+                            <button
+                                    mat-raised-button
+                                    class="mat-primary"
+                                    (click)="updatePhoto(member.id,member.photo.id,selectedPhotoFile)"
+                                    [disabled]="item.isReady || item.isUploading || item.isSuccess">Upload
+                            </button>
+                            <button
+                                    mat-raised-button
+                                    class="mat-accent"
+                                    (click)="item.cancel()"
+                                    [disabled]="!item.isUploading">Cancel
+                            </button>
+
+                            <button
+                                    mat-raised-button
+                                    class="mat-warn"
+                                    (click)="item.remove()">Remove
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <ng-template #tableNoData>
+                        <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                    </ng-template>
+                </table>
+            </mat-card-content>
+        </mat-tab>
+
+
+        <mat-tab label="Change password">
+            <mat-card-content class="mt-16">
+                <form name="basicForm" [formGroup]="basicForm">
+                    <div fxLayout="column">
+                        <div fxFlex="100" class="pr-16">
+                            <mat-form-field class="full-width" appearance="outline">
+                                <mat-label> Current Password</mat-label>
+                                <input
+                                        [type]="show ? 'text' : 'password'"
+                                        name="password"
+                                        matInput
+                                        formControlName="password"
+                                        placeholder="Password"
+                                        value=""
+                                >
+
+                                <mat-icon matSuffix color="primary" class="mr-8"
+                                          (click)="password()">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </mat-form-field>
+
+                            <small
+                                    *ngIf="basicForm.controls['password'].hasError('required') && basicForm.controls['password'].touched "
+                                    class="form-error-msg"> Password is required </small>
+                        </div>
+                        <div fxFlex="100" class="pr-16">
+                            <mat-form-field class="full-width" appearance="outline">
+                                <mat-label>New Password</mat-label>
+                                <input
+                                        [type]="show ? 'text' : 'password'"
+                                        name="NewPassword"
+                                        matInput
+                                        formControlName="NewPassword"
+                                        placeholder="NewPassword"
+                                        value=""
+                                >
+
+                                <mat-icon matSuffix color="primary" class="mr-8"
+                                          (click)="password()">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </mat-form-field>
+
+                            <small
+                                    *ngIf="basicForm.controls['NewPassword'].hasError('required') && basicForm.controls['NewPassword'].touched "
+                                    class="form-error-msg"> Password is required </small>
+                        </div>
+
+                        <div fxFlex="100" class="pr-16">
+                            <mat-form-field class="full-width" appearance="outline">
+                                <mat-label>Confirm password</mat-label>
+                                <input
+                                        name="confirmPassword"
+                                        matInput
+                                        appequalvalidator=""
+                                        formControlName="confirmPassword"
+                                        placeholder="Confirm Password"
+                                        value=""
+                                        [type]="show ? 'text' : 'password'">
+                                <mat-icon matSuffix color="primary" class="mr-8"
+                                          (click)="password()">{{show ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                            </mat-form-field>
+                            <small
+                                    *ngIf="basicForm.controls['confirmPassword'].hasError('equalTo') && basicForm.controls['confirmPassword'].touched"
+                                    class="form-error-msg"> Password mismatch </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <button mat-raised-button color="primary"
+                            (click)="changePassword(connectedUser.id, basicForm.value.password, basicForm.value.NewPassword)">
+                        Change password
+                    </button>
+                </form>
+            </mat-card-content>
+        </mat-tab>
+
+    </mat-tab-group>
 </mat-card>
