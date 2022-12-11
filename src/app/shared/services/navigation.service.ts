@@ -96,33 +96,11 @@ export class NavigationService {
                 }
             ]
         },
-        // {
-        //   name: "CHARTS",
-        //   type: "link",
-        //   tooltip: "Charts",
-        //   icon: "show_chart",
-        //   state: "charts"
-        // },
         {
-            name: 'SESSIONS',
-            type: 'dropDown',
-            tooltip: 'Pages',
-            icon: 'view_carousel',
-            state: 'sessions',
-            sub: [
-                {name: 'SIGNUP', state: 'signup'},
-                {name: 'Signup 2', state: 'signup2'},
-                {name: 'Signup 3', state: 'signup3'},
-                {name: 'Signup 4', state: 'signup4'},
-                {name: 'SIGNIN', state: 'signin'},
-                {name: 'Signin 2', state: 'signin2'},
-                {name: 'Signin 3', state: 'signin3'},
-                {name: 'Signin 4', state: 'signin4'},
-                {name: 'FORGOT', state: 'forgot-password'},
-                {name: 'LOCKSCREEN', state: 'lockscreen'},
-                {name: 'NOTFOUND', state: '404'},
-                {name: 'ERROR', state: 'error'}
-            ]
+            name: 'Log out',
+            type: 'link',
+            icon: 'exit_to_app',
+            state: 'sessions/signin3'
         }
     ];
 
@@ -174,19 +152,10 @@ export class NavigationService {
             name: 'Other components'
         },
         {
-            name: 'SESSIONS',
-            type: 'dropDown',
-            tooltip: 'Pages',
-            icon: 'view_carousel',
-            state: 'sessions',
-            sub: [
-                {name: 'SIGNUP', state: 'signup'},
-                {name: 'SIGNIN', state: 'signin'},
-                {name: 'FORGOT', state: 'forgot-password'},
-                {name: 'LOCKSCREEN', state: 'lockscreen'},
-                {name: 'NOTFOUND', state: '404'},
-                {name: 'ERROR', state: 'error'}
-            ]
+            name: 'Log out',
+            type: 'link',
+            icon: 'exit_to_app',
+            state: 'sessions/signin3'
         }
     ];
 
@@ -237,22 +206,12 @@ export class NavigationService {
             icon: 'show_chart',
             state: 'charts'
         },
-
         {
-            name: 'SESSIONS',
-            type: 'dropDown',
-            tooltip: 'Pages',
-            icon: 'view_carousel',
-            state: 'sessions',
-            sub: [
-                {name: 'SIGNUP', state: 'signup'},
-                {name: 'SIGNIN', state: 'signin'},
-                {name: 'FORGOT', state: 'forgot-password'},
-                {name: 'LOCKSCREEN', state: 'lockscreen'},
-                {name: 'NOTFOUND', state: '404'},
-                {name: 'ERROR', state: 'error'}
-            ]
-        },
+            name: 'Log out',
+            type: 'link',
+            icon: 'exit_to_app',
+            state: 'sessions/signin3'
+        }
     ];
 
     // Icon menu TITLE at the very top of navigation.

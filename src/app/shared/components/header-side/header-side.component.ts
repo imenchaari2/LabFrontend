@@ -4,6 +4,7 @@ import { LayoutService } from '../../services/layout.service';
 import { TranslateService } from '@ngx-translate/core';
 import { JwtAuthService } from '../../services/auth/jwt-auth.service';
 import { EgretNotifications2Component } from '../egret-notifications2/egret-notifications2.component';
+import {MemberService} from "../../services/labServices/memberService";
 
 @Component({
   selector: 'app-header-side',
@@ -25,27 +26,30 @@ export class HeaderSideComponent implements OnInit {
 
   public egretThemes;
   public layoutConf: any;
+  photo: any;
+  member: any;
   constructor(
     private themeService: ThemeService,
     private layout: LayoutService,
     public translate: TranslateService,
     private renderer: Renderer2,
-    public jwtAuth: JwtAuthService
+    public jwtAuth: JwtAuthService,
+    public memberService: MemberService,
   ) {}
   ngOnInit() {
     this.egretThemes = this.themeService.egretThemes;
     this.layoutConf = this.layout.layoutConf;
     this.translate.use(this.currentLang.code);
+    this.member = this.jwtAuth.getUser();
+    console.log(this.jwtAuth.getUser())
+    this.getMemberById(this.member.id);
   }
-  setLang(lng) {
-    this.currentLang = lng;
-    this.translate.use(lng.code);
-  }
-  changeTheme(theme) {
-    // this.themeService.changeTheme(theme);
-  }
-  toggleNotific() {
-    this.notificPanel.toggle();
+  private getMemberById(id: string) {
+    this.memberService.getMemberById(id).subscribe(value => {
+      if (!!value) {
+        this.photo = 'data:image/jpeg;base64,' + value.photo.data;
+      }
+    });
   }
   toggleSidenav() {
     if (this.layoutConf.sidebarStyle === 'closed') {
@@ -56,26 +60,5 @@ export class HeaderSideComponent implements OnInit {
     this.layout.publishLayoutChange({
       sidebarStyle: 'closed'
     });
-  }
-
-  toggleCollapse() {
-    // compact --> full
-    if (this.layoutConf.sidebarStyle === 'compact') {
-      return this.layout.publishLayoutChange({
-        sidebarStyle: 'full',
-        sidebarCompactToggle: false
-      }, {transitionClass: true});
-    }
-
-    // * --> compact
-    this.layout.publishLayoutChange({
-      sidebarStyle: 'compact',
-      sidebarCompactToggle: true
-    }, {transitionClass: true});
-
-  }
-
-  onSearch(e) {
-    //   console.log(e)
   }
 }
