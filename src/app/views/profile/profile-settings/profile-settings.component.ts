@@ -12,6 +12,7 @@ import {FormGroup, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup} fro
 import {CustomValidators} from "ngx-custom-validators";
 import {Teacher} from "../../../shared/models/Teacher";
 import {User} from "../../../shared/models/user";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-profile-settings',
@@ -35,6 +36,7 @@ export class ProfileSettingsComponent implements OnInit {
         {type: 'thesis'}
     ];
     connectedUser!: User;
+    myDatePipe: any;
 
     constructor(private memberService: MemberService,
                 private formBuilder: UntypedFormBuilder,
@@ -42,8 +44,10 @@ export class ProfileSettingsComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private ngZone: NgZone,
+                datepipe: DatePipe,
                 public jwtAuth: JwtAuthService
     ) {
+        this.myDatePipe = datepipe;
         this.role = this.jwtAuth.getUser().role;
         this.connectedUser = this.jwtAuth.getUser();
         if (this.jwtAuth.getUser().role === 'ROLE_ADMIN') {
@@ -87,7 +91,8 @@ export class ProfileSettingsComponent implements OnInit {
 
     buildStudentForm() {
         const password = new UntypedFormControl(!!this.student?.password ? this.student?.password : '');
-        const confirmPassword = new UntypedFormControl(!!this.student?.password ? this.student?.password : '', CustomValidators.equalTo(password));
+        const NewPassword = new UntypedFormControl('');
+        const confirmPassword = new UntypedFormControl('', CustomValidators.equalTo(NewPassword));
         return new UntypedFormGroup({
             id: new UntypedFormControl(!!this.student?.id ? this.student?.id : ''),
             firstName: new UntypedFormControl(!!this.student?.firstName ? this.student?.firstName : ''),
@@ -100,12 +105,13 @@ export class ProfileSettingsComponent implements OnInit {
             inscriptionDate: new UntypedFormControl(!!this.student?.inscriptionDate ? this.student?.inscriptionDate : ''),
             password,
             confirmPassword,
+            NewPassword
 
         });
     }
 
     buildTeacherForm() {
-        const password = new UntypedFormControl('');
+        const password = new UntypedFormControl(!!this.teacher?.password ? this.teacher?.password :'');
         const NewPassword = new UntypedFormControl('');
         const confirmPassword = new UntypedFormControl('', CustomValidators.equalTo(NewPassword));
         return new UntypedFormGroup({
@@ -229,21 +235,21 @@ export class ProfileSettingsComponent implements OnInit {
             console.log(value);
             if (!!value ) {
                 this._snackBar.open(' your informations are updated successfully !', 'OK', {duration: 4000});
-                this.refresh.next();
-
+                this.ngZone.run(() => this.router.navigateByUrl('profile')).then(r => console.log(r));
+                window.location.reload();
             } else {
                 this._snackBar.open( ' no !', 'OK', {duration: 4000});
 
             }
-        })
+        });
     }
-    updateStudentInfos(studentId: string, student: Student) {
-            this.memberService.updateStudentInfos(studentId, student).subscribe(value => {
+    updateStudentInfos(studentId: string) {
+        this.memberService.updateStudentInfos(studentId, this.buildMember()).subscribe(value => {
             console.log(value);
             if (!!value ) {
                 this._snackBar.open(' your informations are updated successfully !', 'OK', {duration: 4000});
-                this.refresh.next();
-
+                this.ngZone.run(() => this.router.navigateByUrl('profile')).then(r => console.log(r));
+                window.location.reload();
             } else {
                 this._snackBar.open( ' no !', 'OK', {duration: 4000});
 
@@ -269,11 +275,11 @@ export class ProfileSettingsComponent implements OnInit {
             lastName: this.basicForm.value.lastName,
             email: this.basicForm.value.email,
             cin: this.basicForm.value.cin,
-            birthDate: this.basicForm.value.birthDate,
+            birthDate: this.myDatePipe.transform(this.basicForm.value.birthDate, 'yyyy-MM-dd'),
             grade: this.basicForm.value.grade,
             etablishment: this.basicForm.value.etablishment,
             diploma: this.basicForm.value.diploma,
-            inscriptionDate: this.basicForm.value.inscriptionDate,
+            inscriptionDate: this.myDatePipe.transform(this.basicForm.value.inscriptionDate, 'yyyy-MM-dd'),
             type: this.basicForm.value.type,
             password: this.basicForm.value.password,
         };

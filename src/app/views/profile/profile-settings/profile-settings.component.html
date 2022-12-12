@@ -33,59 +33,60 @@
                                     class="form-error-msg"> Last name is required </small>
                         </div>
                     </div>
-                        <div  class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Email</mat-label>
-                                <input
-                                        matInput
-                                        type="email"
-                                        formControlName="email"
-                                        placeholder="Your Email"
-                                        class="form-control" required>
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['email'].hasError('required') && basicForm.controls['email'].touched"
-                                    class="form-error-msg"> Email is required </small>
-                            <small
-                                    *ngIf="basicForm.controls['email'].hasError('email') && basicForm.controls['email'].touched"
-                                    class="form-error-msg"> Invaild email address </small>
-                        </div>
-                        <div class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Cin</mat-label>
-                                <input
-                                        matInput
-                                        name="cin"
-                                        formControlName="cin"
-                                        placeholder="Cin card number"
-                                        type="number"
-                                        oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8);">
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['cin'].hasError('cin') && basicForm.controls['cin'].touched && basicForm.value.cin<0 && basicForm.value.cin.length<8"
-                                    class="form-error-msg"> Invaild cin card number </small>
-                        </div>
-                        <div  class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Date of birth</mat-label>
-                                <input
-                                        matInput
-                                        name="Birth date"
-                                        formControlName="birthDate"
-                                        placeholder="date of birth"
-                                        [matDatepicker]="appDatepicker"
-                                >
-                                <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
-                            </mat-form-field>
-                            <mat-datepicker #appDatepicker></mat-datepicker>
-                        </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Email</mat-label>
+                            <input
+                                    matInput
+                                    type="email"
+                                    formControlName="email"
+                                    placeholder="Your Email"
+                                    class="form-control" required>
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['email'].hasError('required') && basicForm.controls['email'].touched"
+                                class="form-error-msg"> Email is required </small>
+                        <small
+                                *ngIf="basicForm.controls['email'].hasError('email') && basicForm.controls['email'].touched"
+                                class="form-error-msg"> Invaild email address </small>
+                    </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Cin</mat-label>
+                            <input
+                                    matInput
+                                    name="cin"
+                                    formControlName="cin"
+                                    placeholder="Cin card number"
+                                    type="number"
+                                    oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8);">
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['cin'].hasError('cin') && basicForm.controls['cin'].touched && basicForm.value.cin<0 && basicForm.value.cin.length<8"
+                                class="form-error-msg"> Invaild cin card number </small>
+                    </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Date of birth</mat-label>
+                            <input
+                                    matInput
+                                    name="Birth date"
+                                    formControlName="birthDate"
+                                    placeholder="date of birth"
+                                    [matDatepicker]="appDatepicker"
+                            >
+                            <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
+                        </mat-form-field>
+                        <mat-datepicker #appDatepicker></mat-datepicker>
+                    </div>
 
                     <div style="margin-top:10px ">
                         <button mat-stroked-button
                                 fxLayoutAlign="center center"
                                 color="warn" type="button"
                                 (click)="updateAdminInfos(admin.id)"
-                        >update your informations</button>
+                        >update your informations
+                        </button>
                     </div>
                 </form>
             </mat-card-content>
@@ -121,126 +122,96 @@
                                     class="form-error-msg"> Last name is required </small>
                         </div>
                     </div>
-                    <div fxLayout="row">
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Email</mat-label>
-                                <input
-                                        matInput
-                                        type="email"
-                                        formControlName="email"
-                                        placeholder="Your Email"
-                                        class="form-control" required>
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['email'].hasError('required') && basicForm.controls['email'].touched"
-                                    class="form-error-msg"> Email is required </small>
-                            <small
-                                    *ngIf="basicForm.controls['email'].hasError('email') && basicForm.controls['email'].touched"
-                                    class="form-error-msg"> Invaild email address </small>
-                        </div>
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Cin</mat-label>
-                                <input
-                                        matInput
-                                        name="cin"
-                                        formControlName="cin"
-                                        placeholder="Cin card number"
-                                        type="number"
-                                        oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8);">
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['cin'].hasError('cin') && basicForm.controls['cin'].touched && basicForm.value.cin<0 && basicForm.value.cin.length<8"
-                                    class="form-error-msg"> Invaild cin card number </small>
-                        </div>
+
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Email</mat-label>
+                            <input
+                                    matInput
+                                    type="email"
+                                    formControlName="email"
+                                    placeholder="Your Email"
+                                    class="form-control" required>
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['email'].hasError('required') && basicForm.controls['email'].touched"
+                                class="form-error-msg"> Email is required </small>
+                        <small
+                                *ngIf="basicForm.controls['email'].hasError('email') && basicForm.controls['email'].touched"
+                                class="form-error-msg"> Invaild email address </small>
                     </div>
-                    <div fxLayout="row">
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Date of birth</mat-label>
-                                <input
-                                        matInput
-                                        name="Birth date"
-                                        formControlName="birthDate"
-                                        placeholder="date of birth"
-                                        [matDatepicker]="appDatepicker"
-                                >
-                                <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
-                            </mat-form-field>
-                            <mat-datepicker #appDatepicker></mat-datepicker>
-                        </div>
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Inscription Date</mat-label>
-                                <input
-                                        matInput
-                                        name="inscriptionDate"
-                                        formControlName="inscriptionDate"
-                                        placeholder="inscription Date"
-                                        [matDatepicker]="appDatepicker1"
-                                >
-                                <mat-datepicker-toggle matSuffix [for]="appDatepicker1"></mat-datepicker-toggle>
-                            </mat-form-field>
-                            <mat-datepicker #appDatepicker1></mat-datepicker>
-                        </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Cin</mat-label>
+                            <input
+                                    matInput
+                                    name="cin"
+                                    formControlName="cin"
+                                    placeholder="Cin card number"
+                                    type="number"
+                                    oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8);">
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['cin'].hasError('cin') && basicForm.controls['cin'].touched && basicForm.value.cin<0 && basicForm.value.cin.length<8"
+                                class="form-error-msg"> Invaild cin card number </small>
                     </div>
 
 
-                    <div fxLayout="row">
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Grade</mat-label>
-                                <input
-                                        matInput
-                                        name="grade"
-                                        formControlName="grade"
-                                        placeholder="grade"
-                                        value=""
-                                >
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['grade'].hasError('required') && basicForm.controls['grade'].touched"
-                                    class="form-error-msg"> Grade is required </small>
-                        </div>
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Etablishment</mat-label>
-                                <input
-                                        matInput
-                                        name="etablishment"
-                                        formControlName="etablishment"
-                                        placeholder="etablishment"
-                                        value=""
-                                >
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['etablishment'].hasError('required') && basicForm.controls['etablishment'].touched"
-                                    class="form-error-msg"> Etablishment is required </small>
-                        </div>
-
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Date of birth</mat-label>
+                            <input
+                                    matInput
+                                    name="Birth date"
+                                    formControlName="birthDate"
+                                    placeholder="date of birth"
+                                    [matDatepicker]="appDatepicker"
+                            >
+                            <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
+                        </mat-form-field>
+                        <mat-datepicker #appDatepicker></mat-datepicker>
                     </div>
 
 
-                    <!--                    <div>-->
-                    <!--                        <mat-form-field class="full-width" appearance="outline">-->
-                    <!--                            <mat-select placeholder="type"-->
-                    <!--                                        name="type"-->
-                    <!--                                        formControlName="type"-->
-                    <!--                            >-->
-                    <!--                                <mat-option *ngFor="let t of types" [value]="t.type">-->
-                    <!--                                    {{ t.type }}-->
-                    <!--                                </mat-option>-->
-                    <!--                            </mat-select>-->
-                    <!--                        </mat-form-field>-->
-                    <!--                    </div>-->
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Grade</mat-label>
+                            <input
+                                    matInput
+                                    name="grade"
+                                    formControlName="grade"
+                                    placeholder="grade"
+                                    value=""
+                            >
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['grade'].hasError('required') && basicForm.controls['grade'].touched"
+                                class="form-error-msg"> Grade is required </small>
+                    </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Etablishment</mat-label>
+                            <input
+                                    matInput
+                                    name="etablishment"
+                                    formControlName="etablishment"
+                                    placeholder="etablishment"
+                                    value=""
+                            >
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['etablishment'].hasError('required') && basicForm.controls['etablishment'].touched"
+                                class="form-error-msg"> Etablishment is required </small>
+                    </div>
+
 
                     <div style="margin-top:10px ">
                         <button mat-stroked-button
                                 fxLayoutAlign="center center"
                                 color="warn" type="button"
                                 (click)="updateTeacherInfos(teacher.id)"
-                        >update your informations</button>
+                        >update your informations
+                        </button>
                     </div>
                 </form>
             </mat-card-content>
@@ -276,126 +247,100 @@
                                     class="form-error-msg"> Last name is required </small>
                         </div>
                     </div>
-                    <div fxLayout="row">
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Email</mat-label>
-                                <input
-                                        matInput
-                                        type="email"
-                                        formControlName="email"
-                                        placeholder="Your Email"
-                                        class="form-control" required>
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['email'].hasError('required') && basicForm.controls['email'].touched"
-                                    class="form-error-msg"> Email is required </small>
-                            <small
-                                    *ngIf="basicForm.controls['email'].hasError('email') && basicForm.controls['email'].touched"
-                                    class="form-error-msg"> Invaild email address </small>
-                        </div>
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Cin</mat-label>
-                                <input
-                                        matInput
-                                        name="cin"
-                                        formControlName="cin"
-                                        placeholder="Cin card number"
-                                        type="number"
-                                        oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8);">
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['cin'].hasError('cin') && basicForm.controls['cin'].touched && basicForm.value.cin<0 && basicForm.value.cin.length<8"
-                                    class="form-error-msg"> Invaild cin card number </small>
-                        </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Email</mat-label>
+                            <input
+                                    matInput
+                                    type="email"
+                                    formControlName="email"
+                                    placeholder="Your Email"
+                                    class="form-control" required>
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['email'].hasError('required') && basicForm.controls['email'].touched"
+                                class="form-error-msg"> Email is required </small>
+                        <small
+                                *ngIf="basicForm.controls['email'].hasError('email') && basicForm.controls['email'].touched"
+                                class="form-error-msg"> Invaild email address </small>
                     </div>
-                    <div fxLayout="row">
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Date of birth</mat-label>
-                                <input
-                                        matInput
-                                        name="Birth date"
-                                        formControlName="birthDate"
-                                        placeholder="date of birth"
-                                        [matDatepicker]="appDatepicker"
-                                >
-                                <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
-                            </mat-form-field>
-                            <mat-datepicker #appDatepicker></mat-datepicker>
-                        </div>
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Inscription Date</mat-label>
-                                <input
-                                        matInput
-                                        name="inscriptionDate"
-                                        formControlName="inscriptionDate"
-                                        placeholder="inscription Date"
-                                        [matDatepicker]="appDatepicker1"
-                                >
-                                <mat-datepicker-toggle matSuffix [for]="appDatepicker1"></mat-datepicker-toggle>
-                            </mat-form-field>
-                            <mat-datepicker #appDatepicker1></mat-datepicker>
-                        </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Cin</mat-label>
+                            <input
+                                    matInput
+                                    name="cin"
+                                    formControlName="cin"
+                                    placeholder="Cin card number"
+                                    type="number"
+                                    oninput="if (this.value.length > 8) this.value = this.value.slice(0, 8);">
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['cin'].hasError('cin') && basicForm.controls['cin'].touched && basicForm.value.cin<0 && basicForm.value.cin.length<8"
+                                class="form-error-msg"> Invaild cin card number </small>
                     </div>
-
-
-                    <div fxLayout="row">
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Grade</mat-label>
-                                <input
-                                        matInput
-                                        name="grade"
-                                        formControlName="grade"
-                                        placeholder="grade"
-                                        value=""
-                                >
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['grade'].hasError('required') && basicForm.controls['grade'].touched"
-                                    class="form-error-msg"> Grade is required </small>
-                        </div>
-                        <div fxFlex="50" class="pr-16">
-                            <mat-form-field class="full-width" appearance="fill">
-                                <mat-label>Etablishment</mat-label>
-                                <input
-                                        matInput
-                                        name="etablishment"
-                                        formControlName="etablishment"
-                                        placeholder="etablishment"
-                                        value=""
-                                >
-                            </mat-form-field>
-                            <small
-                                    *ngIf="basicForm.controls['etablishment'].hasError('required') && basicForm.controls['etablishment'].touched"
-                                    class="form-error-msg"> Etablishment is required </small>
-                        </div>
-
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Date of birth</mat-label>
+                            <input
+                                    matInput
+                                    name="Birth date"
+                                    formControlName="birthDate"
+                                    placeholder="date of birth"
+                                    [matDatepicker]="appDatepicker"
+                            >
+                            <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
+                        </mat-form-field>
+                        <mat-datepicker #appDatepicker></mat-datepicker>
                     </div>
-
-
-                    <!--                    <div>-->
-                    <!--                        <mat-form-field class="full-width" appearance="outline">-->
-                    <!--                            <mat-select placeholder="type"-->
-                    <!--                                        name="type"-->
-                    <!--                                        formControlName="type"-->
-                    <!--                            >-->
-                    <!--                                <mat-option *ngFor="let t of types" [value]="t.type">-->
-                    <!--                                    {{ t.type }}-->
-                    <!--                                </mat-option>-->
-                    <!--                            </mat-select>-->
-                    <!--                        </mat-form-field>-->
-                    <!--                    </div>-->
-
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Inscription Date</mat-label>
+                            <input
+                                    matInput
+                                    name="inscriptionDate"
+                                    formControlName="inscriptionDate"
+                                    placeholder="inscription Date"
+                                    [matDatepicker]="appDatepicker1"
+                            >
+                            <mat-datepicker-toggle matSuffix [for]="appDatepicker1"></mat-datepicker-toggle>
+                        </mat-form-field>
+                        <mat-datepicker #appDatepicker1></mat-datepicker>
+                    </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Diploma</mat-label>
+                            <input
+                                    matInput
+                                    name="diploma"
+                                    formControlName="diploma"
+                                    placeholder="diploma"
+                                    value=""
+                            >
+                        </mat-form-field>
+                        <small
+                                *ngIf="basicForm.controls['diploma'].hasError('required') && basicForm.controls['diploma'].touched"
+                                class="form-error-msg"> Diploma is required </small>
+                    </div>
+                    <div class="pr-16">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-select placeholder="type"
+                                        name="type"
+                                        formControlName="type"
+                            >
+                                <mat-option *ngFor="let t of types" [value]="t.type">
+                                    {{ t.type }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                     <div style="margin-top:10px ">
                         <button mat-stroked-button
                                 fxLayoutAlign="center center"
                                 color="warn" type="button"
-                                (click)="updateTeacherInfos(teacher.id)"
-                        >update your informations</button>
+                                (click)="updateStudentInfos(student.id)"
+                        >update your informations
+                        </button>
                     </div>
                 </form>
             </mat-card-content>

@@ -22,19 +22,22 @@
             <mat-list *ngIf="role==='ROLE_STUDENT'"  class="pt-0">
                 <mat-list-item><mat-icon class="mr-16">email</mat-icon>{{student.email}}</mat-list-item>
                 <mat-list-item><mat-icon class="mr-16">card_membership</mat-icon>CIN : {{student.cin}}</mat-list-item>
-                <mat-list-item><mat-icon class="mr-16">grade</mat-icon>Diploma : {{student.cin}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">grade</mat-icon>Diploma : {{student.diploma}}</mat-list-item>
                 <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> BirthDate :  {{student.birthDate}}</mat-list-item>
-                <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> Inscription Date :  {{student.birthDate}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> Inscription Date :  {{student.inscriptionDate}}</mat-list-item>
                 <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> Created at :  {{student.createdDate}}</mat-list-item>
+                <mat-list-item  *ngIf="student.cv !== null">Upload your CV : <button mat-icon-button color="primary" (click)="onDownloadFile(student.cv.name)"><mat-icon>get_app</mat-icon></button></mat-list-item>
+
 
             </mat-list>
             <mat-list *ngIf="role==='ROLE_TEACHER'"  class="pt-0">
                 <mat-list-item><mat-icon class="mr-16">email</mat-icon>{{teacher.email}}</mat-list-item>
                 <mat-list-item><mat-icon class="mr-16">card_membership</mat-icon>CIN : {{teacher.cin}}</mat-list-item>
-                <mat-list-item><mat-icon class="mr-16">grade</mat-icon>Grade : {{teacher.cin}}</mat-list-item>
-                <mat-list-item><mat-icon class="mr-16">home</mat-icon>Etablishment : {{teacher.cin}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">grade</mat-icon>Grade : {{teacher.grade}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">home</mat-icon>Etablishment : {{teacher.etablishment}}</mat-list-item>
                 <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> BirthDate :  {{teacher.birthDate}}</mat-list-item>
                 <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> Created at :  {{teacher.createdDate}}</mat-list-item>
+                <mat-list-item  *ngIf="teacher.cv !== null">Upload your CV : <button mat-icon-button color="primary" (click)="onDownloadFile(teacher.cv.name)"><mat-icon>get_app</mat-icon></button></mat-list-item>
 
             </mat-list>
             <div class="profile-nav">

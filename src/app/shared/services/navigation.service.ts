@@ -48,7 +48,7 @@ export class NavigationService {
         {
             name: 'Profile',
             type: 'link',
-            icon: 'profile',
+            icon: 'person_outline',
             state: 'profile'
         },
         {
@@ -63,12 +63,12 @@ export class NavigationService {
         }, {
             name: 'Articles',
             type: 'link',
-            icon: 'list',
+            icon: 'comment',
             state: 'articles'
         }, {
             name: 'Tools',
             type: 'link',
-            icon: 'list',
+            icon: 'language',
             state: 'tools'
         }, {
             name: 'Events',
@@ -119,7 +119,7 @@ export class NavigationService {
         {
             name: 'Profile',
             type: 'link',
-            icon: 'profile',
+            icon: 'person_outline',
             state: 'profile'
         },
         {
@@ -134,12 +134,12 @@ export class NavigationService {
         }, {
             name: 'Articles',
             type: 'link',
-            icon: 'list',
+            icon: 'comment',
             state: 'articles'
         }, {
             name: 'Tools',
             type: 'link',
-            icon: 'list',
+            icon: 'language',
             state: 'tools'
         }, {
             name: 'Events',
@@ -170,7 +170,7 @@ export class NavigationService {
         {
             name: 'Profile',
             type: 'link',
-            icon: 'profile',
+            icon: 'person_outline',
             state: 'profile'
         },
         {
@@ -185,12 +185,12 @@ export class NavigationService {
         }, {
             name: 'Articles',
             type: 'link',
-            icon: 'list',
+            icon: 'comment',
             state: 'articles'
         }, {
             name: 'Tools',
             type: 'link',
-            icon: 'list',
+            icon: 'language',
             state: 'tools'
         }, {
             name: 'Events',
