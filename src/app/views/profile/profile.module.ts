@@ -22,9 +22,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { SharedPipesModule } from 'app/shared/pipes/shared-pipes.module';
 
 import { ProfileComponent } from "./profile.component";
-import { ProfileOverviewComponent } from './profile-overview/profile-overview.component';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
-import { ProfileBlankComponent } from './profile-blank/profile-blank.component';
 import { ProfileRoutes } from "./profile.routing";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatOptionModule} from "@angular/material/core";
@@ -58,6 +56,6 @@ import {MatSelectModule} from "@angular/material/select";
         MatSelectModule,
         ReactiveFormsModule
     ],
-  declarations: [ProfileComponent, ProfileOverviewComponent, ProfileSettingsComponent, ProfileBlankComponent]
+  declarations: [ProfileComponent,ProfileSettingsComponent]
 })
 export class ProfileModule { }

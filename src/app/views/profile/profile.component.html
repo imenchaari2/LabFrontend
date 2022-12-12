@@ -4,11 +4,39 @@
             <div class="propic text-center">
                 <img [src]=photo alt="">
             </div>
-            <div class="profile-title text-center mb-16">
-                <!--        <div class="main-title">{{(user | async)?.displayName}}</div>-->
-                <div class="subtitle mb-8">{{member.firstName +" "+member.lastName}}</div>
-                <div class="text-muted">diploma</div>
+            <div  class="profile-title text-center mb-16">
+                <div *ngIf="role==='ROLE_ADMIN'" class="subtitle mt-8"><h2><strong>{{admin.firstName +" "+admin.lastName}}</strong></h2>
+                </div>
+                <div *ngIf="role==='ROLE_STUDENT'" class="subtitle mt-8"><h2><strong>{{student.firstName +" "+student.lastName}}</strong></h2></div>
+                <div *ngIf="role==='ROLE_TEACHER'" class="subtitle mt-8"><h2><strong>{{teacher.firstName +" "+teacher.lastName}}</strong></h2></div>
             </div>
+                <mat-list *ngIf="role==='ROLE_ADMIN'"  class="pt-0">
+                    <mat-list-item><mat-icon class="mr-16">email</mat-icon>{{admin.email}}</mat-list-item>
+                    <mat-list-item><mat-icon class="mr-16">card_membership</mat-icon>CIN : {{admin.cin}}</mat-list-item>
+                    <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> BirthDate :  {{admin.birthDate}}</mat-list-item>
+                    <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> Created at :  {{admin.createdDate}}</mat-list-item>
+                    <mat-list-item  *ngIf="admin.cv !== null">Upload your CV : <button mat-icon-button color="primary" (click)="onDownloadFile(admin.cv.name)"><mat-icon>get_app</mat-icon></button>
+                    </mat-list-item>
+
+                </mat-list>
+            <mat-list *ngIf="role==='ROLE_STUDENT'"  class="pt-0">
+                <mat-list-item><mat-icon class="mr-16">email</mat-icon>{{student.email}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">card_membership</mat-icon>CIN : {{student.cin}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">grade</mat-icon>Diploma : {{student.cin}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> BirthDate :  {{student.birthDate}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> Inscription Date :  {{student.birthDate}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> Created at :  {{student.createdDate}}</mat-list-item>
+
+            </mat-list>
+            <mat-list *ngIf="role==='ROLE_TEACHER'"  class="pt-0">
+                <mat-list-item><mat-icon class="mr-16">email</mat-icon>{{teacher.email}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">card_membership</mat-icon>CIN : {{teacher.cin}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">grade</mat-icon>Grade : {{teacher.cin}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">home</mat-icon>Etablishment : {{teacher.cin}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> BirthDate :  {{teacher.birthDate}}</mat-list-item>
+                <mat-list-item><mat-icon class="mr-16">date_range</mat-icon> Created at :  {{teacher.createdDate}}</mat-list-item>
+
+            </mat-list>
             <div class="profile-nav">
                 <mat-nav-list>
                     <mat-divider></mat-divider>
@@ -24,7 +52,6 @@
 
 
     </div>
-
     <!-- Profile Views -->
     <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 400px)">
         <router-outlet></router-outlet>

@@ -1,5 +1,5 @@
 import {Component, OnInit, OnDestroy, AfterViewInit} from "@angular/core";
-import {NavigationService} from "../../../shared/services/navigation.service";
+import {NavigationService} from "../../services/navigation.service";
 import {ThemeService} from "../../services/theme.service";
 import {Subscription} from "rxjs";
 import {ILayoutConf, LayoutService} from "app/shared/services/layout.service";
@@ -37,7 +37,7 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
             this.menuItems = menuItem;
             //Checks item list has any icon type.
             this.hasIconTypeMenuItem = !!this.menuItems.filter(
-                item => item.type === "icon"
+                item => item.type === 'icon'
             ).length;
         });
         this.layoutConf = this.layout.layoutConf;

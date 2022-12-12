@@ -53,8 +53,6 @@ export class ProfileSettingsComponent implements OnInit {
         } else {
             this.basicForm = this.buildTeacherForm();
         }
-
-
     }
 
     ngOnInit() {
@@ -63,10 +61,7 @@ export class ProfileSettingsComponent implements OnInit {
         } else if (this.jwtAuth.getUser().role === 'ROLE_STUDENT') {
             this.getMemberById(this.jwtAuth.getUser().id);
         } else {
-
             this.getMemberById(this.jwtAuth.getUser().id);
-            console.log("eeeeeeeeeeeeeeeeeee", this.jwtAuth.getUser().id)
-
         }
     }
 
@@ -77,13 +72,14 @@ export class ProfileSettingsComponent implements OnInit {
                 if (this.jwtAuth.getUser().role === 'ROLE_ADMIN') {
                     this.admin = value;
                     this.basicForm = this.buildAdminForm();
+                    console.log("hhhhhhhhhhhhhhhh", this.admin)
+
                 } else if (this.jwtAuth.getUser().role === 'ROLE_STUDENT') {
                     this.student = value;
                     this.basicForm = this.buildStudentForm();
                 } else {
                     this.teacher = value;
                     this.basicForm = this.buildTeacherForm();
-                    console.log("hhhhhhhhhhhhhhhh", this.teacher)
                 }
             }
         });
@@ -121,8 +117,6 @@ export class ProfileSettingsComponent implements OnInit {
             birthDate: new UntypedFormControl(!!this.teacher?.birthDate ? this.teacher?.birthDate : ''),
             grade: new UntypedFormControl(!!this.teacher?.grade ? this.teacher?.grade : ''),
             etablishment: new UntypedFormControl(!!this.teacher?.etablishment ? this.teacher?.etablishment : ''),
-            // cvFile: new UntypedFormControl(!!this.member?.cv ? this.member?.cv : ''),
-            // photo: new UntypedFormControl(!!this.member?.photo ? this.member?.photo : ''),
             password,
             NewPassword,
             confirmPassword,
@@ -132,7 +126,8 @@ export class ProfileSettingsComponent implements OnInit {
 
     buildAdminForm() {
         const password = new UntypedFormControl(!!this.admin?.password ? this.admin?.password : '');
-        const confirmPassword = new UntypedFormControl(!!this.admin?.password ? this.admin?.password : '', CustomValidators.equalTo(password));
+        const NewPassword = new UntypedFormControl('');
+        const confirmPassword = new UntypedFormControl('', CustomValidators.equalTo(NewPassword));
         return new UntypedFormGroup({
             id: new UntypedFormControl(!!this.admin?.id ? this.admin?.id : ''),
             firstName: new UntypedFormControl(!!this.admin?.firstName ? this.admin?.firstName : ''),
@@ -142,6 +137,7 @@ export class ProfileSettingsComponent implements OnInit {
             birthDate: new UntypedFormControl(!!this.admin?.birthDate ? this.admin?.birthDate : ''),
             password,
             confirmPassword,
+            NewPassword
         });
     }
 
@@ -153,12 +149,55 @@ export class ProfileSettingsComponent implements OnInit {
         this.selectedPhotoFile = event.target.files[0];
         console.log(this.selectedPhotoFile);
     }
+    selectCVFile(event) {
+        this.selectedCvFile = event.target.files[0];
+        console.log(this.selectedCvFile)
+    }
 
     private updatePhoto(idMember: string, idPhoto: string, photo: File) {
 
         this.memberService.updatePhoto(idMember, idPhoto, photo).subscribe(
             event => {
                 this._snackBar.open('your profile photo has been updated successfully', '', {duration: 1000});
+                this.ngZone.run(() => this.router.navigateByUrl('profile')).then(r => console.log(r));
+                window.location.reload();
+            },
+            (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        );
+    }
+    private updatePhotoAdmin(idMember: string,  photo: File) {
+
+        this.memberService.updatePhotoAdmin(idMember, photo).subscribe(
+            event => {
+                this._snackBar.open('your profile photo has been updated successfully', '', {duration: 1000});
+                this.ngZone.run(() => this.router.navigateByUrl('profile')).then(r => console.log(r));
+                window.location.reload();
+            },
+            (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        );
+    }
+    private updateCV(idMember: string, idCv: string, Cv: File) {
+
+        this.memberService.updateCV(idMember, idCv, Cv).subscribe(
+            event => {
+                this._snackBar.open('your cv has been updated successfully', '', {duration: 1000});
+                this.ngZone.run(() => this.router.navigateByUrl('profile')).then(r => console.log(r));
+                window.location.reload();
+            },
+            (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        );
+    }
+    private updateCVAdmin(idMember: string,  cv: File) {
+
+        this.memberService.updateCVAdmin(idMember, cv).subscribe(
+            event => {
+                this._snackBar.open('your cv has been updated successfully', '', {duration: 1000});
                 this.ngZone.run(() => this.router.navigateByUrl('profile')).then(r => console.log(r));
                 window.location.reload();
             },
@@ -199,7 +238,7 @@ export class ProfileSettingsComponent implements OnInit {
         })
     }
     updateStudentInfos(studentId: string, student: Student) {
-        this.memberService.updateStudentInfos(studentId, student).subscribe(value => {
+            this.memberService.updateStudentInfos(studentId, student).subscribe(value => {
             console.log(value);
             if (!!value ) {
                 this._snackBar.open(' your informations are updated successfully !', 'OK', {duration: 4000});
@@ -209,7 +248,20 @@ export class ProfileSettingsComponent implements OnInit {
                 this._snackBar.open( ' no !', 'OK', {duration: 4000});
 
             }
-        })
+        });
+    }
+    updateAdminInfos(adminId: string) {
+        this.memberService.updateMember(adminId, this.buildMember()).subscribe(value => {
+            console.log(value);
+            if (!!value ) {
+                this._snackBar.open(' your informations are updated successfully !', 'OK', {duration: 4000});
+                this.ngZone.run(() => this.router.navigateByUrl('profile')).then(r => console.log(r));
+                window.location.reload();
+            } else {
+                this._snackBar.open( ' no !', 'OK', {duration: 4000});
+
+            }
+        });
     }
     buildMember(): any {
         return{

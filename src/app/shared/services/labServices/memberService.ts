@@ -100,6 +100,9 @@ export class MemberService {
         }
         return this.http.put<Student>(`${this.apiUrl}/updateStudent/${id}`, formData);
     }
+    public updateMember(id: string , member: Member): Observable<Member> {
+        return this.http.put<Member>(`${this.apiUrl}/updateMember/${id}`, member);
+    }
 
     public updateTeacher(teacher: Teacher, id: string, cv: File, photo: File): Observable<Teacher> {
         const formData = new FormData();
@@ -133,6 +136,21 @@ export class MemberService {
         const formData = new FormData();
         formData.append('imageFile', photo);
         return this.http.put<any>(`${this.apiUrl}/updatePhoto/${idMember}/${idPhoto}`, formData);
+    }
+    updatePhotoAdmin(idMember: string, photo: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('imageFile', photo);
+        return this.http.put<any>(`${this.apiUrl}/updatePhoto/${idMember}`, formData);
+    }
+    updateCV(idMember: string, idCv: string, Cv: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('cvFile', Cv);
+        return this.http.put<any>(`${this.apiUrl}/updateCv/${idMember}/${idCv}`, formData);
+    }
+    updateCVAdmin(idMember: string, Cv: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('cvFile', Cv);
+        return this.http.put<any>(`${this.apiUrl}/updateCv/${idMember}`, formData);
     }
 
 
