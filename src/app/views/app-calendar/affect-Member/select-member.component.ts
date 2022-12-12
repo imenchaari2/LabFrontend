@@ -26,7 +26,7 @@ export class SelectMemberComponent implements OnInit {
         // this.affectedMembers =  new FormControl(data.payload.membersIds);
         if (data.isArticle === true) {
             this.article = this.data.payload.title;
-        } else {
+        } else if (data.isEvent === true) {
             this.event = this.data.payload.title;
         }
     }

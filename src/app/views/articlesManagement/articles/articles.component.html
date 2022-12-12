@@ -80,7 +80,7 @@
                         <mat-icon>cloud_download</mat-icon>
                     </button>
 
-                    <button *ngIf="contains(article,currentUserId)" mat-icon-button mat-sm-button class="mr-8"
+                    <button *ngIf="contains(article,currentUserId) || role==='ROLE_ADMIN'" mat-icon-button mat-sm-button class="mr-8"
                             style="color: green"
                             (click)="openPopUp(article,false)"
                     >

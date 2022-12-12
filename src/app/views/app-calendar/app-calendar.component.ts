@@ -140,7 +140,7 @@ export class AppCalendarComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // result.data.toArray().mapArray()
+                console.log(result.data)
                 this.affectedMembers = result.data;
                 this.affectedMembers.map(member => {
                     this.membersIds.push(member.id);

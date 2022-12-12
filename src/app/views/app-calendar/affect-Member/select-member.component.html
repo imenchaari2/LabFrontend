@@ -3,7 +3,7 @@
     <div fxLayoutAlign="space-between center">
         <div>
             <h2 *ngIf="data.isArticle===true" class="green-300-fg">Affect members to article :  {{article}}</h2>
-            <h2 *ngIf="data.isArticle===false" class="green-300-fg">Affect members to event :  {{event}}</h2>
+            <h2 *ngIf="data.isEvent===true" class="green-300-fg">Affect members to event :  {{event}}</h2>
         </div>
         <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
             <mat-icon>close</mat-icon>

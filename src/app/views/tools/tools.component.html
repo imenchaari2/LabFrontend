@@ -57,7 +57,7 @@
                 <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
                     <ng-template ngx-datatable-cell-template let-row="row">
 
-                    <span  *ngIf='contains(row,currentUserId)'>
+                    <span  *ngIf='contains(row,currentUserId) || role==="ROLE_ADMIN"'>
 
                         <button mat-icon-button mat-sm-button class="mr-8" style="color: green"
                                 (click)="openPopUp(row,false)"

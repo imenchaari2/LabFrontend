@@ -200,7 +200,6 @@
                             [viewDate]="viewDate"
                             [events]="events"
                             [refresh]="refresh"
-                            [activeDayIsOpen]="activeDayIsOpen"
                     >
                     </mwl-calendar-month-view>
                     <mwl-calendar-week-view
@@ -208,14 +207,15 @@
                             [viewDate]="viewDate"
                             [events]="events"
                             [refresh]="refresh"
+
                             >
                     </mwl-calendar-week-view>
                     <mwl-calendar-day-view
                             *ngSwitchCase="'day'"
                             [viewDate]="viewDate"
                             [events]="events"
-                            [refresh]="refresh"
-                           >
+
+                    >
                     </mwl-calendar-day-view>
                 </div>
             </mat-card-content>

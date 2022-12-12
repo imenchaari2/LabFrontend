@@ -165,7 +165,7 @@ export class ArticlesComponent implements OnInit {
                 }
                 if (isNew) {
                     console.log(article);
-                    this.articleService.addArticle(article, source).subscribe(async () => {
+                    this.articleService.addArticle(this.currentUserId,article, source).subscribe(async () => {
                         this._snackBar.open('your informations have been added successfully', '', {duration: 1000});
                         await this.getListArticles();
                         this.refresh.next();
