@@ -335,12 +335,15 @@
                         </mat-form-field>
                     </div>
                     <div style="margin-top:10px ">
-                        <button mat-stroked-button
-                                fxLayoutAlign="center center"
-                                color="warn" type="button"
-                                (click)="updateStudentInfos(student.id)"
-                        >update your informations
-                        </button>
+                        <span fxFlex></span>
+                        <div class="m-333">
+                            <button mat-raised-button class="button"
+                                   type="button"
+                                    (click)="updateStudentInfos(student.id)"
+                            >update your informations
+                            </button>
+                        </div>
+
                     </div>
                 </form>
             </mat-card-content>

@@ -81,6 +81,9 @@ export class ToolsComponent implements OnInit {
     return this.rows;
   }
 
+  contains(tool: Tool, id: string): boolean {
+    return tool.memberId === id;
+  }
   openPopUp(data: any = {}, isNew?) {
     const title = isNew ? 'Add new tool' : 'Update tool';
     const action = isNew ? 'add' : 'edit';

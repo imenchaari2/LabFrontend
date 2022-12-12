@@ -54,17 +54,15 @@
                     </span>
                     </ng-template>
                 </ngx-datatable-column>
-
-
                 <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
                     <ng-template ngx-datatable-cell-template let-row="row">
 
-                    <span>
+                    <span  *ngIf='contains(row,currentUserId)'>
 
                         <button mat-icon-button mat-sm-button class="mr-8" style="color: green"
                                 (click)="openPopUp(row,false)"
                         ><mat-icon>edit</mat-icon></button>
-                              <button mat-icon-button color="warn" (click)="affect(row)"><mat-icon>add_task</mat-icon></button>
+                              <button *ngIf="role==='ROLE_ADMIN'"  mat-icon-button color="warn" (click)="affect(row)"><mat-icon>add_task</mat-icon></button>
 
                         <button mat-icon-button mat-sm-button color="warn"
                                 (click)="deleteItem(row.id)"><mat-icon>delete</mat-icon></button>
