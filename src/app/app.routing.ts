@@ -7,11 +7,12 @@ import {ToolsComponent} from "./views/tools/tools.component";
 import {TeachersComponent} from "./views/membersManagement/teachers/teachers.component";
 import {StudentsComponent} from './views/membersManagement/studens/students.component';
 import {UserRoleGuard} from "./shared/guards/user-role.guard";
+import {ChartsComponent} from "./views/charts/charts.component";
 
 export const rootRouterConfig: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'charts',
         pathMatch: 'full'
     },
     {
@@ -31,9 +32,8 @@ export const rootRouterConfig: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
-                path: 'dashboard',
-                loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
-                data: {title: 'Dashboard', breadcrumb: 'DASHBOARD',roles: 'ROLE_ADMIN'}
+                path: 'charts',
+                component: ChartsComponent,
             },
             {
                 path: 'members',

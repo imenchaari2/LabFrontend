@@ -190,13 +190,15 @@ export class ArticlesComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result.data)
                 this.affectedMembers = result.data;
                 this.affectedMembers.map(member => {
                     this.membersIds.push(member.id);
                 });
+                console.log(this.membersIds)
+
                 this.articleService.affectAuthorsToArticle(article.articleId, this.membersIds).subscribe(res => {
                     this.getListArticles();
+                    this.membersIds= [];
                     this.refresh.next();
 
                     this._snackBar.open('members affected successfully !', '', {duration: 1000});

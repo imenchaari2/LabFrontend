@@ -16,7 +16,7 @@ import {Student} from '../../../shared/models/Student';
 import {HttpErrorResponse} from "@angular/common/http";
 import {DatePipe} from "@angular/common";
 import {JwtAuthService} from "../../../shared/services/auth/jwt-auth.service";
-
+import { saveAs } from 'file-saver';
 @Component({
     selector: 'app-students',
     templateUrl: './students.component.html',
@@ -93,7 +93,8 @@ export class StudentsComponent implements OnInit {
     myDatePipe!: any;
     base64Data: any;
     selectedCvFile: File;
-
+    downloadFile: File;
+    fileUrl;
     constructor(private memberService: MemberService,
                 private dialog: MatDialog,
                 datepipe: DatePipe,
@@ -270,15 +271,28 @@ export class StudentsComponent implements OnInit {
             });
     }
 
-    onDownloadFile(filename: string): void {
-        this.memberService.download(filename).subscribe(
-            event => {
-                console.log(event);
-                // this.resportProgress(event);
-            },
-            (error: HttpErrorResponse) => {
-                console.log(error);
-            }
+    // onDownloadFile(filename: string): void {
+    //     this.memberService.download(filename).subscribe(
+    //         event => {
+    //             // const blob = new Blob([data], { type: 'application/octet-stream' });
+    //             //
+    //             // this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+    //             console.log(event);
+    //             // this.resportProgress(event);
+    //         },
+    //         (error: HttpErrorResponse) => {
+    //             console.log(error);
+    //         }
+    //     );
+    // }
+    onDownloadFile(downloadFile: File): void {
+        this.memberService.download(downloadFile.name).subscribe(
+            event => saveAs(event, downloadFile.name)
         );
     }
+    // downloadFile(fileData: FileData): void {
+    //     this.downloadService
+    //         .download(fileData.filename)
+    //         .subscribe(blob => saveAs(blob, fileData.filename));
+    // }
 }

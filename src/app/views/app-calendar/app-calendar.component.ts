@@ -140,12 +140,12 @@ export class AppCalendarComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result.data)
                 this.affectedMembers = result.data;
                 this.affectedMembers.map(member => {
                     this.membersIds.push(member.id);
                 });
                 this.eventService.affectMembersToEvent(event._id, this.membersIds).subscribe(res => {
+                    this.membersIds= [];
                     this._snackBar.open('members affected successfully !', '', {duration: 1000});
                     this.loadEvents();
                     this.refresh.next();

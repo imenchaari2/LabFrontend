@@ -75,7 +75,7 @@
                 <ngx-datatable-column *ngIf='column.name === "Cv"' name="{{column.name}}">
                     <ng-template ngx-datatable-cell-template let-row="row">
                     <span>
-                        <button mat-icon-button color="primary" (click)="onDownloadFile(row.cv.name)"><mat-icon>cloud_download</mat-icon></button>
+                        <button mat-icon-button color="primary" (click)="onDownloadFile(row.cv)"><mat-icon>cloud_download</mat-icon></button>
                     </span>
                     </ng-template>
                 </ngx-datatable-column>

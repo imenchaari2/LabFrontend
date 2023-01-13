@@ -32,18 +32,10 @@ export class NavigationService {
     iconMenu: IMenuItem[] = [
         {
             name: 'DASHBOARD',
-            type: 'dropDown',
+            type: 'link',
             tooltip: 'Dashboard',
             icon: 'dashboard',
-            state: 'dashboard',
-            sub: [
-                {name: 'Default', state: 'default'},
-                {name: 'Learning Management', state: 'learning-management'},
-                {name: 'Analytics', state: 'analytics'},
-                {name: 'Analytics Alt', state: 'analytics-alt'},
-                {name: 'Cryptocurrency', state: 'crypto'},
-                {name: 'Dark Cards', state: 'dark'}
-            ]
+            state: 'charts',
         },
         {
             name: 'Profile',
@@ -75,26 +67,6 @@ export class NavigationService {
             type: 'link',
             icon: 'event_note',
             state: 'events'
-        },
-        {
-            name: 'CHARTS',
-            type: 'dropDown',
-            tooltip: 'Charts',
-            icon: 'show_chart',
-            sub: [
-                {name: 'Chart js', state: 'charts'},
-                {
-                    name: 'eChart',
-                    type: 'dropDown',
-                    state: 'chart',
-                    sub: [
-                        {name: 'Pie', state: 'pie'},
-                        {name: 'Bar', state: 'bar'},
-                        {name: 'Radar', state: 'radar'},
-                        // { name: "Heatmap", state: "heatmap" },
-                    ]
-                }
-            ]
         },
         {
             name: 'Log out',

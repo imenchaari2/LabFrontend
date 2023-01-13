@@ -17,30 +17,6 @@ export class MemberService {
     constructor(private http: HttpClient) {
     }
 
-
-    // saveMember(objectToSubmit: any): Promise<any> {
-    //     // si j'ai la partie back
-    //     // return this.httpClient.post('linktorestAPI',objectToSubmit).toPromise();
-    //     const memberToSave = {
-    //         ...objectToSubmit,
-    //         id: objectToSubmit.id ?? (Math.random() * 100000).toString(),
-    //         createdDate: objectToSubmit.createdDate ?? new Date().toISOString()
-    //     };
-    //     this.tab = [memberToSave, ...this.tab.filter(item => item.id !== memberToSave.id)];
-    //     return new Promise(resolve => resolve(memberToSave));
-    //
-    // }
-    //
-    // getMemberById(id: string): Promise<Member> {
-    //     // return this.httpClient.get<M
-    //     return new Promise(resolve => resolve(this.tab.filter(item => item.id === id)[0] ?? null));
-    // }
-    //
-    // delete(id: string): Promise<void> {
-    //     this.tab = this.tab.filter(item => item.id !== id);
-    //     return new Promise(resolve => resolve());
-    // }
-
     public getAllMembers(): Observable<Member[]> {
         return this.http.get<Member[]>(`${this.apiUrl}/members`);
     }
@@ -171,7 +147,7 @@ export class MemberService {
         return this.http.get<Student[]>(`${this.apiUrl}/findByInscriptionDatePeriod?inscriptionDateGT=${inscriptionDateGT}&inscriptionDateLT=${inscriptionDateLT}`);
     }
 
-    download(filename: string): Observable<any> {
+     download(filename: string): Observable<any> {
         return this.http.get(`${this.apiUrl}/downloadFile/${filename}`, {
             reportProgress: true,
             observe: 'events',
